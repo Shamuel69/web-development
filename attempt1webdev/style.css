@@ -1,0 +1,72 @@
+body{
+    color: rgb(255, 255, 255);
+    font-family: "Karla", sans-serif;
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+}
+.base-header{
+    width: 100%;
+    height: 100px;
+    float: left;
+    display: flex;
+    background-image: linear-gradient(to right, rgb(162, 105, 48), rgb(123, 70, 17));
+}
+.header-wrapper{
+    margin-left: 125px;
+    width: 15%;
+}
+.header-extended-content{
+    margin-left: auto;
+    width: 75%;
+    display: flex;
+    align-items: center;
+}
+.header-extended-content ul{
+    list-style-type: none;
+    justify-content: space-between;
+}
+.header-extended-content button{
+    margin-left: auto;
+    border: 8px solid rgb(114, 69, 23);
+    padding: 15px;
+    border-radius: 30px;
+    background-color: rgb(255, 191, 123);
+    color: aliceblue;
+    font-size: 16px;
+}
+.header-extended-content button:hover{
+    background-color: rgb(114, 69, 23);
+}
+.header-extended-content button:active{
+    background-color: rgb(162, 105, 48);
+}
+.menu li{
+    display: inline-block;
+}
+.written-body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    width: 100%;
+}
+.written-body-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    width: 60%;
+}
+.menu a{
+    text-decoration: none;
+    color:aliceblue;
+    margin-right: 25px;
+    font-size: 22px;
+}
+.menu li:first-child{
+    border-left: 2px solid aliceblue;
+    padding-left: 20px;
+}
