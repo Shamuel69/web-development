@@ -15,16 +15,25 @@
                 <li><a href="calculator.html">Categories</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
-            <img src="images/lightmode.png" alt="darkmode icon">
-            <button>Profile</button>
+            <img src="images/lightmode.png" alt="darkmode icon" class="darkmode-icon"">
+            <button class="profile-button">Profile</button>
 
         </div>
     </header>
     <div class="legend">
-        <h3>Skim the Writings</h3>
+        <div class="legend-contents">
+            <h3 class="legend-title">Skim the Writings:</h3>
+            <ul>
+                <li><a href="#section_1">Basic Text</a></li>
+                <li><a href="#section_2">Recommended Readings</a></li>
+                <li><a href="#section_3">Our Mission</a></li>
+                <li><a href="#section_4">What we offer</a></li>
+            </ul>
+        </div>
+        
     </div>
     <div class="written-body">
-        <h3>Basic Text</h3>
+        <h3 id="section_1">Basic Text</h3>
         <p>
             &nbsp;&nbsp;&nbsp;&nbsp;At BrightPath Solutions, we believe in creating simple, 
             elegant, and powerful tools that help people accomplish more with less effort. 
@@ -38,7 +47,7 @@
             and reliability, our products are designed to scale with you as your needs grow.
         </p>
         <div class="floating-body">
-            <h4>Recommended Readings:</h4>
+            <h4 id="section_2">Recommended Readings:</h4>
             <ul>
                 <li>Book 1</li>
                 <li>Book 2</li>
@@ -46,7 +55,7 @@
             </ul>
         </div>
 
-        <h2>Our Mission</h2>
+        <h2 id="section_3">Our Mission</h2>
         <p>
             &nbsp;&nbsp;&nbsp;&nbsp;Our mission is simple: empower individuals and 
             organizations to unlock their full potential through technology. We 
@@ -54,7 +63,7 @@
             Whether it’s a web application, a mobile tool, or a custom platform, we aim 
             to deliver solutions that make a real difference.
         </p>
-        <h2>What We Offer</h2>
+        <h2 id="section_4">What We Offer</h2>
         <ul>
             <li>Custom web design and development</li>
             <li>Responsive and mobile-first applications</li>
@@ -69,13 +78,16 @@
         </p>
     </div>
     <footer>
-        <p>&copy; 2025 Carl-carlnator 9/3/2025. All rights (hopefully soon) reserved.</p>
-        <h5>Created and developed by <i>Samuel S. Parnell<i></h5>
-        <h5>Address; Gogginator street, 69420</h5>
-        <h5>Phone: 123-456-7890</h5>
-        <h5>Email: 7tB0a@example.com</h5>
-        <h5>Website: https://samuelsparnell.github.io</h5>
+        <div class="footer-content">
+            <p>&copy; 2025 Carl-carlnator 9/3/2025. All rights (hopefully soon) reserved.</p>
+            <h5>Created and developed by <i>&nbsp;Samuel S. Parnell<i></h5>
+            <h5>Address; Gogginator street, 69420</h5>
+            <h5>Phone: 123-456-7890</h5>
+            <h5>Email: 7tB0a@example.com</h5>
+            <h5>Website: https://samuelsparnell.github.io</h5>
+        </div>
     </footer>
     </body>
+    <script src="func.js"></script>
 
 </html>

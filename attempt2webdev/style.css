@@ -3,12 +3,16 @@
     --header-hover-color: rgb(187, 187, 187);
     --body-text-color: #dedddd;
     --body-background-color: rgb(19, 18, 19);
-    --dropdown_background_color: #292929;
+    --dropdown_background_color: #1a1a1a;
+    --dropdown_text_color: rgb(221, 221, 221);
+    --dropdown_hover_color: rgb(187, 187, 187);
+    --footer_background_color: rgb(17, 17, 17);
+
 }
 
 body{
-    background-color: rgb(19, 19, 19);
-    color: rgb(221, 221, 221);
+    background-color: var(--body-background-color);
+    color: var(--body-text-color);
     font-family: "Karla", sans-serif;
     font-size: 20px;
     margin: 0;
@@ -23,10 +27,28 @@ header{
 }
 /* header wrapper */
 .header-content{
-    width: 95%;
+    width: 92%;
     margin: 0 auto;
     display: flex;
     align-items: center;
+}
+/* profile */
+.header-content button{
+    color: var(--header-text-color);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    margin-left: auto;
+
+}
+.profile-button{
+    font-size: 20px;
+    font-family: "Karla", sans-serif;
+}
+.profile-button:hover{
+    color: var(--header-hover-color);
+    text-decoration: underline;
 }
 /* title */
 .header-content h2{
@@ -36,11 +58,12 @@ header{
     align-items: center;
     width: 15rem;
 }
+
 /* next to the title */
 .header-options {
     height: 100%;
     display: flex;
-    gap: 2rem;
+    gap: 1.5rem;
     align-items: center;
     list-style: none;
     margin: 0;
@@ -66,31 +89,119 @@ header{
     padding-right: 1rem;
     border-right: 2px solid var(--header-text-color);
 }
+
 /* legend: skipto content */
 .legend{
-    display: flex;
+    display: block;
     height: 100%;
     width: 20%;
-    align-items: center;
-    border-right: .5rem solid rgb(114, 69, 23);
-    text-align: center;
+    border-right: .3rem solid rgb(114, 69, 23);
     float: left;
+    background-image: linear-gradient(to bottom, rgb(162, 105, 48), rgb(114, 69, 23));
+}
+.legend-contents{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 80%;
+    background: var(--dropdown_background_color);
+    float: right
+}
+.legend-title{
+    margin-left: 1rem;
 }
 .legend h3{
-    margin-left: 2rem;
-    
+    text-decoration: underline;
+}
+/* Links to sections */
+.legend ul{
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    list-style: none;
+}
+.legend li{
+    margin-left: 1rem;
+    cursor: pointer;
+}
+.legend a{
+
+    color: var(--dropdown_text-color);
+    text-decoration: none;
+}
+.legend a:hover{
+    color: var(--dropdown-hover-color);
+    text-decoration: underline;
 }
 /* body */
 .written-body{
     width: 60%;
-    margin-left: 20%;
-
+    display: flex;
+    flex-direction: column;
+    padding-left: 2.5rem;
+    justify-content: center;
+    height: auto;
 }
+.written-body-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    width: 60%;
+}
+/* darkmode toggle image */
 header img{
     width: 2rem;
     height: 2rem;
-    position: absolute;
     top: 1rem;
-    right: 1rem;
     cursor: pointer;
+    display: inline-block;
+    padding-left: 1rem;
+    padding-right: 1rem; 
+}
+
+body.darkmode{
+    --body-text-color: #dedddd;
+    --body-background-color: rgb(19, 18, 19);
+    --dropdown_background_color: #1a1a1a;
+    --dropdown_hover_color: rgb(187, 187, 187);
+    --footer_background_color: rgb(17, 17, 17);
+}
+body.lightmode{
+    --body-text-color: #232323;
+    --body-background-color: rgb(204, 204, 204);
+    --dropdown_background_color: #ababab;
+    --dropdown_hover_color: rgb(30, 30, 30);
+    --dropdown_text_color: rgb(27, 27, 27);
+    --footer_background_color: rgb(36, 36, 36);
+}
+/* footer */
+footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: fit-content;
+    background-color: var(--footer_background_color);
+    border-top: 4px solid rgb(114, 69, 23);
+    overflow: visible;
+}
+.footer-content{
+    height: 100%;
+    width: 85%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.footer-content p{
+    font-size: 1rem;
+}
+.footer-content h5{
+    font-size: .8rem;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
 }
