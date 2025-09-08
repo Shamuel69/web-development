@@ -7,7 +7,6 @@
     --dropdown_text_color: rgb(221, 221, 221);
     --dropdown_hover_color: rgb(187, 187, 187);
     --footer_background_color: rgb(17, 17, 17);
-
 }
 
 body{
@@ -20,35 +19,60 @@ body{
 }
 header{
     width: 100%;
-    height: 4rem;
+    height: 2.75rem;
     background-image: linear-gradient(to right, rgb(162, 105, 48), rgb(123, 70, 17));
     border-bottom: 4px solid rgb(114, 69, 23);
     overflow: visible;
+    display: flex;
 }
 /* header wrapper */
 .header-content{
-    width: 92%;
+    width: 90%;
     margin: 0 auto;
     display: flex;
     align-items: center;
 }
 /* profile */
-.header-content button{
-    color: var(--header-text-color);
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    display: flex;
+.sign-in{
+    position: relative;
+    display: inline-block;
     margin-left: auto;
-
 }
+
 .profile-button{
     font-size: 20px;
     font-family: "Karla", sans-serif;
+    color: var(--header-text-color);
+    background-color: transparent;
+    border: solid 2px var(--header-text-color);
+    border-radius: 8px;
+    padding-right: .5rem;
+    padding-left: .5rem;
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+    cursor: pointer;
+    
+}
+.sign-in-content{
+    font-size: 14px;
+    font-family: "Karla", sans-serif;
+    width: 10rem;
+    height: 10rem;
+    display: none;
+    position: absolute;
+    background-color: var(--dropdown_background_color);
+    border-radius: 8px;
+    box-shadow: 4px 8px 16px 0px rgba(0, 0, 0, 0.304);
+    z-index: 1;
 }
 .profile-button:hover{
     color: var(--header-hover-color);
     text-decoration: underline;
+}
+.sign-in-content.active{
+    display: block;
+    float: left;
+    right: 0rem;
 }
 /* title */
 .header-content h2{
@@ -123,6 +147,7 @@ header{
 .legend li{
     margin-left: 1rem;
     cursor: pointer;
+    padding-top: .5rem;
 }
 .legend a{
 
@@ -156,11 +181,12 @@ header img{
     height: 2rem;
     top: 1rem;
     cursor: pointer;
-    display: inline-block;
     padding-left: 1rem;
     padding-right: 1rem; 
 }
-
+.darkmode-icon{
+    display: block;
+}
 body.darkmode{
     --body-text-color: #dedddd;
     --body-background-color: rgb(19, 18, 19);

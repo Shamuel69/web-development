@@ -1,4 +1,17 @@
 const img = document.querySelector('.darkmode-icon');
+const profileButton = document.getElementById('profile-button');
+const signInContent = document.getElementById('sign-in-content');
+
+profileButton.addEventListener("click", (event) => {
+    event.stopPropagation();
+    signInContent.classList.toggle('active');
+});
+
+document.addEventListener('click', (event) => {
+    if (!signInContent.contains(event.target)) {
+        signInContent.classList.toggle('active');
+    }
+});
 
 img.addEventListener('click', () => {
     document.body.classList.toggle('lightmode');
