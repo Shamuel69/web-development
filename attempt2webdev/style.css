@@ -51,13 +51,12 @@ header{
     padding-top: .25rem;
     padding-bottom: .25rem;
     cursor: pointer;
-    
 }
 .sign-in-content{
     font-size: 14px;
     font-family: "Karla", sans-serif;
-    width: 10rem;
-    height: 10rem;
+    width: 20rem;
+    height: 20rem;
     display: none;
     position: absolute;
     background-color: var(--dropdown_background_color);
@@ -74,6 +73,53 @@ header{
     float: left;
     right: 0rem;
 }
+/* profile dropdown details */
+
+.sign-in-content a{
+    color: var(--dropdown_text_color);
+    border: none;
+}
+.sign-in-content a:hover{
+    color: var(--dropdown_hover_color);
+}
+.sign-in-content h4{
+    color: var(--dropdown_text_color);
+    text-align: center;
+    font-size: 1.25rem;
+    margin: 0;
+    padding: 0;
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+    border-bottom: 2px solid var(--dropdown_text_color);
+}
+/* textbox in sign in area */
+.sign-in-textbox{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+.sign-in-content p{
+    display: flex;
+    padding-left: 1rem;
+    font-size: 1rem;
+    margin: 0;
+    padding: 0;
+}
+.sign-in-textbox input{
+    width: 15rem;
+    height: 2rem;
+    border-radius: 8px;
+    border: 2px solid var(--dropdown_text_color);
+    background-color: var(--dropdown_background_color);
+    color: var(--dropdown_text_color);
+    padding-left: .5rem;
+}
+
 /* title */
 .header-content h2{
     color: var(--header-text-color);
@@ -105,11 +151,11 @@ header{
 .header-content a:hover{
     color: var(--header-hover-color);
 }
-.header-content a:first-child{
+.header-options a:first-child{
     padding-left: 1rem;
     border-left: 2px solid var(--header-text-color);
 }
-.header-content a:last-child{
+.header-options a:last-child{
     padding-right: 1rem;
     border-right: 2px solid var(--header-text-color);
 }
