@@ -9,7 +9,7 @@ profileButton.addEventListener("click", (event) => {
 
 document.addEventListener('click', (event) => {
     if (!signInContent.contains(event.target)) {
-        signInContent.classList.toggle('active');
+        signInContent.classList.remove('active');
     }
 });
 
