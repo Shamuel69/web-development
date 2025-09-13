@@ -116,6 +116,12 @@ header{
     background-color: hsla(0, 0%, 0%, 0.139);
     color: var(--dropdown_text_color);
     padding-left: .5rem;
+    outline: none;
+    transition: border-color 0.2s ease-in-out;
+}
+
+.sign-in-textbox input:focus{
+    border-color: rgb(136, 100, 15);
 }
 .sign-in-footer {
     border-top: 2px solid var(--dropdown_text_color);
@@ -252,11 +258,11 @@ body.darkmode{
     --footer_background_color: rgb(17, 17, 17);
 }
 body.lightmode{
-    --body-text-color: #232323;
+    --body-text-color: #2e2e2e;
     --body-background-color: rgb(204, 204, 204);
     --dropdown_background_color: #ababab;
     --dropdown_hover_color: rgb(30, 30, 30);
-    --dropdown_text_color: rgb(27, 27, 27);
+    --dropdown_text_color: #2e2e2e;
     --footer_background_color: rgb(36, 36, 36);
 }
 /* footer */
