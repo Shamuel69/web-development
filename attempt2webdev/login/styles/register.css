@@ -12,29 +12,45 @@
     --border_colors: linear-gradient(to right, rgb(162, 105, 48), rgb(123, 70, 17));
 
 }
-.body-wrapper{
+/* assisted by AI due to struggling with z-index */
+.body-wrapper {
+    position: relative;
     display: flex;
-    width: 35%;
-    height: max-content;
-    margin: 0 auto;
-    background-color: var(--footer_background_color);
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
-    position:relative;
-    border-radius: 10px;
-    
+    justify-content: center;
+    height: 80vh;
+    width: 35%;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 4px 8px 16px 0px rgba(0, 0, 0, 0.304);
+    padding: 2px; 
+    background: linear-gradient(to right, #a26930, #7b4611); /* border gradient */
 }
-.body-wrapper::after{
+
+.body-wrapper::before {
     content: "";
-    position:absolute;
-    width: 100%;
-    height: 100%;
-    inset: 10px;
-    background: var(--border_colors);
-    padding: .5rem;
-    z-index: -1;
+    position: absolute;
+    inset: 2px; /* same as padding */
+    border-radius: 6px; /* radius - border thickness */
+    background: var(--body-background-color); /* your inner black background */
+    z-index: 0;
 }
+
+.body-wrapper * {
+    position: relative;
+    z-index: 1; /* content above inner background */
+}
+.from-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+    width: 100%;
+    gap: 1rem;
+}
+
 .textbox{
     width: 65%;
     height: 2rem;
