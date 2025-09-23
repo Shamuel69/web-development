@@ -9,21 +9,31 @@
 <body>
     <div class="body-wrapper">
         <div class="from-wrapper">
-            <h2>Sign up</h2>
+            <h2 class="signup-header">Sign up</h2>
     
-            
-            <h4>Username</h4>
+            <h4 class="header-title">Username</h4>
             <input type="text" placeholder="Username" class="textbox">
-            <h4>Email</h4>
+            <h4 class="header-title">Email</h4>
             <input type="email" placeholder="Email" class="textbox">
-            <h4>Password</h4>
-            <input type="password" placeholder="Password" class="textbox">
-            <h4>Confirm Password</h4>
-            <input type="password" placeholder="Confirm Password" class="textbox">
+            <h4 class="header-title">Password</h4>
+            <input type="password" placeholder="Password" class="textbox" id="Password">
+            <div class="password-container">
+                <label>
+                    <input type="checkbox" id="signup-button" class="show-password-button" name="show-password-checkbox"> Show password
+                </label>
+            </div>
+            <h4 class="header-title">Confirm Password</h4>
+            <input type="password" placeholder="Confirm Password" class="textbox" id="confirm-Password">
+            <div class="password-container">
+                <label>
+                    <input type="checkbox" id="confirm-signup-button" class="show-password-button" name="show-password-checkbox"> Show password
+                </label>
+            </div>
             <button class="signup-button">Sign up</button>
             <h3>Already have an account? <a href="signin.html">Sign in!</a></h3>
 
         </div>
     </div>
 </body>
+<script src="register.js"></script>
 </html>

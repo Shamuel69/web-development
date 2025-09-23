@@ -1,6 +1,9 @@
 const img = document.querySelector('.darkmode-icon');
 const profileButton = document.getElementById('profile-button');
 const signInContent = document.getElementById('sign-in-content');
+const checkboxshow1 = document.getElementById('signup-button');
+const checkboxshow2 = document.getElementById('confirm-signup-button');
+
 
 profileButton.addEventListener("click", (event) => {
     event.stopPropagation();

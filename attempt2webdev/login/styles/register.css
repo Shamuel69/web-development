@@ -10,7 +10,6 @@
     --dropdown_hover_color: rgb(187, 187, 187);
     --footer_background_color: rgb(17, 17, 17);
     --border_colors: linear-gradient(to right, rgb(162, 105, 48), rgb(123, 70, 17));
-
 }
 /* assisted by AI due to struggling with z-index */
 .body-wrapper {
@@ -48,24 +47,46 @@
     justify-content: center;
     height: 80vh;
     width: 100%;
-    gap: 1rem;
 }
 
 .textbox{
     width: 65%;
-    height: 2rem;
+    height: 1.55rem;
+    font-size: 16px;
     font-family: Arial, Helvetica, sans-serif;
-    border-radius: 8px;
-    border: 2px solid var(--dropdown_text_color);
     background-color: hsla(0, 0%, 0%, 0.139);
     color: var(--dropdown_text_color);
-    padding-left: .5rem;
+    padding-left: .75rem;
     outline: none;
+    border-radius: 0px 12px 0px 5px;
+    border: 2px solid var(--dropdown_text_color);
+    border-bottom: 2.5px solid var(--dropdown_hover_color);
+    border-left: 2px solid var(--dropdown_hover_color);
+    border-top: none;
+    border-right: none;
+    padding: 0.5rem;
     transition: border-color 0.2s ease-in-out;
 }
 .textbox:focus{
-    border-color: rgb(136, 100, 15);
+    border-color: rgb(116, 85, 13);
 }
+.password-footer{
+    float: right;
+    display: flex;
+    flex-direction: row;
+}
+.signup-header{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid gray;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    font-family: Arial, Helvetica, sans-serif; 
+}
+
 .signup-button{
     border: 2px solid var(--dropdown_text_color);
     padding: 1rem;
@@ -80,7 +101,34 @@
 }
 
 .signup-button:hover{
-    border-color: rgb(136, 100, 15);
+    border-color: rgb(124, 85, 13);
+}
+.password-container label{
+    font-size: 14.5px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--dropdown_text_color);
+    margin-left: auto;
+}
+.password-container{
+    width: 65%;
+    padding: 0 10px 0 10px;
+    display: flex;
+}
+label .show-password-button{
+    accent-color: var(--dropdown_text_color);
+    cursor: pointer;
+}
+.header-title{
+    font-size: 1.5rem;
+    font-family: Arial, Helvetica, sans-serif;
+    color: var(--dropdown_text_color);
+    display: flex;
+    width: 70%;
+    padding: 15px 0 10px 0;
+}
+.from-wrapper h4{
+    margin: 0.5rem;
+    margin-left: 0;
 }
 body{
     background-color: var(--body-background-color);
