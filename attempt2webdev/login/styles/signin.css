@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+
+:root{
+    --header-text-color: rgb(221, 221, 221);
+    --header-hover-color: rgb(187, 187, 187);
+    --body-text-color: #dedddd;
+    --body-background-color: rgb(19, 18, 19);
+    --dropdown_background_color: #1a1a1a;
+    --dropdown_text_color: rgb(221, 221, 221);
+    --dropdown_hover_color: rgb(187, 187, 187);
+    --footer_background_color: rgb(17, 17, 17);
+    --border_colors: linear-gradient(to right, rgb(162, 105, 48), rgb(123, 70, 17));
+}
+
+.main-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    width: 35%;
+    margin: 0 auto;
+    border-radius: 8px;
+    box-shadow: 4px 8px 16px 0px rgba(0, 0, 0, 0.504);
+    padding: 2px; 
+    background: linear-gradient(to right, #a26930, #7b4611); /* border gradient */
+}
+
+.main-wrapper::before {
+    content: "";
+    position: absolute;
+    inset: 2px; /* same as padding */
+    border-radius: 6px; /* radius - border thickness */
+    background: var(--body-background-color); /* your inner black background */
+    z-index: 0;
+}
+.main-wrapper *{
+    z-index: 1;
+    position: relative;
+}
+.body-wrapper{
+    position:relative;
+    height: 80vh;
+    width: 80%;
+    overflow: hidden;
+    margin: 0 auto;
+    font-size: 14.5px;
+    color: var(--dropdown_text_color);
+}
+.main-wrapper h2{
+    font-size: 2rem;
+    color: var(--header-text-color);
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid gray;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+}
+.body-wrapper h4 {
+    font-size: 1.5rem;
+    color: var(--header-text-color);
+    padding: 1rem 0 0 0;
+    margin: 0;
+    width: 100%;
+}
+.body-wrapper input{
+    width: 95%;
+    height: 2rem;
+    margin: 0 auto;
+    border-radius: 0px 8px 0px 8px;
+    border-top: none;
+    border-right: none;
+    border-left: 2px solid var(--dropdown_text_color);
+    border-bottom: 2px solid var(--dropdown_text_color);
+    background-color: hsla(0, 0%, 0%, 0.139);
+    color: var(--dropdown_text_color);
+    padding-left: 1rem;
+    padding-bottom: .25rem;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s ease-in-out;
+}
+.body-wrapper input:focus{
+    border-color: rgb(136, 100, 15);
+}
+html{
+    background-color: var(--body-background-color);
+    color: var(--body-text-color);
+    font-family: "Source Sans 3", sans-serif;
+    font-optical-sizing: auto;
+}

@@ -1,7 +1,7 @@
 const checkboxshow1 = document.getElementById('signup-button');
 const checkboxshow2 = document.getElementById('confirm-signup-button');
-const passwordInput = document.querySelector('.Password');
-const confirmpasswordInput = document.querySelector('.confirm-Password');
+const passwordInput = document.getElementById('Password');
+const confirmpasswordInput = document.getElementById('confirms-Password');
 
 
 checkboxshow1.onclick = () => {
@@ -11,17 +11,10 @@ checkboxshow1.onclick = () => {
         passwordInput.type = "password";
     }
 }
-checkboxshow1.addEventListener('click', () => {
-    if(checkboxshow1.checked) {
-        passwordInput.type = "text";
-    } else {
-        passwordInput.type = "password";
-    }
-})
 checkboxshow2.onclick = () => {
-    if(checkboxshow1.checked) {
-        confirmPasswordInput.type = "text";
+    if(checkboxshow2.checked) {
+        confirmpasswordInput.type = "text";
     } else {
-        confirmPasswordInput.type = "password";
+        confirmpasswordInput.type = "password";
     }
 }
