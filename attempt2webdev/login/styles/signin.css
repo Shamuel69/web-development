@@ -23,6 +23,7 @@
     box-shadow: 4px 8px 16px 0px rgba(0, 0, 0, 0.504);
     padding: 2px; 
     background: linear-gradient(to right, #a26930, #7b4611); /* border gradient */
+    
 }
 
 .main-wrapper::before {
@@ -34,18 +35,24 @@
     z-index: 0;
 }
 .main-wrapper *{
+
     z-index: 1;
     position: relative;
 }
+
 .body-wrapper{
     position:relative;
     height: 80vh;
-    width: 80%;
+    width: 72%;
     overflow: hidden;
     margin: 0 auto;
     font-size: 14.5px;
     color: var(--dropdown_text_color);
-}
+    gap: 2rem;
+    display: flex;
+    flex-direction: column;
+    }
+
 .main-wrapper h2{
     font-size: 2rem;
     color: var(--header-text-color);
@@ -59,12 +66,13 @@
 .body-wrapper h4 {
     font-size: 1.5rem;
     color: var(--header-text-color);
-    padding: 1rem 0 0 0;
+    padding: 1rem 0 .25rem 0;
+    text-align: left;
     margin: 0;
     width: 100%;
 }
 .body-wrapper input{
-    width: 95%;
+    width: 90%;
     height: 2rem;
     margin: 0 auto;
     border-radius: 0px 8px 0px 8px;
@@ -83,6 +91,38 @@
 .body-wrapper input:focus{
     border-color: rgb(136, 100, 15);
 }
+
+.sign-in-textbox {
+    padding-top: 1rem;
+    display: flex;
+    gap: .5rem;
+    flex-direction: column;
+}
+
+.body-wrapper button {
+    border: 2px solid var(--dropdown_text_color);
+    padding: 1rem;
+    top: 25%;
+    left: 40%;
+    
+    margin: 0 auto;
+    font-size: 1.25rem;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: hsla(0, 0%, 0%, 0.139);
+    color: var(--dropdown_text_color);
+    cursor: pointer;
+    border-radius: 8px;
+    transition: border-color 0.2s ease-in-out, background 0.2s ease-in-out;
+}
+.body-wrapper button:hover{
+    border-color: rgb(124, 85, 13);
+}
+.password-container {
+    display: flex;
+    gap: .5rem;
+    flex-direction: column;
+}
+.sign-in-textbox h4
 html{
     background-color: var(--body-background-color);
     color: var(--body-text-color);
