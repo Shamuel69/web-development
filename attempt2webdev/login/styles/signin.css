@@ -31,7 +31,7 @@
     position: absolute;
     inset: 2px; /* same as padding */
     border-radius: 6px; /* radius - border thickness */
-    background: var(--body-background-color); /* your inner black background */
+    background: rgb(19, 18, 19); /* your inner black background */
     z-index: 0;
 }
 .main-wrapper *{
@@ -46,20 +46,22 @@
     width: 72%;
     overflow: hidden;
     margin: 0 auto;
-    font-size: 14.5px;
+    font-size: 16px;
     color: var(--dropdown_text_color);
     gap: 2rem;
     display: flex;
     flex-direction: column;
-    }
+    border-radius: 8px;
+}
 
 .main-wrapper h2{
     font-size: 2rem;
     color: var(--header-text-color);
     padding-top: 2rem;
-    padding-bottom: 1rem;
+    padding-bottom: 2rem;
     border-bottom: 2px solid gray;
     margin: 0;
+    margin-bottom: 2rem;
     width: 100%;
     text-align: center;
 }
@@ -122,10 +124,12 @@
     gap: .5rem;
     flex-direction: column;
 }
-.sign-in-textbox h4
-html{
+body{
+    margin: 0;
+    padding: 0;
+    padding-top: 2rem;
     background-color: var(--body-background-color);
     color: var(--body-text-color);
-    font-family: "Source Sans 3", sans-serif;
+    font-family: Arial, Helvetica, sans-serif; 
     font-optical-sizing: auto;
 }

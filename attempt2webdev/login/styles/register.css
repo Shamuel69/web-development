@@ -135,6 +135,5 @@ label .show-password-button{
 body{
     background-color: var(--body-background-color);
     color: var(--body-text-color);
-    font-family: "Source Sans 3", sans-serif;
     font-optical-sizing: auto;
 }
