@@ -12,12 +12,20 @@
   transition: filter 300ms;
 }
 .logo:hover {
+  
   filter: drop-shadow(0 0 2em #646cffaa);
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
-
+.big_banner {
+  font-size: 1rem;
+  margin-bottom: 0.5em;
+  border: 2px solid black;
+  padding: 0.5em;
+  display: flex;
+  background-color: #f0f0f0;
+}
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);

@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React, { useState } from 'react'
+import LightMode from './assets/sun_with_clouds.png'
+import DarkMode from './assets/crescent_moon.png'
 import './App.css'
 
 function formatDate(date) {
@@ -11,21 +11,28 @@ function formatDate(date) {
   });
 }
 
+
+
 function App() {
   const [count, setCount] = useState(0)
+  const [darkMode, setDarkMode] = useState(false);
+  const iconSrc = darkMode ? LightMode : DarkMode;
+  const [bgColor, setBgColor] = useState(darkMode ? '#333' : '#fff');
+  const shineColor = bgColor ? '#fff' : '#000';
+  document.body.style.backgroundColor = bgColor;
 
+  React.useEffect(() => {
+    setBgColor(darkMode ? '#333' : '#fff');
+  }, [darkMode]);
   return (
     <>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <img src={iconSrc} className="logo" alt="light/dark toggle" onClick={() => setDarkMode(!darkMode)}/>
       </div>
-      <h1>Vite + React</h1>
-      <h2>{formatDate(new Date())}</h2>
+      <div className="big_banner">
+      <h1>Welcome to my personal website!</h1>
+      </div>
+      <h2>The date if you missed it: {formatDate(new Date())}</h2>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
