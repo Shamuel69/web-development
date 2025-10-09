@@ -26,9 +26,11 @@ function App() {
   }, [darkMode]);
   return (
     <>
-      <div>
+      <div className="header">
+        
+        <h1>Personal Website</h1>
         <img src={iconSrc} className="logo" alt="light/dark toggle" 
-          onClick={() => setDarkMode(!darkMode)} style={{cursor: 'pointer', filter: darkMode ? 'dropshadow(0 0 2em #646cffaa)' : 'dropshadow(0 0 2em #ecfb61aa)'}}/>
+          onClick={() => setDarkMode(!darkMode)} style={{cursor: 'pointer'}}/>
       </div>
       <div className="big_banner">
       <h1>Welcome to my personal website!</h1>
