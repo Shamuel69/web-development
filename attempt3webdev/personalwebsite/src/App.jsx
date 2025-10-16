@@ -26,8 +26,7 @@ function App() {
   }, [darkMode]);
   return (
     <>
-      <div className="header">
-        
+      <div className="header" style={{backgroundColor: darkMode ? '#555' : '#ebff85', color: darkMode ? '#fff' : '#000'}}>
         <h1>Personal Website</h1>
         <img src={iconSrc} className="logo" alt="light/dark toggle" 
           onClick={() => setDarkMode(!darkMode)} style={{cursor: 'pointer'}}/>
