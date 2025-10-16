@@ -17,24 +17,24 @@ function App() {
   const [count, setCount] = useState(0)
   const [darkMode, setDarkMode] = useState(false);
   const iconSrc = darkMode ? LightMode : DarkMode;
-  const [bgColor, setBgColor] = useState(darkMode ? '#333' : '#fff');
   
-  document.body.style.backgroundColor = bgColor;
-
   React.useEffect(() => {
-    setBgColor(darkMode ? '#333' : '#fff');
+    document.body.style.backgroundColor = darkMode ? '#333' : '#fff';
   }, [darkMode]);
   return (
-    <>
-      <div className="header" style={{backgroundColor: darkMode ? '#555' : '#ebff85', color: darkMode ? '#fff' : '#000'}}>
+    <div className="app">
+      <header className={"header ${darkMode ? 'dark' : 'light'}"}>
         <h1>Personal Website</h1>
         <img src={iconSrc} className="logo" alt="light/dark toggle" 
           onClick={() => setDarkMode(!darkMode)} style={{cursor: 'pointer'}}/>
-      </div>
+      </header>
+
       <div className="big_banner">
-      <h1>Welcome to my personal website!</h1>
+        <h1>Welcome to my personal website!</h1>
       </div>
+      
       <h2>The date if you missed it: {formatDate(new Date())}</h2>
+      
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
@@ -46,7 +46,7 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-    </>
+    </div>
   )
 }
 
