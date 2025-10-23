@@ -9,24 +9,24 @@
   min-height: 100vh;
 }
 .header {
-  width: 80vw;
-  max-width: 1100px;
   display: flex;
+  position: sticky;
+  width: 80vw;
+  max-width: 90vw;
   align-items: center;
   justify-content: space-between;
-  margin: 0; /* no gap above header */
+  margin: 0 10rem; 
   padding: 1rem 1.25rem;
   box-sizing: border-box;
-  position: sticky;
-  top: 0;
   z-index: 50;
-  border-bottom: 2px solid rgba(255,255,255,0.06);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.626);
 }
 .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
+
 }
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);

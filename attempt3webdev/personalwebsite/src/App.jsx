@@ -19,7 +19,7 @@ function App() {
   const iconSrc = darkMode ? LightMode : DarkMode;
   
   React.useEffect(() => {
-    document.body.style.backgroundColor = darkMode ? '#333' : '#fff';
+    document.body.style.backgroundColor = darkMode ? '#333' : '#271a26ff';
   }, [darkMode]);
   return (
     <div className="app">
