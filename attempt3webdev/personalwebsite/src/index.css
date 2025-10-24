@@ -23,7 +23,6 @@ a:hover {
 }
 html, body, #root {
   height: 100%;
-  margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
@@ -55,6 +54,12 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+header{
+  width: 80vw;
+  max-width: 80vw;
+  display: flex;
+  justify-content: space-between;
+}
 button:hover {
   border-color: #646cff;
 }
@@ -72,6 +77,6 @@ button:focus-visible {
     color: #747bff;
   }
   button {
-    background-color: #f9f9f9;
+    background-color: #f9f9f93c;
   }
 }
