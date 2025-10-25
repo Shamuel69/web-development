@@ -2,25 +2,22 @@
 .app {
   text-align: center;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
   min-height: 100vh;
 }
 .text-header-container {
-  width: 95vw;
+  position: fixed;
   background-color: rgba(255, 255, 255, 0.05);
-  margin: 0 0 0 auto;
   display: flex;
-  justify-content: flex-end;
-  margin-right: auto;
+  justify-content: space-between;
+  align-items: center;
+  width: 60%;
+  left: 15%;
+  padding-left: 1rem;
+  z-index: 10;
 }
-.header {
-  border-bottom: 2px solid rgba(255, 255, 255, 0.626);
-  
-}
+
 .sidebar {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 15vw;
@@ -48,23 +45,26 @@
   filter: drop-shadow(0 0 2em #80fb61aa);
 }
 .inside-content {
-  flex: 1;
   display: flex;
+  position: fixed;
+  bottom: 0;
+  top:15vh;
+  left: 15vw;
+  padding-left: 1rem;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
   padding: 2rem;
   box-sizing: border-box;
-  width: 100%;
-  max-width: 800px;
+  background: rgba(255, 255, 255, 0.05);
+  overflow-y: auto;
+  z-index: 1;
 }
+
 .big_banner {
   font-size: 1rem;
   margin-bottom: 0.5em;
   border: 2px solid rgb(92, 92, 92);
   border-top: none;
   padding: 0.5em;
-  display: flex;
 }
 @keyframes logo-spin {
   from {

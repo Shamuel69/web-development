@@ -16,6 +16,7 @@ function formatDate(date) {
 function App() {
   const [count, setCount] = useState(0)
   const [darkMode, setDarkMode] = useState(false);
+  
   const iconSrc = darkMode ? LightMode : DarkMode;
   
   const [IsOpen, setIsOpen] = useState(false);
@@ -25,18 +26,16 @@ function App() {
   }, [darkMode]);
   return (
     <div className="app">
-      <div className="text-header-container" style={{position: "absolute", left: 0}}>
-        <header className="header" style={{}}>
+      <div className="text-header-container" style={{borderBottom: '2px solid white'}}>
           <h1>Personal Website</h1>
           <img src={iconSrc} className="logo" alt="light/dark toggle" 
             onClick={() => setDarkMode(!darkMode)} style={{cursor: 'pointer'}}/>
-        </header>
       </div>
       <div className="sidebar">
         <button onClick={() => setIsOpen(!IsOpen)}> close/open </button>
         <h2>Sidebar</h2>
       </div>
-      <div className="inside-content">
+      <div className="inside-content" style={{width: '60%'}}>
         <div className="big_banner">
           <h1>Welcome to my personal website!</h1>
         </div>
