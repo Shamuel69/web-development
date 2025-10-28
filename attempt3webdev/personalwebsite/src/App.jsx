@@ -50,6 +50,33 @@ function App() {
             Edit <code>src/App.jsx</code> and save to test HMR
           </p>
         </div>
+        <div className="to-know-about-me">
+          <h2>Things to know about me:</h2>
+          <div class="scroll-row-of-interests" style={{background: 'rgba(255, 255, 255, 0.1)',}}>
+            <div class="interest-item">
+              <p></p>Programming
+              </div>
+            <div class="interest-item">
+              Gaming
+              <p>During my free time, I really like playing games! 
+                When my friends are free, we usually play <i>Call of Duty: Zombies</i> and <i>Minecraft</i>.
+                On my own time, I usually play <i>Skyrim</i> or <i></i></p>
+              </div>
+            <div class="interest-item">
+              Cooking
+              <p></p>
+            </div>
+            <div class="interest-item">
+              Nature
+              <p></p>
+            </div>
+            <div class="interest-item">
+              Engineering
+              <p></p>
+            </div>
+          </div>
+
+        </div>
         <p className="read-the-docs">
           Click on the Vite and React logos to learn more
         </p>
