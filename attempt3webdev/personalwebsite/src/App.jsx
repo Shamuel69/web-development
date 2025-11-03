@@ -52,26 +52,28 @@ function App() {
         </div>
         <div className="to-know-about-me">
           <h2>Things to know about me:</h2>
-          <div class="scroll-row-of-interests" style={{background: 'rgba(255, 255, 255, 0.1)',}}>
-            <div class="interest-item">
-              <p></p>Programming
+          <div className="scroll-row-of-interests" style={{background: 'rgba(255, 255, 255, 0.1)',}}>
+            <div className="interest-item">
+              <h4>Programming</h4>
+              <p></p>
               </div>
-            <div class="interest-item">
-              Gaming
-              <p>During my free time, I really like playing games! 
+            <div className="interest-item">
+              <h4>Gaming</h4>
+              
+              <p className="interest-item-text">During my free time, I really like playing games! 
                 When my friends are free, we usually play <i>Call of Duty: Zombies</i> and <i>Minecraft</i>.
-                On my own time, I usually play <i>Skyrim</i> or <i></i></p>
+                On my own time, I usually play <i>Skyrim</i> or <i>No Man's Sky</i></p>
               </div>
-            <div class="interest-item">
-              Cooking
+            <div className="interest-item">
+              <h4>Cooking</h4>
               <p></p>
             </div>
-            <div class="interest-item">
-              Nature
+            <div className="interest-item">
+              <h4>Nature</h4>
               <p></p>
             </div>
-            <div class="interest-item">
-              Engineering
+            <div className="interest-item">
+              <h4>Engineering</h4>
               <p></p>
             </div>
           </div>
