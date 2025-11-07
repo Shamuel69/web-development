@@ -32,8 +32,18 @@ function App() {
             onClick={() => setDarkMode(!darkMode)} style={{cursor: 'pointer'}}/>
       </div>
       <div className="sidebar">
+        <p>status: {IsOpen ? 'open' : 'closed'}</p>
         <button onClick={() => setIsOpen(!IsOpen)}> close/open </button>
         <h2>Sidebar</h2>
+        <div className="directory-links" style={{display: IsOpen ? 'block' : 'none'}}>
+          <p>bling bling</p>
+          <ul className="links-list">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About Me</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
       </div>
       <div className="inside-content" style={{width: '60%'}}>
         <div className="big_banner">
@@ -61,8 +71,7 @@ function App() {
               <h4>Gaming</h4>
               
               <p className="interest-item-text">During my free time, I really like playing games! 
-                When my friends are free, we usually play <i>Call of Duty: Zombies</i> and <i>Minecraft</i>.
-                On my own time, I usually play <i>Skyrim</i> or <i>No Man's Sky</i></p>
+                Click on the card and find out all about it.</p>
               </div>
             <div className="interest-item">
               <h4>Cooking</h4>

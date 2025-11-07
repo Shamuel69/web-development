@@ -15,7 +15,47 @@
   padding-left: 1rem;
   z-index: 10;
 }
+.links-list {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
+  margin: 0 auto;
+  width: 90%;
+  padding-left: .4em;
+
+  list-style-type: none;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+.links-list li {
+  padding: 0;
+  margin: 0 auto;
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  width: 102%;
+  margin-left: -5px;
+}
+.links-list li:last-child {
+  border-bottom: none;
+}
+.links-list li a {
+  text-decoration: none;
+  color: white;
+  font-size: 1em;
+  font-weight: 500;
+  padding: .4em;
+  
+  display: block;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
+}
 .sidebar {
   position: fixed;
   top: 0;
@@ -27,6 +67,7 @@
   padding: 1rem;
   box-sizing: border-box;
 }
+
 .sidebar button{
   width: 100%;
   margin-bottom: 1rem;
@@ -90,28 +131,28 @@
   width: 80%;
   display: flex;
   flex-direction: row;
-  height: 25vh;
+  height: 30vh;
   margin: 0 auto;
   gap: 1rem;
-  padding: .5rem 2rem .5rem 2rem;
+  padding: .5rem 1rem .5rem 1rem;
   margin-top: 2rem;
   overflow-x: auto;
-  border-radius: 1rem;
+  border-radius: .5rem;
+  border-right: 5px solid rgb(29, 29, 29);
+  border-left: 5px solid rgb(27, 27, 27);
+
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: #888 #dddddd;
-  scroll-snap-type: proximity;
+  scrollbar-color: #5b5b5b #888888;
+  scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
 }
 .scroll-row-of-interests::-webkit-scrollbar {
-
   scroll-snap-type: proximity;
-  scroll-behavior: smooth;
-  /* scroll-snap-type: x mandatory; */
 
-  height: 8px;
+  height: 12px;
   width: 10%;
 }
 .scroll-row-of-interests::-webkit-scrollbar-track {
@@ -134,12 +175,13 @@
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.163);
   transition: background-color 0.5s, transform 0.5s;
-  height: 85%;
+  height: 95%;
   padding: 0 1rem;
-  max-width: 700px;
-  min-width: 300px;
+  max-width: 500px;
+  min-width: 250px;
 }
 .interest-item h4 {
+  padding-top: 1.75rem;
   font-size: 1.75rem;
   margin: 0 0;
   border-bottom: 2px solid rgba(255, 255, 255, 0.5);
@@ -147,11 +189,16 @@
 }
 .interest-item-text {
   font-size:14px;
-  background-color: rgb(0, 0, 0); 
   word-wrap: break-word;
   white-space: normal;
-  width: 100%;
+  width: 90%;
+  text-align: start;
   
+
+  font-family: "Lexend", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .read-the-docs {
