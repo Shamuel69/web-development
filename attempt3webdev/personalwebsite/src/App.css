@@ -18,7 +18,6 @@
 .links-list {
   display: flex;
   flex-direction: column;
-  gap: .75rem;
   
   position: absolute;
   top: 50%;
@@ -50,28 +49,73 @@
   color: white;
   font-size: 1em;
   font-weight: 500;
-  padding: .4em;
+  padding: .25em;
   
   display: block;
   border-radius: 4px;
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color .7s, color .5s;
+}
+.links-list li a:hover {
+  background-color: rgba(100, 108, 255, 0.2);
+  color: #a1a6ff;
 }
 .sidebar {
+  transform: translateX(-80%); 
+  transition: transform 0.5s ease-out, opacity 0.5s ease-out, border-radius 0.5s ease-out;
+
+  border-right: 3px solid rgba(255, 255, 255, 0.626);
+  border-radius: 0px;
+  width: 20vw;
+  height: 100vh;
+  background-color: #1a1a1a;
+  padding: 1rem;
+  z-index: 2;
   position: fixed;
   top: 0;
   left: 0;
-  width: 15vw;
-  height: 100vh;
-  background-color: #1a1a1a;
-  border-right: 3px solid rgba(255, 255, 255, 0.626);
-  padding: 1rem;
   box-sizing: border-box;
-}
 
+}
+.sidebar.active {
+  transform: translateX(0); 
+  border-radius: 4px;
+}
 .sidebar button{
   width: 100%;
   margin-bottom: 1rem;
 }
+
+.book-icon{
+  position: absolute;
+  right: 0;
+  height: 4em;
+  padding: .5em;
+}
+.book-icon:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+  border: 2px solid #646cffaa;
+}
+.ease-in-out {
+  transform: translateX(-80%); 
+  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+  opacity: 1;
+
+  padding: 20px;
+  width: 15vw;
+  height: 100vh;
+
+  position: absolute;
+  top: 50px;
+  left: 0;
+  
+  box-sizing: border-box;
+  text-align: center;
+}
+.ease-in-out.active {
+  transform: translateX(0); 
+  opacity: 1;
+}
+
 .logo {
   height: 5em;
   padding: 1.5em;
