@@ -70,8 +70,20 @@ function App() {
             Edit <code>src/App.jsx</code> and save to test HMR
           </p>
         </div>
+        {/* do that menu thing here */}
         <div className="to-know-about-me">
           <h2>Things to know about me:</h2>
+          <div className="icon-containers">
+            <div className="subject-box">
+              <h3>Interests</h3>
+            </div>
+            <div className="subject-box">
+              <h3>Skills</h3>
+            </div>
+            <div className="subject-box">
+              <h3>Hobbies</h3>
+            </div>
+          </div>
           <div className="scroll-row-of-interests" style={{background: 'rgba(255, 255, 255, 0.1)',}}>
             <div className="interest-item">
               <h4>Programming</h4>

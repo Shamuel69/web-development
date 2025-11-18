@@ -61,7 +61,7 @@
 }
 .sidebar {
   transform: translateX(-80%); 
-  transition: transform 0.5s ease-out, opacity 0.5s ease-out, border-radius 0.5s ease-out;
+  transition: transform 0.5s ease-out, border-radius 0.5s ease-out;
 
   border-right: 3px solid rgba(255, 255, 255, 0.626);
   border-radius: 0px;
@@ -97,8 +97,8 @@
 }
 .ease-in-out {
   transform: translateX(-80%); 
-  transition: transform 0.5s ease-out, opacity 0.5s ease-out;
-  opacity: 1;
+  transition: transform 0.5s ease-out, opacity 0.3s ease-out;
+  opacity: 0;
 
   padding: 20px;
   width: 15vw;
@@ -171,6 +171,33 @@
   padding: 2em;
 }
 
+.icon-containers {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  margin-top: 2rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  width: 100%;
+}
+.subject-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 8rem;
+  height: 8rem;
+  padding: .5rem;
+  transition: filter 300ms, border 300ms, background-color 300ms;
+  border: 2px solid transparent;
+  border-radius: 8px;
+}
+.subject-box:hover {
+  filter: drop-shadow(0 2em 2em #646cffaa);
+  border: 2px solid #646cffaa;
+  border-radius: 8px;
+  background-color: rgba(100, 108, 255, 0.1);
+}
 .scroll-row-of-interests {
   width: 80%;
   display: flex;
