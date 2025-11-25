@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import {Link} from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 
 import './App.css'
-import './infopages/aboutme.jsx'
+import AboutMe from './infopages/aboutme.jsx'; 
 
 import LightMode from './assets/sun_with_clouds.png'
 import DarkMode from './assets/crescent_moon.png'
@@ -20,8 +20,45 @@ function formatDate(date) {
   });
 }
 
+function bikeProduct() {
+  return (
+    <div>
+      <h1>Bike Product Page</h1>
+      <p>This is the Bike Product page.</p>
+    </div>
+  );
+}
+function Home() {
+  return (
+    <div className="inside-content" style={{width: '60%'}}>
+        <div className="big_banner">
+          <h1>Welcome to my personal website!</h1>
+        </div>
+        
+        <h2>The date if you missed it: {formatDate(new Date())}</h2>
+        
+        {/* do that menu thing here */}
+        <div className="to-know-about-me">
+          <h2>Things to know about me:</h2>
+          <div className="icon-containers">
+            <div className="subject-box">
+              <img src={controller} className="subject-icon" alt="controller icon"/>
+              <h3>Interests</h3>
+            </div>
+            <div className="subject-box">
+              <img src={computer} className="subject-icon" alt="computer icon"/>
+              <h3>Skills</h3>
+            </div>
+            <div className="subject-box">
+              <img src={toolbox} className='subject-icon' alt="toolbox icon"/>
+              <h3>Hobbies</h3>
+            </div>
+          </div>
 
-
+        </div>
+    </div>
+  );
+}
 function App() {
   const [count, setCount] = useState(0)
   const [darkMode, setDarkMode] = useState(false);
@@ -51,10 +88,10 @@ function App() {
           <h1>ghghg</h1>
           <div className="directory-links" >
             <p>bling bling</p>
-            <p><Link to="/infopages/aboutme">About Me</Link></p>
+            {/* <p><Link to="/infopages/aboutme">About Me</Link></p> */}
             <ul className="links-list">
               <li><a href="#home">Home</a></li>
-              <li><a href="/infopages/aboutme">About Me</a></li>
+              {/* <li><a href="/infopages/aboutme">About Me</a></li> */}
               <li><a href="#projects">Projects</a></li>
               <li><a href="#contact">Contact</a></li>
             </ul>
@@ -64,44 +101,31 @@ function App() {
       </div>
       </div>
       <div className="inside-content" style={{width: '60%'}}>
-        <div className="big_banner">
-          <h1>Welcome to my personal website!</h1>
-        </div>
-        
-        <h2>The date if you missed it: {formatDate(new Date())}</h2>
-        
-        <div className="card">
-          <button onClick={() => setCount((count) => count + 1)}>
-            count is {count}
-          </button>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test HMR
-          </p>
-        </div>
-        {/* do that menu thing here */}
-        <div className="to-know-about-me">
-          <h2>Things to know about me:</h2>
-          <div className="icon-containers">
-            <div className="subject-box">
-              <img src={controller} className="subject-icon" alt="controller icon"/>
-              <h3>Interests</h3>
-            </div>
-            <div className="subject-box">
-              <img src={computer} className="subject-icon" alt="computer icon"/>
-              <h3>Skills</h3>
-            </div>
-            <div className="subject-box">
-              <img src={toolbox} className='subject-icon' alt="toolbox icon"/>
-              <h3>Hobbies</h3>
-            </div>
-          </div>
-
-        </div>
+        <BrowserRouter>
+          <nav>
+            <p>bingus<Link to="/aboutme">About Me</Link></p>
+          </nav>
+          <Routes>
+            <Route path="/" element={
+              <div>
+                {/* ---- Your main homepage content here ---- */}
+                <div className="big_banner">
+                  <h1>Welcome to my personal website!</h1>
+                </div>
+                {/* ...rest of index content */}
+              </div>
+            } />
+            <Route path="/bikeproduct" element={<BikeProduct />} />
+            <Route path="/aboutme" element={<AboutMe />} />
+            {/* Add more routes as you make new pages */}
+          </Routes>
+        </BrowserRouter>
+      </div>
         <p className="read-the-docs">
           Click on the Vite and React logos to learn more
         </p>
       </div>
-    </div>
+    
   )
 }
 
