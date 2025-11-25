@@ -1,9 +1,16 @@
 import React, { useState } from 'react'
+import {Link} from 'react-router-dom'
+
+import './App.css'
+import './infopages/aboutme.jsx'
+
 import LightMode from './assets/sun_with_clouds.png'
 import DarkMode from './assets/crescent_moon.png'
 import closedBook from './assets/closed_book.svg'
 import openedBook from './assets/opened_book.svg'
-import './App.css'
+import controller from './assets/game-controller.svg'
+import computer from './assets/computer.svg'
+import toolbox from './assets/tool-box.svg'
 
 function formatDate(date) {
   return date.toLocaleDateString('en-US', {
@@ -31,7 +38,7 @@ function App() {
     <div className="app">
       <div className="text-header-container" style={{borderBottom: '2px solid white'}}>
         <h1>Personal Website</h1>
-        <img src={iconSrc} className="logo" alt="light/dark toggle" 
+        <img src={iconSrc} className={`logo ${darkMode ? "dark" : "light"}`} alt="light/dark toggle" 
           onClick={() => setDarkMode(!darkMode)} style={{cursor: 'pointer'}}/>
       <div className={`sidebar ${IsOpen ? "active" : ""}`}>
         <div className="sidebar-icon-container">
@@ -44,9 +51,10 @@ function App() {
           <h1>ghghg</h1>
           <div className="directory-links" >
             <p>bling bling</p>
+            <p><Link to="/infopages/aboutme">About Me</Link></p>
             <ul className="links-list">
               <li><a href="#home">Home</a></li>
-              <li><a href="#about">About Me</a></li>
+              <li><a href="/infopages/aboutme">About Me</a></li>
               <li><a href="#projects">Projects</a></li>
               <li><a href="#contact">Contact</a></li>
             </ul>
@@ -75,37 +83,16 @@ function App() {
           <h2>Things to know about me:</h2>
           <div className="icon-containers">
             <div className="subject-box">
+              <img src={controller} className="subject-icon" alt="controller icon"/>
               <h3>Interests</h3>
             </div>
             <div className="subject-box">
+              <img src={computer} className="subject-icon" alt="computer icon"/>
               <h3>Skills</h3>
             </div>
             <div className="subject-box">
+              <img src={toolbox} className='subject-icon' alt="toolbox icon"/>
               <h3>Hobbies</h3>
-            </div>
-          </div>
-          <div className="scroll-row-of-interests" style={{background: 'rgba(255, 255, 255, 0.1)',}}>
-            <div className="interest-item">
-              <h4>Programming</h4>
-              <p></p>
-              </div>
-            <div className="interest-item">
-              <h4>Gaming</h4>
-              
-              <p className="interest-item-text">During my free time, I really like playing games! 
-                Click on the card and find out all about it.</p>
-              </div>
-            <div className="interest-item">
-              <h4>Cooking</h4>
-              <p></p>
-            </div>
-            <div className="interest-item">
-              <h4>Nature</h4>
-              <p></p>
-            </div>
-            <div className="interest-item">
-              <h4>Engineering</h4>
-              <p></p>
             </div>
           </div>
 

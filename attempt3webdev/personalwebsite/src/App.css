@@ -25,12 +25,12 @@
   transform: translate(-50%, -50%);
 
   margin: 0 auto;
-  width: 90%;
-  padding-left: .4em;
+  width: 87%;
+  padding-left: .6em;
 
   list-style-type: none;
   text-align: left;
-  background: rgba(255, 255, 255, 0.1);
+  background-color: #1a1a1a;
   border-radius: 8px;
 }
 .links-list li {
@@ -45,7 +45,6 @@
   border-bottom: none;
 }
 .links-list li a {
-  text-decoration: none;
   color: white;
   font-size: 1em;
   font-weight: 500;
@@ -53,7 +52,7 @@
   
   display: block;
   border-radius: 4px;
-  transition: background-color .7s, color .5s;
+  transition: background-color .6s, color .4s;
 }
 .links-list li a:hover {
   background-color: rgba(100, 108, 255, 0.2);
@@ -63,7 +62,7 @@
   transform: translateX(-80%); 
   transition: transform 0.5s ease-out, border-radius 0.5s ease-out;
 
-  border-right: 3px solid rgba(255, 255, 255, 0.626);
+  border-right: 3px solid rgb(255, 255, 255);
   border-radius: 0px;
   width: 20vw;
   height: 100vh;
@@ -90,6 +89,8 @@
   right: 0;
   height: 4em;
   padding: .5em;
+  border: 2px solid transparent;
+
 }
 .book-icon:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
@@ -105,11 +106,12 @@
   height: 100vh;
 
   position: absolute;
-  top: 50px;
+  top: 0;
   left: 0;
   
   box-sizing: border-box;
   text-align: center;
+  background-color: rgb(34, 34, 34);
 }
 .ease-in-out.active {
   transform: translateX(0); 
@@ -120,15 +122,16 @@
   height: 5em;
   padding: 1.5em;
   will-change: filter;
-  transition: filter 300ms;
+  transition: filter .6s ease-in-out;
 
 }
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #80fb61aa);
+.logo.dark:hover {
+  filter: drop-shadow(0 0 2em #ff61eaaa);
 }
+
 .inside-content {
   display: flex;
   position: fixed;
@@ -173,12 +176,11 @@
 
 .icon-containers {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 3rem;
   margin-top: 2rem;
-  background-color: rgba(255, 255, 255, 0.05);
-  width: 100%;
+  width: 80%;
+  margin: 0 auto;
 }
 .subject-box {
   display: flex;
@@ -186,22 +188,28 @@
   align-items: center;
   justify-content: center;
   width: 8rem;
-  height: 8rem;
+  height: 9rem;
   padding: .5rem;
   transition: filter 300ms, border 300ms, background-color 300ms;
-  border: 2px solid transparent;
+  border: 2px solid rgba(255, 255, 255, 0.75);
   border-radius: 8px;
 }
 .subject-box:hover {
-  filter: drop-shadow(0 2em 2em #646cffaa);
-  border: 2px solid #646cffaa;
+  filter: drop-shadow(0 2em 2em #282828aa);
+  border: 2px solid rgba(54, 55, 65, 0.667);
   border-radius: 8px;
-  background-color: rgba(100, 108, 255, 0.1);
+  background-color: rgb(255, 255, 255);
 }
+
+.subject-icon {
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
 .scroll-row-of-interests {
   width: 80%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   height: 30vh;
   margin: 0 auto;
   gap: 1rem;
