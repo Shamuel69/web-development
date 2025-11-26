@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 
 import './App.css'
 import AboutMe from './infopages/aboutme.jsx'; 
@@ -20,7 +20,7 @@ function formatDate(date) {
   });
 }
 
-function bikeProduct() {
+function BikeProduct() {
   return (
     <div>
       <h1>Bike Product Page</h1>
@@ -60,7 +60,6 @@ function Home() {
   );
 }
 function App() {
-  const [count, setCount] = useState(0)
   const [darkMode, setDarkMode] = useState(false);
 
   const iconSrc = darkMode ? LightMode : DarkMode;
@@ -89,41 +88,24 @@ function App() {
           <div className="directory-links" >
             <p>bling bling</p>
             {/* <p><Link to="/infopages/aboutme">About Me</Link></p> */}
-            <ul className="links-list">
-              <li><a href="#home">Home</a></li>
-              {/* <li><a href="/infopages/aboutme">About Me</a></li> */}
-              <li><a href="#projects">Projects</a></li>
-              <li><a href="#contact">Contact</a></li>
-            </ul>
+            <nav className="nav-links">
+              <p><Link to="/">Home</Link></p>
+              <p><Link to="/aboutme">About Me</Link></p>
+              <p><Link to="/projects">Projects</Link></p>
+              <p><Link to="/contact">Contact</Link></p>
+            </nav>
           </div>
         </div>
         
       </div>
       </div>
-      <div className="inside-content" style={{width: '60%'}}>
-        <BrowserRouter>
-          <nav>
-            <p>bingus<Link to="/aboutme">About Me</Link></p>
-          </nav>
           <Routes>
-            <Route path="/" element={
-              <div>
-                {/* ---- Your main homepage content here ---- */}
-                <div className="big_banner">
-                  <h1>Welcome to my personal website!</h1>
-                </div>
-                {/* ...rest of index content */}
-              </div>
-            } />
+            <Route path="/" element={<Home />} />
             <Route path="/bikeproduct" element={<BikeProduct />} />
             <Route path="/aboutme" element={<AboutMe />} />
             {/* Add more routes as you make new pages */}
           </Routes>
-        </BrowserRouter>
-      </div>
-        <p className="read-the-docs">
-          Click on the Vite and React logos to learn more
-        </p>
+        
       </div>
     
   )
