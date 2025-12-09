@@ -11,6 +11,7 @@ import openedBook from './assets/opened_book.svg'
 import controller from './assets/game-controller.svg'
 import computer from './assets/computer.svg'
 import toolbox from './assets/tool-box.svg'
+import lalacat from './assets/lalacat.jpg'
 
 function formatDate(date) {
   return date.toLocaleDateString('en-US', {
@@ -30,11 +31,18 @@ function BikeProduct() {
 }
 function Home() {
   return (
-    <div className="inside-content" style={{width: '60%'}}>
+    <div className="inside-content">
         <div className="big_banner">
           <h1>Welcome to my personal website!</h1>
         </div>
-        
+        <div className="intro-text">
+          <img src={lalacat} className="lalacat-image" alt="cute cat with a flower crown"/>
+          <div className="spacer-horizontal">
+            <h2 className="intro-title">Hi! I'm Sam</h2>
+            <h3 className="intro-description">A budding software developer, a tech enthusiast, and the guy you want making your next website.
+               This website you get to learn what I'm all about and my developing skills in web design along with projects I've worked on.</h3>
+          </div>
+        </div>
         <h2>The date if you missed it: {formatDate(new Date())}</h2>
         
         {/* do that menu thing here */}
@@ -68,26 +76,26 @@ function App() {
   const bookiconSrc = IsOpen ? openedBook : closedBook;
   
   React.useEffect(() => {
-    document.body.style.backgroundColor = darkMode ? '#333' : '#271a26ff';
+    document.body.classList.toggle('lightMode', darkMode);
   }, [darkMode]);
   return (
     <div className="app">
-      <div className="text-header-container" style={{borderBottom: '2px solid white'}}>
-        <h1>Personal Website</h1>
-        <img src={iconSrc} className={`logo ${darkMode ? "dark" : "light"}`} alt="light/dark toggle" 
-          onClick={() => setDarkMode(!darkMode)} style={{cursor: 'pointer'}}/>
-      <div className={`sidebar ${IsOpen ? "active" : ""}`}>
+      <div className={`text-header-container ${darkMode ? "dark" : "light"}`} style={{borderBottom: '2px solid white'}}>
+        <div className="text-header">
+          <h1>Personal Website</h1>
+          <img src={iconSrc} className={`logo ${darkMode ? "dark" : "light"}`} alt="light/dark toggle" 
+            onClick={() => setDarkMode(!darkMode)} style={{cursor: 'pointer'}}/>
+        </div>  
+      <div className={`sidebar ${darkMode ? "light" : ""} ${IsOpen ? "active" : ""}`}>
         <div className="sidebar-icon-container">
           <img src={bookiconSrc} className="book-icon" alt="toggle open and close sidebar"
             onClick={() => setIsOpen(!IsOpen)} style={{cursor: 'pointer'}}/>
         </div>
-        <div className={`ease-in-out ${IsOpen ? "active" : ""}`}>
+        <div className={`ease-in-out ${darkMode ? "light" : ""} ${IsOpen ? "active" : ""}`}>
           <p>status: {IsOpen ? 'active' : 'closed'}</p>
           <h2>Sidebar</h2>
           <h1>ghghg</h1>
           <div className="directory-links" >
-            <p>bling bling</p>
-            {/* <p><Link to="/infopages/aboutme">About Me</Link></p> */}
             <nav className="nav-links">
               <p><Link to="/">Home</Link></p>
               <p><Link to="/aboutme">About Me</Link></p>
@@ -97,16 +105,16 @@ function App() {
           </div>
         </div>
         
+        </div>
       </div>
+      <div className="content">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/bikeproduct" element={<BikeProduct />} />
+          <Route path="/aboutme" element={<AboutMe />} />
+        </Routes>
       </div>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/bikeproduct" element={<BikeProduct />} />
-            <Route path="/aboutme" element={<AboutMe />} />
-            {/* Add more routes as you make new pages */}
-          </Routes>
-        
-      </div>
+    </div>
     
   )
 }
