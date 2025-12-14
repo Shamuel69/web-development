@@ -35,15 +35,17 @@ function Home() {
         <div className="big_banner">
           <h1>Welcome to my personal website!</h1>
         </div>
+        
         <div className="intro-text">
           <img src={lalacat} className="lalacat-image" alt="cute cat with a flower crown"/>
+
           <div className="spacer-horizontal">
             <h2 className="intro-title">Hi! I'm Sam</h2>
             <h3 className="intro-description">A budding software developer, a tech enthusiast, and the guy you want making your next website.
                This website you get to learn what I'm all about and my developing skills in web design along with projects I've worked on.</h3>
           </div>
         </div>
-        <h2>The date if you missed it: {formatDate(new Date())}</h2>
+        <h2>The date because im not good with it: {formatDate(new Date())}</h2>
         
         {/* do that menu thing here */}
         <div className="to-know-about-me">
@@ -62,7 +64,6 @@ function Home() {
               <h3>Hobbies</h3>
             </div>
           </div>
-
         </div>
     </div>
   );
