@@ -1,0 +1,35 @@
+#root {
+  max-width: 1280px;
+}
+.App-header {
+  width: 80vw;
+  font-size: 22px;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #444;
+}
+.App-profile {
+  width: fit-content;
+  display: flex;
+  gap: .5em;
+  align-items: center;
+  
+}
+
+.App-profile img {
+  flex-shrink: 1;
+  min-width: 40px;
+  min-height: 40px;
+  width: 2em;
+
+  height: auto;
+}

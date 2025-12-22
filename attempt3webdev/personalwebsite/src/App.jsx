@@ -35,6 +35,7 @@ function Home() {
         <div className="big_banner">
           <h1>Welcome to my personal website!</h1>
         </div>
+        <h2>The date because im not good with it: {formatDate(new Date())}</h2>
         
         <div className="intro-text">
           <img src={lalacat} className="lalacat-image" alt="cute cat with a flower crown"/>
@@ -45,24 +46,26 @@ function Home() {
                This website you get to learn what I'm all about and my developing skills in web design along with projects I've worked on.</h3>
           </div>
         </div>
-        <h2>The date because im not good with it: {formatDate(new Date())}</h2>
         
         {/* do that menu thing here */}
         <div className="to-know-about-me">
-          <h2>Things to know about me:</h2>
-          <div className="icon-containers">
-            <div className="subject-box">
-              <img src={controller} className="subject-icon" alt="controller icon"/>
-              <h3>Interests</h3>
+          <div className="to-know-about-me-title">
+            <h2 className="to-know-about-me-header">To know more about me:</h2>
+            <div className="icon-containers">
+              <div className="subject-box">
+                <img src={controller} className="subject-icon" alt="controller icon"/>
+                <h3>Interests</h3>
+              </div>
+              <div className="subject-box">
+                <img src={computer} className="subject-icon" alt="computer icon"/>
+                <h3>Skills</h3>
+              </div>
+              <div className="subject-box">
+                <img src={toolbox} className='subject-icon' alt="toolbox icon"/>
+                <h3>Hobbies</h3>
+              </div>
             </div>
-            <div className="subject-box">
-              <img src={computer} className="subject-icon" alt="computer icon"/>
-              <h3>Skills</h3>
-            </div>
-            <div className="subject-box">
-              <img src={toolbox} className='subject-icon' alt="toolbox icon"/>
-              <h3>Hobbies</h3>
-            </div>
+
           </div>
         </div>
     </div>

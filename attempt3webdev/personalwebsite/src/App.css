@@ -10,7 +10,7 @@
 
   --text-color: #cecece;
   --text-color-secondary: #888888;
-  --text-color-dark: #1c1c1c;
+  --text-color-dark: #303030;
   --accent-color: #646cff;
   --accent-color-dark: #ff61ea;
 
@@ -264,6 +264,15 @@ body.lightMode{
 .card {
   padding: 2em;
 }
+.to-know-about-me-title {
+  position: absolute;
+  background-color: var(--secondary-color);
+  height: 100vh;
+  width: 100vw;
+  left: 50%;
+  top: 100%;
+  transform: translateX(-50%);
+}
 
 .icon-containers {
   display: flex;
@@ -272,11 +281,9 @@ body.lightMode{
   margin-top: 2rem;
   width: 80%;
   margin: 0 auto;
-  position: absolute;
-  left: 50%;
-  top: 100%;
-  transform: translateX(-50%);
+  
 }
+
 .subject-box {
   display: flex;
   flex-direction: column;
