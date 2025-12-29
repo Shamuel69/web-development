@@ -1,8 +1,17 @@
 #root {
   max-width: 1280px;
+  padding: 0 0;
+}
+.App {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 .App-header {
-  width: 80vw;
+  width: 70vw;
   font-size: 22px;
 
   position: absolute;
@@ -17,19 +26,84 @@
   align-items: center;
   border-bottom: 2px solid #444;
 }
-.App-profile {
+
+.App-title-container {
+  display: flex;
+  gap: 1em;
+  cursor: pointer;
   width: fit-content;
   display: flex;
-  gap: .5em;
-  align-items: center;
-  
+  gap: 1em;
 }
+.App-title-container img{
+  flex-shrink: 1;
+  min-width: 20px;
+  min-height: 20px;
+  width: 1.5em;
+  height: auto;
+}
+.search-bar{
+  display: flex;
+  align-items: center;
+}
+.search-bar img {
+  width: 1.5em;
+  height: auto;
+}
+.App-profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5em;
+  border: 2px solid transparent;
+  border-radius: 10px;
 
+  width: fit-content;
+  height: 20%;
+  
+  transition: opacity .3s ease-in-out, background-color .3s ease-in-out, border .3s ease-in-out;  
+}
+.App-profile:hover {
+  opacity: 0.7;
+  background-color: #444;
+  border: 2px solid #444;
+}
+.search-bar-header {
+  width: 0vw;
+  height: 3em;
+  opacity: 0;
+  margin: 0 auto;
+  
+  background-color: #44444427;
+  padding-left: 5px;
+  margin-left: 7px;
+  outline: none;
+  border-radius: 0 10px 0 0;
+  border-left: 2px solid #444;
+  border-bottom: 2px solid #444;
+  border-right: transparent;
+  border-top: transparent;
+
+  transition: width .5s ease-in-out, opacity .5s ease-in-out;
+  font-size: 16px;
+}
+.search-bar-header.show{
+  width: 20vw;
+  opacity: 1;
+}
 .App-profile img {
   flex-shrink: 1;
-  min-width: 40px;
-  min-height: 40px;
-  width: 2em;
-
+  min-width: 20px;
+  min-height: 20px;
+  width: 1.5em;
   height: auto;
+  cursor: pointer;
+}
+.App-menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  
+  gap: 2em;
 }
