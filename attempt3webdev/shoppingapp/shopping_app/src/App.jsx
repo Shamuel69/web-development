@@ -5,6 +5,10 @@ import shoppingCart from './assets/shopping-cart.svg'
 import { Routes, Route, Link } from 'react-router-dom';
 import './App.css'
 
+import Home from './subpages/home.jsx'
+import BestDeals from './subpages/bestdeals.jsx'
+import Contact from './subpages/infopages/contact.jsx'
+
 function App() {
   const [isshown, setIsShown] = useState(false);
 
@@ -19,11 +23,7 @@ function App() {
               <input className={`search-bar-header ${isshown ? 'show' : ''}`} type="text" placeholder="Search..."/>
             </div>
           </div>
-          {/* <div className="App-title-container">
-            <Link to="/"><h2>Home</h2></Link>
-            <Link to="/about"><h2>About</h2></Link>
-            <Link to="/contact"><h2>Contact</h2></Link>
-          </div> */}
+          
           <div className="App-title-container">
             <div className="App-profile">
               <img src={profile} alt="Profile" />
@@ -33,12 +33,19 @@ function App() {
           </div>
         </div>
         <div className="App-menu">
-        
+          
           <Link to="/">Jewels</Link>
           <Link to="/about">About</Link>
           <Link to="/contact">Contact</Link>
         
         </div>
+      <div className="display-area">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<BestDeals />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </div>
       </div>
     </>
   )
