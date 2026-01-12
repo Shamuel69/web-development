@@ -2,17 +2,37 @@
   max-width: 1280px;
   padding: 0 0;
 }
+:root {
+  --header-height: 15vh;   
+  --sidebar-width: 15vw; 
 
+  --background-color: #222222;
+  --secondary-color: #151515;
+  --background-color-light: #dcd4c7;
+
+  --sidebar-color-light: #cbc1b0;
+
+  --text-color: #cecece;
+  --text-color-secondary: #888888;
+  --text-color-dark: #303030;
+  --accent-color: #797979;
+
+  --border-color-light: rgb(92, 92, 92);
+  --border-color: rgb(207, 207, 207);
+}
 .items-of-homepage {
+    display: flex;
+    flex-direction: column;
+    
+    background-color: var(--secondary-color);
+}
+.items-of-homepage-container {
     display: flex;
     gap: 2em;
     justify-content: center;
 
-    margin-top: 2em;
-    margin-bottom: 2em;
-
-    background-color: rgb(12, 12, 12);
-    padding: 2em;
+    margin-bottom: 1em;
+    
     width: 100vw;
     max-width: 100vw;
     max-height: 360px;
@@ -20,6 +40,15 @@
     overflow-y: hidden;
     scroll-behavior: smooth;
 }
+.header-text {
+    color: var(--text-color);
+    font-size: 1.5em;
+    font-weight: 600;
+    width: 80%;
+    margin: 0 auto;
+    padding: 1em 0;
+}
+
 .items-of-homepage::-webkit-scrollbar {
     height: 8px;
 }
@@ -31,17 +60,142 @@
     min-width: 300px;
     min-height: 300px;
     
-    background-color: #1a1a1a;
-    border-radius: 12px;
+    background-color: var(--background-color);
+    border-radius: 0 3px 2px 0;
     box-sizing: border-box;
     flex-shrink: 1;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1em;
+    flex-direction: row;
+    z-index: 1;
+    position: relative;
+    cursor: pointer;
 }
 .item-details {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+.item-info {
+    color: var(--text-color);
+    font-size: 1.2em;
+    font-weight: 600;
+    padding: 10px;
+}
+.item-info p {
+    font-size: 1rem;
+}
+.body-text{
+    font-size: 1em;
+    color: var(--text-color);
+    margin-top: 0.5em;
+    width: 65%;
+    margin: 0 auto;
+}
+.body-text p{
+    font-size: 1em;
+    font-weight: 400;
+    margin-top: 0.5em;
+}
+.item-info button{
+    margin-top: 40%;
+    padding: 0.5em 1em;
+    background-color: var(--accent-color);
+    border: none;
+    font-size: .7em;
+    border-radius: 3px;
+    color: white;
+    cursor: pointer;
+}
+.item-info button:hover{
+    background-color: #595959;
+}
+.item-card img {
+    max-width: 300px;
+    max-height: 300px;
+    object-fit: cover;
+}
+.item-card-vertical {
+    min-width: 150px;
+    min-height: 250px;
+    width: 280px;
+    height: 300px;   
+
+    background-color: var(--background-color);
+    flex-shrink: 1;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+    
+
+    position: relative;
+    cursor: pointer;
+}
+.deal-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    gap: 1.5em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+
+}
+
+.item-info-vertical {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 0 auto;
+}
+.original-price {
+    text-decoration: line-through;
+    color: var(--text-color-secondary);
+}
+.item-info-vertical p {
+    font-size: 1.1rem;
+    margin-top: 0em;
+    margin-bottom: 0.35em;
+}
+.item-info-vertical h3 {
+    font-size: 1.45rem;
+    margin-top: 0em;
+    margin-bottom: 0.5em;
+}
+.item-info-vertical button{
+    margin-top: 1em;
+    padding: 0.5em 1em;
+    background-color: var(--accent-color);
+    border: none;
+    font-size: .75em;
+    border-radius: 3px;
+    color: white;
+    cursor: pointer;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    justify-content: center;
+    width: 40%;
+}
+.item-info-vertical button:hover{
+    background-color: #595959;
+}
+.deals-routes{
+    margin-bottom: 1.5em;
+}
+.deals-link {
+    display: flex;
+    background-color: transparent;
+    border: 1px solid var(--border-color-light);
+    font-size: 1.1em;
+    padding: 0.5em 1.5em;
+    width: fit-content;
+    transition: background-color 0.2s ease-in-out;
+    cursor: pointer;
+    margin: 0 auto;
+}
+.deals-link:hover {
+    background-color: var(--secondary-color);
+}
+.deals-display-area {
+    margin-bottom: 2em;
+    border-bottom: 1px solid var(--border-color-light);
 }

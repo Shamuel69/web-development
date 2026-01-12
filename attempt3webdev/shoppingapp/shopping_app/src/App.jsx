@@ -19,7 +19,7 @@ function App() {
           <div className="App-title-container">
             <h2>Shopping App</h2>
             <div className="search-bar" style={{cursor: 'pointer'}}>
-              <img src={Search} alt="Search" onClick={() => setIsShown(!isshown)} />
+              <img src={Search} alt="Search" />
               <input className={`search-bar-header ${isshown ? 'show' : ''}`} type="text" placeholder="Search..."/>
             </div>
           </div>
