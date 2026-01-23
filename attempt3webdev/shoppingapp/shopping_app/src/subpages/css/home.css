@@ -199,3 +199,59 @@
     margin-bottom: 2em;
     border-bottom: 1px solid var(--border-color-light);
 }
+.specific-content-container {
+    margin-top: 2em;
+    border-bottom: 1px solid var(--border-color-light);
+}
+.specific-content-container-content {
+    display: flex;
+    flex-direction: row;
+
+    max-width: 1200px;
+    margin: 0 auto 2em;
+    justify-content: space-between;
+}
+.spacer-horizontal-inverted {
+    display: flex;
+    flex-direction: column;
+    margin-left: 2em;
+    justify-content: space-between;
+}
+.normal-container-description {
+    width: 90%;
+    margin: 0 auto;
+    font-size: 1.1em;
+    color: var(--text-color);
+}
+.browse-link{
+    margin-top: auto;
+    background-color: transparent;
+    border: 1px solid var(--border-color-light);
+    font-size: 1.1em;
+    padding: 0.5em 1em;
+    width: fit-content;
+    transition: background-color 0.2s ease-in-out;
+    cursor: pointer;
+}
+.browse-link:hover{
+    background-color: var(--secondary-color);
+}
+.spacer-horizontal {
+    display: flex;
+    flex-direction: column;
+}
+.browse-link-inverted{
+    margin-top: auto;
+    background-color: transparent;
+    border: 1px solid var(--border-color-light);
+    font-size: 1.1em;
+    padding: 0.5em 1em;
+    width: fit-content;
+    transition: background-color 0.2s ease-in-out;
+    cursor: pointer;
+    align-self: flex-end;
+    margin-right: 1em;
+}
+.browse-link-inverted:hover{
+    background-color: var(--secondary-color);
+}

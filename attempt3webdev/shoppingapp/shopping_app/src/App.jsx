@@ -9,6 +9,14 @@ import Home from './subpages/home.jsx'
 import BestDeals from './subpages/bestdeals.jsx'
 import Contact from './subpages/infopages/contact.jsx'
 
+function BottomCredits() {
+  return (
+    <div className="bottom-credits">
+      <p>© 2026 Shopping App. All rights reserved.</p>
+    </div>
+  );
+}
+
 function App() {
   const [isshown, setIsShown] = useState(false);
 
@@ -17,9 +25,9 @@ function App() {
       <div className="App">
         <div className="App-header">
           <div className="App-title-container">
-            <h2>Shopping App</h2>
+            <h2><Link to="/" className="App-title">Shopping App</Link></h2>
             <div className="search-bar" style={{cursor: 'pointer'}}>
-              <img src={Search} alt="Search" />
+              <img src={Search} alt="Search" onClick={() => setIsShown(!isshown)}/>
               <input className={`search-bar-header ${isshown ? 'show' : ''}`} type="text" placeholder="Search..."/>
             </div>
           </div>
@@ -46,6 +54,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </div>
+      <div><BottomCredits /></div>
       </div>
     </>
   )
