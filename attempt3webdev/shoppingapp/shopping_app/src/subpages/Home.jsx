@@ -3,54 +3,67 @@ import { Routes, Route, Link } from 'react-router-dom';
 import './css/home.css';
 import ring from '../assets/randoring.jpg';
 import necklace from '../assets/necklacemodel.jpg';
+import BestDeals from './bestdeals.jsx'
+import Inventory from "./inventory.jsx";
+
+const deals = [
+    {
+        id: 1,
+        name: "Ring Name",
+        originalPrice: 199.99,
+        discountedPrice: 99.99,
+        image: ring
+    },
+    {
+        id: 2,
+        name: "Ring Name",
+        originalPrice: 199.99,
+        discountedPrice: 99.99,
+        image: ring
+    },
+    {
+        id: 3,
+        name: "Ring Name",
+        originalPrice: 199.99,
+        discountedPrice: 99.99,
+        image: ring
+    },
+    {
+        id: 4,
+        name: "Ring Name",
+        originalPrice: 199.99,
+        discountedPrice: 99.99,
+        image: ring
+    },
+]
+
+
 
 function showItemDetails() {
     return(
         <div className="deals-display-area">
             <div className="deal-container">
-                <div className="item-card-vertical">
-                    <img src={ring} alt="Random Ring"/>
-                    <div className="item-info-vertical">
-                        <h3>Ring Name</h3>
-                        <p className="original-price">Original Price: <i>$199.99</i></p>
-                        <p>Price: <i>$99.99</i></p>
-                        <button>Add to Cart</button>
+                {deals.map((deal) => (
+                    <div className="item-card-vertical" key={deal.id}>
+                        <img src={deal.image} alt="Random Ring"/>
+                        <div className="item-info-vertical">
+                            <h3>{deal.name}</h3>
+                            <p className="original-price">Original Price: <i>${deal.originalPrice}</i></p>
+                            <p>Price: <i>${deal.discountedPrice}</i></p>
+                            <button>Add to Cart</button>
+                        </div>
                     </div>
-                </div><div className="item-card-vertical">
-                    <img src={ring} alt="Random Ring"/>
-                    <div className="item-info-vertical">
-                        <h3>Ring Name</h3>
-                        <p className="original-price">Original Price: <i>$199.99</i></p>
-                        <p>Price: <i>$99.99</i></p>
-                        <button>Add to Cart</button>
-                    </div>
-                </div><div className="item-card-vertical">
-                    <img src={ring} alt="Random Ring"/>
-                    <div className="item-info-vertical">
-                        <h3>Ring Name</h3>
-                        <p className="original-price">Original Price: <i>$199.99</i></p>
-                        <p>Price: <i>$99.99</i></p>
-                        <button>Add to Cart</button>
-                    </div>
-                </div>
-                <div className="item-card-vertical">
-                    <img src={ring} alt="Random Ring"/>
-                    <div className="item-info-vertical">
-                        <h3>Ring Name</h3>
-                        <p className="original-price">Original Price: <i>$199.99</i></p>
-                        <p>Price: <i>$99.99</i></p>
-                        <button>Add to Cart</button>
-                    </div>
-                </div>
+                ))}
+                
             </div>
-            
             <div className="deals-routes">
-                <Link className="deals-link" to="/bestdeals">Best Deals</Link>
+                <Link className="deals-link" to="/bestdeals" element={<BestDeals />}>Best Deals</Link>
+                
             </div>
         </div>
     );
 }
-function wedding() {
+function Wedding() {
     return (
         <div>
 
@@ -63,7 +76,8 @@ function wedding() {
                                 including engagement rings, wedding bands, 
                                 and bridal accessories that symbolize your eternal love.</p>
                         </div>
-                        <Link to="/inventory" className="browse-link">Browse our collection--</Link>
+                        <Link to="/inventory" className="browse-link-inverted" >Browse our collection--</Link>
+
                     </div>
                     <img src={necklace} alt="necklace model *def copyright"/>
                 </div>
@@ -77,7 +91,7 @@ function wedding() {
                             <p className="normal-container-description">Explore our stunning collection of necklaces, 
                                 including pendant necklaces, chokers, and statement pieces that add elegance to any outfit.</p>
                         </div>
-                        <Link to="/inventory" className="browse-link-inverted">Browse our collection--</Link>
+                        <Link to="/inventory" className="browse-link-inverted" >Browse our collection--</Link>
                     </div>
                 </div>
             </div>
@@ -104,7 +118,7 @@ function wedding() {
                             <p className="normal-container-description">Explore our stunning collection of necklaces, 
                                 including pendant necklaces, chokers, and statement pieces that add elegance to any outfit.</p>
                         </div>
-                        <Link to="/inventory" className="browse-link-inverted">Browse our collection--</Link>
+                        <Link to="/inventory" className="browse-link-inverted" >Browse our collection--</Link>
                     </div>
                 </div>
             </div>
@@ -112,7 +126,7 @@ function wedding() {
     );
 }
 function Home() {
-    const [IsOpen, setIsOpen] = useState(false);
+    const [IsOpen, setisOpen] = useState(false);
 
     return (
         <div>
@@ -129,7 +143,7 @@ function Home() {
                 <h3 className="header-text">Top Sellers:</h3>
                 <div className="items-of-homepage-container">
                     <div className="item-card">
-                        <img src={ring} alt="Random Ring" onClick={() => setIsOpen(!IsOpen)}/>
+                        <img src={ring} alt="Random Ring" onClick={() => setisOpen(!IsOpen)}/>
                         <div className={`item-info ${IsOpen ? 'expanded' : ''}`}>
                             <h3>Ring Name</h3>
                             <p>Ring Description</p>
@@ -138,7 +152,7 @@ function Home() {
                         </div>
                     </div>
                     <div className="item-card">
-                        <img src={ring} alt="Random Ring" onClick={() => setIsOpen(!IsOpen)}/>
+                        <img src={ring} alt="Random Ring" onClick={() => setisOpen(!IsOpen)}/>
                         <div className={`item-info ${IsOpen ? 'expanded' : ''}`}>
                             <h3>Ring Name</h3>
                             <p>Ring Description</p>
@@ -147,7 +161,7 @@ function Home() {
                         </div>
                     </div>
                     <div className="item-card">
-                        <img src={ring} alt="Random Ring" onClick={() => setIsOpen(!IsOpen)}/>
+                        <img src={ring} alt="Random Ring" onClick={() => setisOpen(!IsOpen)}/>
                         <div className={`item-info ${IsOpen ? 'expanded' : ''}`}>
                             <h3>Ring Name</h3>
                             <p>Ring Description</p>
@@ -162,11 +176,11 @@ function Home() {
                 <p>Check out our limited-time offers and exclusive 
                     discounts on selected items. 
                     Don't miss out on these incredible deals!</p>
-                <div className="deals-container (blank)">
+                <div className="deals-container blank">
                     {showItemDetails()}
                 </div>
                 <div className="specific-container">
-                    {wedding()}
+                    {Wedding()}
                 </div>
                 <div className="inverted-specific-container">
                     {/* {jewelry()} */}
@@ -176,4 +190,6 @@ function Home() {
         </div>
     );
 }
+// End of Home component
+// This is just a simple homepage concept for a marketplace website.
 export default Home;

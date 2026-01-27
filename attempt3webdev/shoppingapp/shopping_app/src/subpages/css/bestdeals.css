@@ -1,0 +1,23 @@
+#root {
+  max-width: 1280px;
+  padding: 0 0;
+}
+
+:root {
+  --header-height: 15vh;   
+  --sidebar-width: 15vw; 
+
+  --background-color: #222222;
+  --secondary-color: #151515;
+  --background-color-light: #dcd4c7;
+
+  --sidebar-color-light: #cbc1b0;
+
+  --text-color: #cecece;
+  --text-color-secondary: #888888;
+  --text-color-dark: #303030;
+  --accent-color: #797979;
+
+  --border-color-light: rgb(92, 92, 92);
+  --border-color: rgb(207, 207, 207);
+}

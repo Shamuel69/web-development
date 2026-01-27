@@ -7,6 +7,7 @@ import './App.css'
 
 import Home from './subpages/home.jsx'
 import BestDeals from './subpages/bestdeals.jsx'
+import Inventory from './subpages/inventory.jsx'
 import Contact from './subpages/infopages/contact.jsx'
 
 function BottomCredits() {
@@ -43,14 +44,15 @@ function App() {
         <div className="App-menu">
           
           <Link to="/">Jewels</Link>
-          <Link to="/about">About</Link>
+          <Link to="/bestdeals">Best Deals</Link>
           <Link to="/contact">Contact</Link>
         
         </div>
       <div className="display-area">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/about" element={<BestDeals />} />
+          <Route path="/bestdeals" element={<BestDeals />} />
+          <Route path="/inventory" element={<Inventory />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </div>
