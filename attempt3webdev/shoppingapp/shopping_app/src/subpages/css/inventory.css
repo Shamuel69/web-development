@@ -1,0 +1,69 @@
+#root {
+  max-width: 1280px;
+  padding: 0 0;
+}
+
+:root {
+  --header-height: 15vh;   
+  --sidebar-width: 15vw; 
+
+  --background-color: #222222;
+  --secondary-color: #151515;
+  --background-color-light: #dcd4c7;
+
+  --sidebar-color-light: #cbc1b0;
+
+  --text-color: #cecece;
+  --text-color-secondary: #888888;
+  --text-color-dark: #303030;
+  --accent-color: #797979;
+
+  --border-color-light: rgb(92, 92, 92);
+  --border-color: rgb(207, 207, 207);
+}
+.sb-inventory-container {
+    display: flex;
+
+    background-color: var(--secondary-color);
+    border: 1px solid var(--border-color-light);
+    border-top: none;
+    border-right: none;
+    width: 25%;
+}
+.sb-inventory-input {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    background-color: transparent;
+    color: var(--text-color);
+    font-size: 14px;
+}
+.sb-inventory-button {
+    padding: 8px 12px;
+    border: none;
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    cursor: pointer;
+}
+.inventory-filter{
+    width: 260px;
+    padding: 2px 16px;
+    background-color: var(--secondary-color);
+    border-right: 2px solid var(--border-color-light);
+    border-bottom: 2px solid var(--border-color-light);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 8px;
+    
+}
+.inventory-filter-options{
+    display: flex;
+    flex-direction: column;
+}
+.inventory-filter-categories{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+}

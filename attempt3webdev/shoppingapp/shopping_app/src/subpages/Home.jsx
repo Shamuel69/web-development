@@ -54,11 +54,9 @@ function showItemDetails() {
                         </div>
                     </div>
                 ))}
-                
             </div>
             <div className="deals-routes">
                 <Link className="deals-link" to="/bestdeals" element={<BestDeals />}>Best Deals</Link>
-                
             </div>
         </div>
     );
@@ -66,7 +64,6 @@ function showItemDetails() {
 function Wedding() {
     return (
         <div>
-
             <div className="specific-content-container">
                 <div className="specific-content-container-content">
                     <div className="spacer-horizontal">
