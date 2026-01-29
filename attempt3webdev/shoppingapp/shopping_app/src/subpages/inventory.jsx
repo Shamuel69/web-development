@@ -6,6 +6,28 @@ import necklace from '../assets/necklacemodel.jpg';
 import BestDeals, { Topsales } from './bestdeals.jsx'
 import arrowdown from '../assets/arrow-down.svg';
 
+const categories = [
+    {id:1, name: 'Rings', label: 'Rings' },
+    {id:2, name: 'Necklaces', label: 'Necklaces' },
+    {id:3, name: 'Earrings', label: 'Earrings' },
+    {id:4, name: 'Bracelets', label: 'Bracelets' },
+]
+
+const materials = [
+    {id:1, name: 'Gold', label: 'Gold' },
+    {id:2, name: 'Silver', label: 'Silver' },
+    {id:3, name: 'Platinum', label: 'Platinum' },
+]
+const decorations = [
+    {id:1, name: 'Diamond', label: 'Diamond' },
+    {id:2, name: 'Ruby', label: 'Ruby' },
+    {id:3, name: 'Sapphire', label: 'Sapphire' },
+]
+const [materialItems, setMaterialItems] = useState({});
+const [decorationItems, setDecorationItems] = useState({});
+
+const [checkedItems, setCheckedItems] = useState({});
+
 
 function Inventory() {
     return (
@@ -32,11 +54,21 @@ function Inventory() {
                     </div>
                     <div className="inventory-filter-types">
                         <div className="inventory-filter-options">
-                            <input type="checkbox" name="type" text="gold"/> Gold
-                            <input type="checkbox" name="type" text="silver"/> Silver
-                            <input type="checkbox" name="type" text="platinum"/> Platinum
+                            {materials.map((material) => (
+                                <div className="inventory-filter-category" key={material.id}>
+                                    <input type="checkbox" name={material.name} text={material.label} checked/> {material.label}
+                                </div>
+                            ))}
                         </div>
-
+                    </div>
+                    <div className="inventory-filter-types">
+                        <div className="inventory-filter-options">
+                            {decorations.map((decoration) => (
+                                <div className="inventory-filter-category" key={decoration.id}>
+                                    <input type="checkbox" name={decoration.name} text={decoration.label}/> {decoration.label}
+                                </div>
+                            ))}
+                        </div>
                     </div>
                     <div className="inventory-filter-categories">
                         <button className="inventory-filter-option" style={{backgroundColor: 'transparent'}}>Rings</button>
