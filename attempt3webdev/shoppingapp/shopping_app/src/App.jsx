@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import profile from './assets/profile-icon.svg'
 import Search from './assets/search-icon.svg'
 import shoppingCart from './assets/shopping-cart.svg'
 import { Routes, Route, Link } from 'react-router-dom';
 import './App.css'
 
-import Home from './subpages/home.jsx'
+// import Home from './subpages/Home.jsx'
 import BestDeals from './subpages/bestdeals.jsx'
 import Inventory from './subpages/inventory.jsx'
 import Contact from './subpages/infopages/contact.jsx'
@@ -48,15 +48,16 @@ function App() {
           <Link to="/contact">Contact</Link>
         
         </div>
-      <div className="display-area">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/bestdeals" element={<BestDeals />} />
-          <Route path="/inventory" element={<Inventory />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-      </div>
-      <div><BottomCredits /></div>
+      
+        <div className="display-area">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/bestdeals" element={<BestDeals />} />
+            <Route path="/inventory" element={<Inventory />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </div>
+        <BottomCredits />
       </div>
     </>
   )

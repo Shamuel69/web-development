@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
 import { Routes, Route, Link } from 'react-router-dom';
 import './css/inventory.css';
 import ring from '../assets/randoring.jpg';
-import necklace from '../assets/necklacemodel.jpg';
+// import necklace from '../assets/necklacemodel.jpg';
 import BestDeals, { Topsales } from './bestdeals.jsx'
 import arrowdown from '../assets/arrow-down.svg';
 
-const categories = [
-    {id:1, name: 'Rings', label: 'Rings' },
-    {id:2, name: 'Necklaces', label: 'Necklaces' },
-    {id:3, name: 'Earrings', label: 'Earrings' },
-    {id:4, name: 'Bracelets', label: 'Bracelets' },
-]
+// const categories = [
+//     {id:1, name: 'Rings', label: 'Rings' },
+//     {id:2, name: 'Necklaces', label: 'Necklaces' },
+//     {id:3, name: 'Earrings', label: 'Earrings' },
+//     {id:4, name: 'Bracelets', label: 'Bracelets' },
+// ]
 
 const materials = [
     {id:1, name: 'Gold', label: 'Gold' },
@@ -23,10 +23,10 @@ const decorations = [
     {id:2, name: 'Ruby', label: 'Ruby' },
     {id:3, name: 'Sapphire', label: 'Sapphire' },
 ]
-const [materialItems, setMaterialItems] = useState({});
-const [decorationItems, setDecorationItems] = useState({});
+// const [materialItems, setMaterialItems] = useState({});
+// const [decorationItems, setDecorationItems] = useState({});
 
-const [checkedItems, setCheckedItems] = useState({});
+// const [checkedItems, setCheckedItems] = useState({});
 
 
 function Inventory() {
