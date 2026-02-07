@@ -3,8 +3,8 @@ import { Routes, Route, Link } from 'react-router-dom';
 import './css/home.css';
 import ring from '../assets/randoring.jpg';
 import necklace from '../assets/necklacemodel.jpg';
-import BestDeals from './bestdeals.jsx'
-import Inventory from "./inventory.jsx";
+import BestDeals from './BestDeals.jsx'
+import Inventory from "./Inventory.jsx";
 
 const deals = [
     {

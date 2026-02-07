@@ -5,10 +5,10 @@ import shoppingCart from './assets/shopping-cart.svg'
 import { Routes, Route, Link } from 'react-router-dom';
 import './App.css'
 
-// import Home from './subpages/Home.jsx'
-import BestDeals from './subpages/bestdeals.jsx'
-import Inventory from './subpages/inventory.jsx'
-import Contact from './subpages/infopages/contact.jsx'
+import Home from './subpages/Home.jsx'
+import BestDeals from './subpages/BestDeals.jsx'
+import Inventory from './subpages/Inventory.jsx'
+import Contact from './subpages/infopages/Contact.jsx'
 
 function BottomCredits() {
   return (

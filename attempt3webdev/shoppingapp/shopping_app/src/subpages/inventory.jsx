@@ -3,7 +3,7 @@ import { Routes, Route, Link } from 'react-router-dom';
 import './css/inventory.css';
 import ring from '../assets/randoring.jpg';
 // import necklace from '../assets/necklacemodel.jpg';
-import BestDeals, { Topsales } from './bestdeals.jsx'
+import BestDeals, { Topsales } from './BestDeals.jsx'
 import arrowdown from '../assets/arrow-down.svg';
 
 // const categories = [
