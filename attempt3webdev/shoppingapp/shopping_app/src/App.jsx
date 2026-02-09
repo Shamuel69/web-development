@@ -46,9 +46,7 @@ function App() {
           <Link to="/">Jewels</Link>
           <Link to="/bestdeals">Best Deals</Link>
           <Link to="/contact">Contact</Link>
-        
         </div>
-      
         <div className="display-area">
           <Routes>
             <Route path="/" element={<Home />} />
