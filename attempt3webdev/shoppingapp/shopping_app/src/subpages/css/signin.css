@@ -1,0 +1,120 @@
+#root {
+  max-width: 1280px;
+  padding: 0 0;
+}
+
+:root {
+  --header-height: 15vh;   
+  --sidebar-width: 15vw; 
+
+  --background-color: #222222;
+  --secondary-color: #151515;
+  --background-color-light: #dcd4c7;
+  --linear-gradient: linear-gradient(to bottom, #222222, #151515);
+
+  --sidebar-color-light: #cbc1b0;
+
+  --text-color: #cecece;
+  --text-color-secondary: #888888;
+  --text-color-dark: #303030;
+  --accent-color: #797979;
+
+  --border-color-light: rgb(92, 92, 92);
+  --border-color: rgb(207, 207, 207);
+}
+.signin-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: var(--linear-gradient);
+
+}
+
+.signin-inner-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px;
+    background-color: var(--secondary-color);
+    border: 1px solid var(--border-color-light);
+    border-radius: 8px;
+}
+.signin-container h2 {
+    color: var(--text-color);
+    font-size: 26px;
+    font-weight: 600;
+    text-align: center;
+}
+.signin-form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    min-width: 180px;
+    width: 500px;
+}
+.signin-form label {
+    color: var(--text-color);
+    font-size: 16px;
+    font-weight: 500;
+}
+.email-container, .password-container {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin: 0 auto;
+    gap: 8px;
+}
+.email-container input, .password-container input{
+    margin: 0 auto;
+    width: 90%;
+    height: 24px;
+    font-size: 16px;
+    outline: none;
+    padding: 4px;
+    
+    border-radius: 0 4px 0 4px;
+    background-color: rgba(18, 18, 18, 0.136);
+    color: var(--text-color);
+    border: 1.5px solid var(--border-color);
+    border-top: none;
+    border-right: none;
+    transition: border-color 0.2s ease-in;
+}
+.email-container input:focus, .password-container input:focus{
+
+    border-color: var(--accent-color);
+    border-top: none;
+    border-right: none;
+}
+.email-container input::placeholder, .password-container input::placeholder{
+    color: var(--text-color-secondary);
+    font-size: 16px;
+    text-decoration: italic;
+}
+.signin-form img {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+}
+.signin-form button {
+    width: 30%;
+    margin: 0 auto;
+    padding: 8px;
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.options-container {
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    margin: 0 auto;
+    margin-bottom: 0px;
+
+}
