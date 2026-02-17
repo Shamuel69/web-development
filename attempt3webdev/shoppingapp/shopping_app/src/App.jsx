@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { Routes, Route, Link, useLocation } from 'react-router-dom';
+import { AuthContext } from './context/AuthContext';
+
 import profile from './assets/profile-icon.svg'
 import Search from './assets/search-icon.svg'
 import shoppingCart from './assets/shopping-cart.svg'
-import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import './App.css'
 
 import Home from './subpages/Home.jsx'
@@ -26,9 +28,14 @@ function BottomCredits() {
 function App() {
   const [isshown, setIsShown] = useState(false);
   const location = useLocation();
+  const { user, logout } = useContext(AuthContext);
 
   const hidetopbar = location.pathname === '/signin' || location.pathname === '/contact' || location.pathname === '/signup' || location.pathname === '/forgotpassword';
   
+  const handleLogout = () => {
+    logout();
+  }
+
   return (
     <>
       <div className="App">
@@ -71,7 +78,7 @@ function App() {
             <Route path="/forgotpassword" element={<Forgotpassword />} />
           </Routes>
         </div>
-        {!hidetopbar && (<BottomCredits />)}
+        {!hidetopbar && <BottomCredits />}
       </div>
     </>
   )
