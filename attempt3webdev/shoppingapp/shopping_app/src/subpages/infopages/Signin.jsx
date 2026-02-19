@@ -50,26 +50,26 @@ function Signin() {
 
                 {error && <p className="error-message">{error}</p>}
                 
-                <form className="signin-form">
+                <form className="signin-form" onSubmit={handleSubmit}>
                     <div className="email-container">
                         <div className="text-container">
                             <img src={mail} alt="Email Icon" className="input-icon" />
                             <label htmlFor="email">Email:</label>
                         </div>
-                        <input type="email" id="email" name="email" placeholder="example@gmail.com" required />
+                        <input type="email" id="email" name="email" placeholder="example@gmail.com" required onChange={(e) => setEmail(e.target.value)} />
                     </div>
                     <div className="password-container">
                         <div className="text-container">
                             <img src={lock} alt="Password Icon" className="input-icon" />
                             <label htmlFor="password">Password:</label>
                         </div>
-                        <input type="password" id="password" name="password" placeholder="Password@123" required />
+                        <input type="password" id="password" name="password" placeholder="Password@123" required onChange={(e) => setPassword(e.target.value)} />
                     </div>
                     <div className="options-container">
                         <p className="forgot-password">Forgot Password? <Link to="/forgotpassword">Click here!</Link></p>
                         <p className="forgot-password">Don't have an account? <Link to="/signup">Sign Up!</Link></p>
                     </div>
-                    <button type="submit">Sign In</button>
+                    <button type="submit" disabled={loading}>{loading ? 'Signing In...' : 'Sign In'}</button>
                 </form>
             </div>
         </div>
