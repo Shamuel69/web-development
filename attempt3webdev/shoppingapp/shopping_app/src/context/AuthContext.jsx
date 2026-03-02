@@ -10,6 +10,11 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        const savedUser = localStorage.getItem('user');
+        if (savedUser) {
+            setUser(JSON.parse(savedUser));
+        }
+        setLoading(false);
     }, []);
     const login = (userData) => {
         setUser(userData);

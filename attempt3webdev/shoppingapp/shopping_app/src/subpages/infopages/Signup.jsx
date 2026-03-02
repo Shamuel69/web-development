@@ -11,14 +11,23 @@ function Signup() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [name, setName] = useState('');
     const { login } = useContext(AuthContext);
+    
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setError('');
-        if (!email || !password || !confirmPassword) {
+        if (!name || !email || !password || !confirmPassword) {
             setError('Please fill in all fields.');
+            return;
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        let isValid = emailRegex.test(email);
+
+        if (!isValid) {
+            setError('Please enter a valid email address.');
             return;
         }
         if (password.length < 6) {
@@ -29,11 +38,20 @@ function Signup() {
             setError('Passwords do not match.');
             return;
         }
+        if (name.length > 20) {
+            setError('Name must be less than 20 characters.');
+            return;
+        }
+        if (password.toLowerCase() === 'password' || password.toLowerCase() === '123456' || password.toLowerCase() === '12345678') {
+            setError('Please choose a stronger password.');
+            return;
+        }
+
         setLoading(true);
         setTimeout(() => {
             const userData = {
                 email: email,
-                name: email.split('@')[0],
+                name: name,
                 loginTime: new Date().toISOString()
             };
             login(userData);
@@ -54,6 +72,14 @@ function Signup() {
                 {error && <p className="error-message">{error}</p>}
 
                 <form className="signin-form" onSubmit={handleSubmit}>
+                    <div className="name-container">
+                        <div className="text-container">
+                            <img src={mail} alt="Name Icon" className="input-icon" />
+                            <label htmlFor="username">Username:</label>
+                        </div>
+                        <input type="text" id="username" name="username" placeholder="JohnDoe123" value={name} required onChange={(e) => setName(e.target.value)} />
+                    </div>
+                   
                     <div className="email-container">
                         <div className="text-container">
                             <img src={mail} alt="Email Icon" className="input-icon" />

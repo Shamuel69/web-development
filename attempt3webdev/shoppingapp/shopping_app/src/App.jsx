@@ -53,7 +53,19 @@ function App() {
               <div className="App-title-container">
                 <div className="App-profile">
                   <img src={profile} alt="Profile" />
-                  <h4><Link to="/signin">Sign In</Link></h4>
+                  {user ? (
+                    <div className="profile-dropdown">
+                      <p>Welcome, {user.name}!</p>
+                      <button onClick={handleLogout}>Logout</button>
+                    </div>
+                  ) : (
+                    <div className="profile-dropdown">
+                      <p>Guest</p>
+                      <button><Link to="/signin">Sign In</Link></button>
+                      <button><Link to="/signup">Sign Up</Link></button>
+                    </div>
+                  )}
+                  {/* <h4><Link to="/signin">Sign In</Link></h4> */}
                 </div>
                 <img className="App-cart" src={shoppingCart} alt="Cart" />
               </div>

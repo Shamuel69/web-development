@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect} from "react";
 import { Routes, Route, Link } from 'react-router-dom';
 
 import BestDeals, { Topsales } from './BestDeals.jsx'
@@ -7,7 +7,7 @@ import './css/inventory.css';
 import ring from '../assets/randoring.jpg';
 import necklace from '../assets/necklacemodel.jpg';
 import arrowdown from '../assets/arrow-down.svg';
-
+import cart from '../assets/shopping-cart.svg';
 // const categories = [
 //     {id:1, name: 'Rings', label: 'Rings' },
 //     {id:2, name: 'Necklaces', label: 'Necklaces' },
