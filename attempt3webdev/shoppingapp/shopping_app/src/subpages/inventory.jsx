@@ -1,32 +1,17 @@
 import React, { useState, useContext, useEffect} from "react";
-import { Routes, Route, Link } from 'react-router-dom';
 
 import BestDeals, { Topsales } from './BestDeals.jsx'
+import { CartContext } from '../context/CartContext.jsx';
 import './css/inventory.css';
 
 import ring from '../assets/randoring.jpg';
 import necklace from '../assets/necklacemodel.jpg';
+import earrings from '../assets/earring.jpg';
+import bracelets from '../assets/bracelet.jpg';
 import arrowdown from '../assets/arrow-down.svg';
 import cart from '../assets/shopping-cart.svg';
-// const categories = [
-//     {id:1, name: 'Rings', label: 'Rings' },
-//     {id:2, name: 'Necklaces', label: 'Necklaces' },
-//     {id:3, name: 'Earrings', label: 'Earrings' },
-//     {id:4, name: 'Bracelets', label: 'Bracelets' },
-// ]
-const inventory = [
-    {id:1, name: 'Ring', label: 'Ring', image: ring, description: 'A stunning ring with a brilliant cut diamond.', price: 250, tags: ['Gold', 'Diamond'] },
-    {id:2, name: 'Necklace', label: 'Necklace', image: necklace, description: 'A beautiful necklace with a pendant design.', price: 100, tags: ['Silver', 'Ruby'] },
-    {id:3, name: 'Earrings', label: 'Earrings', image: ring, description: 'A pair of elegant earrings with a timeless design.', price: 70, tags: ['Gold', 'Pearl'] },
-    {id:4, name: 'Bracelets', label: 'Bracelets', image: necklace, description: 'A stylish bracelet made with high-quality materials.', price: 80, tags: ['Silver', 'Sapphire'] },
-    {id:5, name: 'Necklace2', label: 'Necklace', image: necklace, description: 'A beautiful necklace with a pendant design.', price: 100, tags: ['Platinum', 'Diamond'] },
-    {id:6, name: 'Earrings2', label: 'Earrings', image: ring, description: 'A pair of elegant earrings with a classic design.', price: 70, tags: ['Gold', 'Emerald'] },
-    {id:7, name: 'Bracelets2', label: 'Bracelets', image: necklace, description: 'A trendy bracelet with a modern design.', price: 90, tags: ['Silver', 'Ruby'] },
-    {id:8, name: 'Bracelets3', label: 'Bracelets', image: necklace, description: 'A stylish bracelet made with premium materials.', price: 80, tags: ['Gold', 'Sapphire'] },
-    {id:9, name: 'Necklace3', label: 'Necklace', image: necklace, description: 'An elegant necklace made with high-quality materials.', price: 150, tags: ['Platinum', 'Emerald'] },
-    {id:10, name: 'Ring4', label: 'Ring', image: ring, description: 'A stunning ring with a brilliant cut diamond.', price: 250, tags: ['Gold', 'Diamond'] },
-    {id:11, name: 'Necklace4', label: 'Necklace', image: necklace, description: 'A beautiful necklace with intricate designs.', price: 120, tags: ['Silver', 'Ruby'] },
-]
+
+
 const materials = [
     {id:1, name: 'Gold', label: 'Gold' },
     {id:2, name: 'Silver', label: 'Silver' },
@@ -39,13 +24,49 @@ const decorations = [
     {id:4, name: 'Emerald', label: 'Emerald' },
     {id:5, name: 'Pearl', label: 'Pearl' },
 ]
-// const [materialItems, setMaterialItems] = useState({});
-// const [decorationItems, setDecorationItems] = useState({});
 
 
 
 function Inventory() {
     const [checkedItems, setCheckedItems] = useState({});
+    // const { addToCart } = useContext(CartContext);
+    const [inventory, setInventory] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [filteredInventory, setFilteredInventory] = useState([]);
+
+    useEffect(() => {
+        const fetchInventory = async() => {
+            try {
+                setLoading(true);
+                setError(null);
+                
+                const response = await fetch("http://localhost:8080/inventory");
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                console.log("Received inventory:", data.inventory);
+                setInventory(data.inventory);
+            } catch (err) {
+                console.error("Error fetching inventory:", err);
+                setError("Failed to load inventory. error: " + err.message);
+            } finally {
+                console.log("Fetch inventory attempt completed.");
+                setLoading(false);
+            };
+        };
+        
+        fetchInventory();
+    }, []);
+
+    const itemLabels = {
+        'Ring': ring,
+        'Necklace': necklace,
+        'Earrings': earrings,
+        'Bracelets': bracelets
+    }
 
     const handleCheckboxChange = (event) => {
         const { name, checked } = event.target;
@@ -53,12 +74,43 @@ function Inventory() {
             ...prevState,
             [name]: checked,
         }));
+        const crimpedInventory = Array.isArray(inventory) ? inventory.filter((item) => {
+            const materialMatch = !Object.keys(checkedItems).some((key) => checkedItems[key] && materials.some((material) => material.name === key));
+            const decorationMatch = !Object.keys(checkedItems).some((key) => checkedItems[key] && decorations.some((decoration) => decoration.name === key));
+            return materialMatch && decorationMatch;
+        }) : [];
+        console.log("Current crimped inventory state:", filteredInventory);
+        setFilteredInventory(crimpedInventory);
     };
-    const filteredInventory = inventory.filter((item) => {
-        const materialMatch = Object.keys(checkedItems).filter((key) => checkedItems[key] && materials.some((material) => material.name === key)).length === 0 || item.tags.some((tag) => checkedItems[tag] && materials.some((material) => material.name === tag));
-        const decorationMatch = Object.keys(checkedItems).filter((key) => checkedItems[key] && decorations.some((decoration) => decoration.name === key)).length === 0 || item.tags.some((tag) => checkedItems[tag] && decorations.some((decoration) => decoration.name === tag));
-        return materialMatch && decorationMatch;
-    });
+
+
+    // const handleAddToCart = (item) => {
+    //     addToCart(item);
+    //     alert(`${item.name} added to cart!`)
+    // };
+    // const filteredInventory = Array.isArray(inventory) ? inventory.filter((item) => {
+    //     const materialMatch = !Object.keys(checkedItems).some((key) => checkedItems[key] && materials.some((material) => material.name === key));
+    //     const decorationMatch = !Object.keys(checkedItems).some((key) => checkedItems[key] && decorations.some((decoration) => decoration.name === key));
+    //     return materialMatch && decorationMatch;
+    // }) : [];
+
+
+    console.log("Current inventory state:", inventory);
+    console.log("Current filtered inventory state:", filteredInventory);
+
+
+    if (loading) {
+        return <div style={{ color: '#cecece', textAlign: 'center', padding: '2em' }}>Loading inventory...</div>;
+    }
+
+    if (error) {
+        return <div style={{ color: '#ff6b6b', textAlign: 'center', padding: '2em' }}>❌ {error}</div>;
+    }
+
+    if (!Array.isArray(inventory) || inventory.length === 0) {
+        return <div style={{ color: '#cecece', textAlign: 'center', padding: '2em' }}>No items found</div>;
+    }
+
     return (
         <div>
             <h1>Marketplace</h1>
@@ -89,7 +141,7 @@ function Inventory() {
                         <div className="inventory-filter-options">
                             {materials.map((material) => (
                                 <div className="inventory-filter-category" key={material.id}>
-                                    <input type="checkbox" name={material.name} text={material.label} onChange={handleCheckboxChange}/> {material.label}
+                                    <input type="checkbox" name={material.name} onChange={handleCheckboxChange} checked={checkedItems[material.name] || false}/> {material.label}
                                 </div>
                             ))}
                         </div>
@@ -98,7 +150,7 @@ function Inventory() {
                         <div className="inventory-filter-options">
                             {decorations.map((decoration) => (
                                 <div className="inventory-filter-category" key={decoration.id}>
-                                    <input type="checkbox" name={decoration.name} text={decoration.label} onChange={handleCheckboxChange}/> {decoration.label}
+                                    <input type="checkbox" name={decoration.name} onChange={handleCheckboxChange} checked={checkedItems[decoration.name] || false}/> {decoration.label}
                                 </div>
                             ))}
                         </div>
@@ -114,6 +166,18 @@ function Inventory() {
                     <div className="inventory-container">
                         {filteredInventory.map((item) => (
                             <div className="item-card" key={item.id}>
+                                <img src={itemLabels[item.label]} alt={item.name}/>
+                                <div className="item-info">
+                                    <h3>{item.name}</h3>
+                                    <p>{item.description || "No description."}</p>
+                                    <p>Price: <i>${item.price}</i></p>
+                                    {/* <button onClick={() => handleAddToCart(item)}>Add to Cart</button> */}
+                                </div>
+                            </div>
+                        ))}
+
+                        {/* {filteredInventory.map((item) => (
+                            <div className="item-card" key={item.id}>
                                 <img src={item.image} alt={item.name}/>
                                 <div className="item-info">
                                     <h3>{item.name}</h3>
@@ -122,7 +186,7 @@ function Inventory() {
                                     <button>Add to Cart</button>
                                 </div>
                             </div>
-                        ))}
+                        ))} */}
                     </div>
                 </div>
             </div>

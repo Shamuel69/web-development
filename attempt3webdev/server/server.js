@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+
+const PORT = 8080;
+
 const corsOptions = {
     origin: ["http://localhost:5173"]
 };
@@ -22,7 +25,7 @@ const inventory = [{id:1, name: 'Ring', label: 'Ring', description: 'A stunning 
         {id:12, name: 'Ring5', label: 'Ring', description: 'A stunning ring with a brilliant cut diamond.', price: 250, tags: ['Gold', 'Diamond'] },]
 
 app.get("/inventory", (req, res) =>{
-    res.json({inventory: inventory});
+    res.json({inventory});
 });
 
 app.get("/inventory/:id", (req, res) => {
@@ -34,6 +37,6 @@ app.get("/inventory/:id", (req, res) => {
     }
 });
 
-app.listen(8080, () => {
-    console.log("Server is running on port 8080");
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 });
