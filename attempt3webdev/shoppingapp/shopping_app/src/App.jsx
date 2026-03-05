@@ -24,7 +24,7 @@ function BottomCredits() {
     </div>
   );
 }
-
+// go to 90 percent when you open the page that should be the layout
 function App() {
   const [isshown, setIsShown] = useState(false);
   const location = useLocation();

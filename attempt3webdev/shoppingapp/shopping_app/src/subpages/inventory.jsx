@@ -31,9 +31,9 @@ function Inventory() {
     const [checkedItems, setCheckedItems] = useState({});
     // const { addToCart } = useContext(CartContext);
     const [inventory, setInventory] = useState([]);
+    const [iteration, setIteration] = useState(0);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [filteredInventory, setFilteredInventory] = useState([]);
 
     useEffect(() => {
         const fetchInventory = async() => {
@@ -74,26 +74,25 @@ function Inventory() {
             ...prevState,
             [name]: checked,
         }));
-        const crimpedInventory = Array.isArray(inventory) ? inventory.filter((item) => {
+        
+        
+    };
+
+    const filteredInventory = inventory ? inventory.filter((item) => {
+            
             const materialMatch = !Object.keys(checkedItems).some((key) => checkedItems[key] && materials.some((material) => material.name === key));
             const decorationMatch = !Object.keys(checkedItems).some((key) => checkedItems[key] && decorations.some((decoration) => decoration.name === key));
             return materialMatch && decorationMatch;
+        
         }) : [];
-        console.log("Current crimped inventory state:", filteredInventory);
-        setFilteredInventory(crimpedInventory);
-    };
-
-
     // const handleAddToCart = (item) => {
     //     addToCart(item);
     //     alert(`${item.name} added to cart!`)
     // };
-    // const filteredInventory = Array.isArray(inventory) ? inventory.filter((item) => {
-    //     const materialMatch = !Object.keys(checkedItems).some((key) => checkedItems[key] && materials.some((material) => material.name === key));
-    //     const decorationMatch = !Object.keys(checkedItems).some((key) => checkedItems[key] && decorations.some((decoration) => decoration.name === key));
-    //     return materialMatch && decorationMatch;
-    // }) : [];
 
+    // if (filteredInventory.length === 0 && inventory.length > 0) {
+    //     return <div style={{ color: '#cecece', textAlign: 'center', padding: '2em' }}>No items match the selected filters.</div>;
+    // }
 
     console.log("Current inventory state:", inventory);
     console.log("Current filtered inventory state:", filteredInventory);
