@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { createContext, useState, useEffect } from "react";
 
 
-export const CartContext = React.createContext();
+export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
-    const [cartItems, setCartItems] = React.useState([]);
+    const [cartItems, setCartItems] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {

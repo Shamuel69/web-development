@@ -31,7 +31,6 @@ function Inventory() {
     const [checkedItems, setCheckedItems] = useState({});
     // const { addToCart } = useContext(CartContext);
     const [inventory, setInventory] = useState([]);
-    const [iteration, setIteration] = useState(0);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
 
@@ -90,9 +89,9 @@ function Inventory() {
     //     alert(`${item.name} added to cart!`)
     // };
 
-    // if (filteredInventory.length === 0 && inventory.length > 0) {
-    //     return <div style={{ color: '#cecece', textAlign: 'center', padding: '2em' }}>No items match the selected filters.</div>;
-    // }
+    if (filteredInventory.length === 0) {
+        return <div style={{ color: '#cecece', textAlign: 'center', padding: '2em' }}>No items match the selected filters.</div>;
+    }
 
     console.log("Current inventory state:", inventory);
     console.log("Current filtered inventory state:", filteredInventory);
@@ -117,7 +116,7 @@ function Inventory() {
                 <h2 style={{fontWeight: 450}}>Hot Sellers:</h2>
                 <Topsales />
             </div>
-            <div> {/* sb stands for search bar */}
+            <div > {/* sb stands for search bar */}
                 <div className="sb-inventory">
                     <div className="sb-inventory-container">
                         <input className="sb-inventory-input" type="text" placeholder="Search for a specific item!"/>
@@ -129,63 +128,53 @@ function Inventory() {
                         <p key={item} className="selected-filters">{item}</p>
                     ))}
                 </div>
-                <div className="inventory-filter">
-                    <div>
-                        <h3 style={{fontWeight: 450}}>Filters:</h3>
-                        <input className="inventory-filter-price-input" type="number" placeholder="Min Price"/>
-                        <input className="inventory-filter-price-input" type="number" placeholder="Max Price"/>
+                <div className="inventory-container">
+                    <div className="inventory-filter">
+                        <div>
+                            <h3 style={{fontWeight: 450}}>Filters:</h3>
+                            <input className="inventory-filter-price-input" type="number" placeholder="Min Price"/>
+                            <input className="inventory-filter-price-input" type="number" placeholder="Max Price"/>
 
+                        </div>
+                        <div className="inventory-filter-types">
+                            <div className="inventory-filter-options">
+                                {materials.map((material) => (
+                                    <div className="inventory-filter-category" key={material.id}>
+                                        <input type="checkbox" name={material.name} onChange={handleCheckboxChange} checked={checkedItems[material.name] || false}/> {material.label}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="inventory-filter-types">
+                            <div className="inventory-filter-options">
+                                {decorations.map((decoration) => (
+                                    <div className="inventory-filter-category" key={decoration.id}>
+                                        <input type="checkbox" name={decoration.name} onChange={handleCheckboxChange} checked={checkedItems[decoration.name] || false}/> {decoration.label}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="inventory-filter-categories">
+                            <button className="inventory-filter-option" style={{backgroundColor: 'transparent'}} onClick={handleCheckboxChange}>Rings</button>
+                            <button className="inventory-filter-option" style={{backgroundColor: 'transparent'}} onClick={handleCheckboxChange}>Necklaces</button>
+                            <button className="inventory-filter-option" style={{backgroundColor: 'transparent'}} onClick={handleCheckboxChange}>Earrings</button>
+                            <button className="inventory-filter-option" style={{backgroundColor: 'transparent'}} onClick={handleCheckboxChange}>Bracelets</button>
+                        </div>
                     </div>
-                    <div className="inventory-filter-types">
-                        <div className="inventory-filter-options">
-                            {materials.map((material) => (
-                                <div className="inventory-filter-category" key={material.id}>
-                                    <input type="checkbox" name={material.name} onChange={handleCheckboxChange} checked={checkedItems[material.name] || false}/> {material.label}
+                    <div className="inventory-display-area">
+                        <div className="inventory-container">
+                            {filteredInventory.map((item) => (
+                                <div className="item-card" key={item.id}>
+                                    <img src={itemLabels[item.label]} alt={item.name}/>
+                                    <div className="item-info">
+                                        <h3>{item.name}</h3>
+                                        {/* <p>{item.description || "No description."}</p> */}
+                                        <p>Price: <i>${item.price}</i></p>
+                                        {/* <button onClick={() => handleAddToCart(item)}>Add to Cart</button> */}
+                                    </div>
                                 </div>
                             ))}
                         </div>
-                    </div>
-                    <div className="inventory-filter-types">
-                        <div className="inventory-filter-options">
-                            {decorations.map((decoration) => (
-                                <div className="inventory-filter-category" key={decoration.id}>
-                                    <input type="checkbox" name={decoration.name} onChange={handleCheckboxChange} checked={checkedItems[decoration.name] || false}/> {decoration.label}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                    <div className="inventory-filter-categories">
-                        <button className="inventory-filter-option" style={{backgroundColor: 'transparent'}} onClick={handleCheckboxChange}>Rings</button>
-                        <button className="inventory-filter-option" style={{backgroundColor: 'transparent'}} onClick={handleCheckboxChange}>Necklaces</button>
-                        <button className="inventory-filter-option" style={{backgroundColor: 'transparent'}} onClick={handleCheckboxChange}>Earrings</button>
-                        <button className="inventory-filter-option" style={{backgroundColor: 'transparent'}} onClick={handleCheckboxChange}>Bracelets</button>
-                    </div>
-                </div>
-                <div className="inventory-display-area">
-                    <div className="inventory-container">
-                        {filteredInventory.map((item) => (
-                            <div className="item-card" key={item.id}>
-                                <img src={itemLabels[item.label]} alt={item.name}/>
-                                <div className="item-info">
-                                    <h3>{item.name}</h3>
-                                    <p>{item.description || "No description."}</p>
-                                    <p>Price: <i>${item.price}</i></p>
-                                    {/* <button onClick={() => handleAddToCart(item)}>Add to Cart</button> */}
-                                </div>
-                            </div>
-                        ))}
-
-                        {/* {filteredInventory.map((item) => (
-                            <div className="item-card" key={item.id}>
-                                <img src={item.image} alt={item.name}/>
-                                <div className="item-info">
-                                    <h3>{item.name}</h3>
-                                    <p>{item.description}</p>
-                                    <p>Price: <i>${item.price}</i></p>
-                                    <button>Add to Cart</button>
-                                </div>
-                            </div>
-                        ))} */}
                     </div>
                 </div>
             </div>

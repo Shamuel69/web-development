@@ -1,9 +1,11 @@
 #root {
   max-width: 1280px;
   padding: 0 0;
+  font-size: 14px;
 }
 
 .App {
+  font-size: 1em;
   margin: 0 auto;
   height: 100vh;
   width: 100vw;  
@@ -13,7 +15,8 @@
 }
 .App-header {
   width: 70vw;
-  font-size: 22px;
+  height: 5em;
+  font-size: 18px;
 
   margin: 0 auto;
   padding: 0 20px;
@@ -21,8 +24,15 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: 2px solid #444;
+
+  transition: height .2s ease-in-out;
 }
 
+.App-header.shrink {
+  height: 3em;
+
+
+}
 .App-title-container {
   display: flex;
   gap: 1em;
@@ -33,9 +43,9 @@
 }
 .App-title-container img{
   flex-shrink: 1;
-  min-width: 20px;
-  min-height: 20px;
-  width: 1.5em;
+  min-width: 18px;
+  min-height: 18px;
+  width: 1.8em;
   height: auto;
 }
 .search-bar{
@@ -50,14 +60,27 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 0.5em;
   border: 2px solid transparent;
   border-radius: 10px;
 
   width: fit-content;
-  height: 20%;
+  height: 5em;
   
-  transition: opacity .3s ease-in-out, background-color .3s ease-in-out, border .3s ease-in-out;  
+  gap: .5em;
+  transition: opacity .3s ease-in-out, height .2s ease-in-out, background-color .3s ease-in-out, border .3s ease-in-out;  
+}
+.App-profile.clicked {
+  
+  content: '';
+  position: relative;
+  width: 20vw;
+  height: 15vh;
+  
+  left: 0;
+  background-color: #444;
+}
+.App-profile.shrink {
+  height: 3em;
 }
 .App-profile:hover {
   opacity: 0.7;
@@ -81,7 +104,6 @@
   border-top: transparent;
 
   transition: width .5s ease-in-out, opacity .5s ease-in-out;
-  font-size: 16px;
 }
 .search-bar-header.show{
   width: 20vw;
@@ -108,7 +130,6 @@
   padding: 0.1em 1em;
 }
 .App-title{
-  font-size: 1em;
   font-weight: 600;
   color: #cecece;
 }

@@ -50,7 +50,7 @@
         rgb(15, 15, 15) 100% 
     );
     background-size: 100% 200%;
-    animation: gradientShift 0.8s ease forwards;
+    animation: gradientShift 1.8s ease forwards;
     
 }
 .blingbling {

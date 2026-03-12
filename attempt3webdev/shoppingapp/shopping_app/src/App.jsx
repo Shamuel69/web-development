@@ -1,10 +1,11 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { AuthContext } from './context/AuthContext';
 
 import profile from './assets/profile-icon.svg'
 import Search from './assets/search-icon.svg'
 import shoppingCart from './assets/shopping-cart.svg'
+
 import './App.css'
 
 import Home from './subpages/Home.jsx'
@@ -29,19 +30,39 @@ function App() {
   const [isshown, setIsShown] = useState(false);
   const location = useLocation();
   const { user, logout } = useContext(AuthContext);
-
   const hidetopbar = location.pathname === '/signin' || location.pathname === '/contact' || location.pathname === '/signup' || location.pathname === '/forgotpassword';
-  
+  const [isClicked, setIsClicked] = useState(false);
+  const displayRef = useRef(null);
+  const lastScroll = useRef(0);
+  const [isShrunk, setIsShrunk] = useState(false); 
   const handleLogout = () => {
     logout();
   }
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      if (el.scrollTop > lastScroll.current) {
+        console.log('scrolled down');
+        setIsShrunk(true);
+      } else {
+        console.log('scrolled up');
+        setIsShrunk(false);
+      }
+      lastScroll.current = el.scrollTop;
+    };
+
+    const el = displayRef.current;
+    el.addEventListener("scroll", handleScroll);
+
+    return () => el.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
     <>
       <div className="App">
         {!hidetopbar && (
           <>
-            <div className="App-header">
+            <div className={`App-header ${isShrunk ? 'shrink' : ''} `}>
               <div className="App-title-container">
                 <h2><Link to="/" className="App-title">Shopping App</Link></h2>
                 <div className="search-bar" style={{cursor: 'pointer'}}>
@@ -51,7 +72,7 @@ function App() {
               </div>
               
               <div className="App-title-container">
-                <div className="App-profile">
+                <div className={`App-profile ${isShrunk ? 'shrink' : ''} ${isClicked ? 'clicked' : ''}`} onClick={() => setIsClicked(!isClicked)}>
                   <img src={profile} alt="Profile" />
                   {user ? (
                     <div className="profile-dropdown">
@@ -65,7 +86,6 @@ function App() {
                       <button><Link to="/signup">Sign Up</Link></button>
                     </div>
                   )}
-                  {/* <h4><Link to="/signin">Sign In</Link></h4> */}
                 </div>
                 <img className="App-cart" src={shoppingCart} alt="Cart" />
               </div>
@@ -79,7 +99,7 @@ function App() {
           </>
 
         )}
-        <div className="display-area">
+        <div className="display-area" ref={displayRef}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/bestdeals" element={<BestDeals />} />
@@ -95,5 +115,5 @@ function App() {
     </>
   )
 }
-
+console.log("App rendered");
 export default App
