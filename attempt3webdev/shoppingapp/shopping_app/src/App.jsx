@@ -25,7 +25,26 @@ function BottomCredits() {
     </div>
   );
 }
-// go to 90 percent when you open the page that should be the layout
+
+function Profile( { isClicked , user, handleLogout} ) {
+  return (
+    user ? (
+      <div className={`profile-dropdown-list ${isClicked ? 'clicked' : ''}`}>
+        <img src={profile} alt="profile"/>
+        <h4>{user.name}</h4>
+        <button onClick={handleLogout}>Logout</button>
+      </div>
+    ) :
+    (
+      <div className={`profile-dropdown-list ${isClicked ? 'clicked' : ''}`}>
+      <img src={profile} alt="profile"/>
+      <h4>Guest</h4>
+      <button><Link to="/signin">Sign In</Link></button>
+      <button><Link to="/signup">Sign Up</Link></button>
+    </div>
+    )
+  )
+}
 function App() {
   const [isshown, setIsShown] = useState(false);
   const location = useLocation();
@@ -73,28 +92,34 @@ function App() {
               
               <div className="App-title-container">
                 <div className={`App-profile ${isShrunk ? 'shrink' : ''} ${isClicked ? 'clicked' : ''}`} onClick={() => setIsClicked(!isClicked)}>
-                  <img src={profile} alt="Profile" />
                   {user ? (
-                    <div className="profile-dropdown">
-                      <p>Welcome, {user.name}!</p>
-                      <button onClick={handleLogout}>Logout</button>
-                    </div>
-                  ) : (
-                    <div className="profile-dropdown">
-                      <p>Guest</p>
-                      <button><Link to="/signin">Sign In</Link></button>
-                      <button><Link to="/signup">Sign Up</Link></button>
-                    </div>
-                  )}
+                      <div className="profile-dropdown">
+                        <div className="profile-container">
+                          <img src={profile} alt="Profile" />
+                          <p>Welcome, {user.name}!</p>
+                        </div>
+                        <Profile isClicked={isClicked} user={user} handleLogout={handleLogout}/>                       
+                      </div>
+                    ) : (
+                      <div className="profile-dropdown">
+                        <div className="profile-container">
+                          <img src={profile} alt="Profile" />
+                          <p>this is test variable</p>
+                        </div>
+                        <Profile isClicked={isClicked} user={user}/>
+                      </div>
+                    )
+                  }
                 </div>
                 <img className="App-cart" src={shoppingCart} alt="Cart" />
               </div>
             </div>
-            <div className="App-menu">
-              
-              <Link to="/">Jewels</Link>
-              <Link to="/bestdeals">Best Deals</Link>
-              <Link to="/contact">Contact</Link>
+            <div className="App-menu-container" >
+              <div className={`App-menu ${isShrunk ? 'shrink' : ''}`}>
+                <Link to="/">Jewels</Link>
+                <Link to="/bestdeals">Best Deals</Link>
+                <Link to="/contact">Contact</Link>
+              </div>
             </div>
           </>
 
