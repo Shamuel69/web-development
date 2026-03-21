@@ -30,17 +30,40 @@ function Profile( { isClicked , user, handleLogout} ) {
   return (
     user ? (
       <div className={`profile-dropdown-list ${isClicked ? 'clicked' : ''}`}>
-        <img src={profile} alt="profile"/>
-        <h4>{user.name}</h4>
-        <button onClick={handleLogout}>Logout</button>
+        <div className="profile-dropdown-list-header">
+          <img src={profile} alt="profile"/>
+          <h4>{user.name}</h4>
+        </div>
+        <div className="profile-dropdown-list-buttons">
+          <ul>
+            <li><Link to="/profile">Profile</Link></li>
+            <li><Link to="/orders">Orders</Link></li>
+            <li><Link to="/cart">Cart</Link></li>
+            <li><Link to="/wishlist">Wishlist</Link></li>
+            <li><Link to="/checkout">Checkout</Link></li>
+            <li><Link to="/contact">Contact</Link></li>
+            <li><Link to="/about">About</Link></li>
+          </ul>
+          
+        </div>
+        <div className="profile-dropdown-list-buttons">
+          <button onClick={handleLogout}>Logout</button>
+          
+        </div>
       </div>
     ) :
     (
       <div className={`profile-dropdown-list ${isClicked ? 'clicked' : ''}`}>
-      <img src={profile} alt="profile"/>
-      <h4>Guest</h4>
-      <button><Link to="/signin">Sign In</Link></button>
-      <button><Link to="/signup">Sign Up</Link></button>
+        <div className="profile-dropdown-list-header">
+          <img src={profile} alt="profile"/>
+          <h4>Guest</h4>
+          
+        </div>
+        <div className="profile-dropdown-list-buttons">
+          <Link to="/signin">Sign In</Link>
+          <Link to="/signup">Sign Up</Link>
+          
+        </div>
     </div>
     )
   )
@@ -63,9 +86,11 @@ function App() {
       if (el.scrollTop > lastScroll.current) {
         console.log('scrolled down');
         setIsShrunk(true);
+        setIsClicked(false);
       } else {
         console.log('scrolled up');
         setIsShrunk(false);
+        setIsClicked(false);
       }
       lastScroll.current = el.scrollTop;
     };
@@ -91,14 +116,13 @@ function App() {
               </div>
               
               <div className="App-title-container">
-                <div className={`App-profile ${isShrunk ? 'shrink' : ''} ${isClicked ? 'clicked' : ''}`} onClick={() => setIsClicked(!isClicked)}>
+                <div className={`App-profile ${isShrunk ? 'shrink' : ''} ${isClicked ? 'clicked' : ''}`} onClick={(e) => {e.stopPropagation(); setIsClicked(prev => !prev)}}>
                   {user ? (
                       <div className="profile-dropdown">
                         <div className="profile-container">
                           <img src={profile} alt="Profile" />
                           <p>Welcome, {user.name}!</p>
                         </div>
-                        <Profile isClicked={isClicked} user={user} handleLogout={handleLogout}/>                       
                       </div>
                     ) : (
                       <div className="profile-dropdown">
@@ -106,10 +130,10 @@ function App() {
                           <img src={profile} alt="Profile" />
                           <p>this is test variable</p>
                         </div>
-                        <Profile isClicked={isClicked} user={user}/>
                       </div>
                     )
                   }
+                  <Profile isClicked={isClicked} user={user} handleLogout={handleLogout}/>                             
                 </div>
                 <img className="App-cart" src={shoppingCart} alt="Cart" />
               </div>
