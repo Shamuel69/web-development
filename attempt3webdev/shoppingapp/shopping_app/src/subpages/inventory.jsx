@@ -10,6 +10,8 @@ import earrings from '../assets/earring.jpg';
 import bracelets from '../assets/bracelet.jpg';
 import arrowdown from '../assets/arrow-down.svg';
 import cart from '../assets/shopping-cart.svg';
+import { nanoid } from "nanoid";
+
 
 
 const materials = [
@@ -27,26 +29,34 @@ const decorations = [
 
 
 
+
 function Inventory() {
     const [checkedItems, setCheckedItems] = useState({});
     // const { addToCart } = useContext(CartContext);
     const [inventory, setInventory] = useState([]);
+    const [inventoryWithID, setInventoryWithID] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
-
+    
+    const newInventory = inventory.map((item) => {return item.id ? item : {id: nanoid(10), ...item, }}); 
+    console.log("New inventory state:", newInventory);
+    
+    useEffect(() =>{
+        setInventoryWithID(inventory.map(item => item.id ? item : {id: nanoid(10), ...item}))
+    }, [inventory]);
+    
     useEffect(() => {
+            
         const fetchInventory = async() => {
             try {
                 setLoading(true);
                 setError(null);
                 
-                const response = await fetch("http://localhost:8080/inventory");
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const data = await response.json();
+                const res = await fetch("http://localhost:8080/inventory");
+                const data = await res.json();
+
                 console.log("Received inventory:", data.inventory);
+
                 setInventory(data.inventory);
             } catch (err) {
                 console.error("Error fetching inventory:", err);
@@ -55,10 +65,26 @@ function Inventory() {
                 console.log("Fetch inventory attempt completed.");
                 setLoading(false);
             };
+            
         };
-        
         fetchInventory();
+        
     }, []);
+
+    const uploadInventory = async () => {
+        try {
+            const res = await fetch("http://localhost:8080/inventory", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(inventoryWithID)
+            });
+            const data = await res.json();
+            console.log("Uploaded inventory:", data);
+            } catch (err) {
+                console.error("Failed to upload inventory:", err);
+            }
+        }
+    }
 
     const itemLabels = {
         'Ring': ring,
@@ -83,7 +109,7 @@ function Inventory() {
             const decorationMatch = !Object.keys(checkedItems).some((key) => checkedItems[key] && decorations.some((decoration) => decoration.name === key));
             return materialMatch && decorationMatch;
         
-        }) : [];
+    }) : [];
     // const handleAddToCart = (item) => {
     //     addToCart(item);
     //     alert(`${item.name} added to cart!`)
@@ -117,6 +143,7 @@ function Inventory() {
                 <Topsales />
             </div>
             <div > {/* sb stands for search bar */}
+                <button onClick={uploadInventory}>Upload Inventory</button> 
                 <div className="sb-inventory">
                     <div className="sb-inventory-container">
                         <input className="sb-inventory-input" type="text" placeholder="Search for a specific item!"/>

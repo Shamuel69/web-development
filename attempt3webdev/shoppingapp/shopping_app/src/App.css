@@ -122,6 +122,7 @@
 .profile-dropdown {
   border: 2px solid #444;
   border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
   background: #2d2d2d;
   color: #cecece;
   padding: 0.1em 1em;
