@@ -15,6 +15,7 @@ import Contact from './subpages/infopages/Contact.jsx'
 import Signin from './subpages/infopages/Signin.jsx'
 import Signup from './subpages/infopages/Signup.jsx'
 import Forgotpassword from './subpages/infopages/Forgotpassword.jsx'
+import InventoryItem from './subpages/InventoryItem.jsx';
 
 
 
@@ -107,7 +108,7 @@ function App() {
         {!hidetopbar && (
           <>
             <div className={`App-header ${isShrunk ? 'shrink' : ''} `}>
-              <div className="App-title-container">
+              <div className={`App-title-container ${isShrunk ? 'shrink' : ''}`}>
                 <h2><Link to="/" className="App-title">Shopping App</Link></h2>
                 <div className="search-bar" style={{cursor: 'pointer'}}>
                   <img src={Search} alt="Search" onClick={() => setIsShown(!isshown)}/>
@@ -153,7 +154,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/bestdeals" element={<BestDeals />} />
             <Route path="/inventory" element={<Inventory />} />
-            <Route path="/inventory/:id"  />
+            <Route path="/inventory/:id" element={<InventoryItem />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />

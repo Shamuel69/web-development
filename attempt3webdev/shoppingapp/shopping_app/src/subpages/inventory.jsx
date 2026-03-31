@@ -11,6 +11,7 @@ import bracelets from '../assets/bracelet.jpg';
 import arrowdown from '../assets/arrow-down.svg';
 import cart from '../assets/shopping-cart.svg';
 import { nanoid } from "nanoid";
+import { Link } from "react-router-dom";
 
 
 
@@ -80,11 +81,15 @@ function Inventory() {
             });
             const data = await res.json();
             console.log("Uploaded inventory:", data);
-            } catch (err) {
-                console.error("Failed to upload inventory:", err);
-            }
+        } catch (err) {
+            console.error("Failed to upload inventory:", err);
         }
     }
+    // added uploadInventory and just needs bug fixing to pop out the duped items.
+    //  make sure when adding new items your not letting things dupe but actually 
+    // checking the IDs, match those up and if theres an anomoly then add that 
+    // otherwise update the item with the same id.
+
 
     const itemLabels = {
         'Ring': ring,
@@ -104,7 +109,8 @@ function Inventory() {
     };
 
     const filteredInventory = inventory ? inventory.filter((item) => {
-            
+            const price = parseFloat(item.price);
+
             const materialMatch = !Object.keys(checkedItems).some((key) => checkedItems[key] && materials.some((material) => material.name === key));
             const decorationMatch = !Object.keys(checkedItems).some((key) => checkedItems[key] && decorations.some((decoration) => decoration.name === key));
             return materialMatch && decorationMatch;
@@ -191,15 +197,17 @@ function Inventory() {
                     <div className="inventory-display-area">
                         <div className="inventory-container">
                             {filteredInventory.map((item) => (
-                                <div className="item-card" key={item.id}>
-                                    <img src={itemLabels[item.label]} alt={item.name}/>
-                                    <div className="item-info">
-                                        <h3>{item.name}</h3>
-                                        {/* <p>{item.description || "No description."}</p> */}
-                                        <p>Price: <i>${item.price}</i></p>
-                                        {/* <button onClick={() => handleAddToCart(item)}>Add to Cart</button> */}
+                                <Link key={item.id} to={`/inventory/${item.id}`}>
+                                    <div className="item-card" key={item.id}>
+                                        <img src={itemLabels[item.label]} alt={item.name}/>
+                                        <div className="item-info">
+                                            <h3>{item.name}</h3>
+                                            <p>Price: <i>${item.price}</i></p>
+                                            {/* <button onClick={() => handleAddToCart(item)}>Add to Cart</button> */}
+                                        </div>
                                     </div>
-                                </div>
+                                
+                                </Link>
                             ))}
                         </div>
                     </div>
