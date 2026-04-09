@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
 
-import './css/inventory.css'
+// import './css/inventory.css'
 import './css/inventoryitem.css'
 
 import ring from '../assets/randoring.jpg'
@@ -15,6 +15,8 @@ function InventoryItem() {
     const [item, setItem] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
+    const discountedPrice = item ? item.price - item.price * item.discountRate : 0;
+
     const images = {
         "Ring": ring,
         "Necklace": necklace,
@@ -26,7 +28,7 @@ function InventoryItem() {
         const fetchedItem = async () => {
             try {
                 const res = await fetch(`http://localhost:8080/inventory/${id}`);
-                // if (!res.ok) throw new Error("Item not found" + id);
+                if (!res.ok) throw new Error("Item not found" + id);
                 const data = await res.json();
                 setItem(data.item);
             } catch (error) {
@@ -43,13 +45,42 @@ function InventoryItem() {
     }
 
     return (
-        <div className="item-card">
-            <img src={images[item.label]} alt="Random Ring"/>
-            <div className="item-info">
-                <h3>{item.name}</h3>
-                <p>Original Price: <i>${item.originalPrice}</i></p>
-                <p>Price: <i>${item.discountedPrice}</i></p>
-                <button>Add to Cart</button>
+        <div className="root">
+            <div className="inventory-item">
+                <img src={images[item.label]} alt={item.name}/>
+                <div className="item-info">
+                    <h3>{item.name}</h3>
+                    <div className="item-info-container">
+                        {!discountedPrice ? 
+                            (
+                                <div className="price">
+                                    <p>Price: ${item.price}</p>
+                                </div>
+                            ) : (
+                                <div className="price">
+                                    <p className="original-price">Original Price: ${item.price} ${item.discountRate * 100}% off</p>
+                                    <p className="discounted-price">Discounted Price: ${discountedPrice}</p>
+                                </div>
+                            )
+                        }
+                        <div className="tags">
+                            <div className="materials">
+                                <h4 className="label">Materials:</h4>
+                                <div className="tags-container">
+                                    {item.tags.map(material => (
+                                        <h4 className="material">{material}</h4>
+                                    ))}                            
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p className="description">{item.description}</p>
+                        
+                    </div>
+                    <button className="add-to-cart">Add to Cart</button>
+
+                </div>
+                
             </div>
         </div>
     )

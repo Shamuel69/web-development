@@ -1,0 +1,133 @@
+
+
+.root {
+    max-width: 1280px;
+    padding: 0 0;
+    margin: 0 auto;
+    height: 100vh;
+    margin-top: 1em;
+    display: flex;
+}
+.item-info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25em;
+}
+.inventory-item {
+    flex: 1;
+    display: flex;
+    background-color: var(--secondary-color);
+    flex-direction: row;
+    width: 90%;
+    min-height: 300px;
+    margin: 2em auto;
+}
+.inventory-item img {
+    width: 50%;
+
+    object-fit: scale-down;
+}
+
+.item-info {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    margin: 0 auto;
+    
+}
+.price p {
+    display: flex;
+    font-size: 24px;
+    margin-bottom: 1em;
+    margin-top: 1em;
+}
+
+.description {
+    font-size: 18px;
+    color: var(--text-color-secondary);
+    margin-top: 2em;
+    width: 100%;
+    text-align: center;
+}
+.item-info button {
+    margin: 0 auto;
+    margin-top: 2em;
+    width: 90%;
+    
+    font-size: 0.8em;
+}
+.add-to-cart {
+    padding: 0.75em 1.5em;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    background-color: var(--accent-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color .2s ease-in-out, transform .1s ease-in-out;
+}
+.add-to-cart:hover {
+    background-color: var(--text-color);
+    transform: scale(1.05);
+}
+.label{
+    font-weight: 500;
+    margin-bottom: 0.5em;
+
+}
+.tags-container {
+    font-size: 16px;
+    margin-left: 1em;
+    display: flex;
+    gap: 0.5em;
+    margin-bottom: 2em;
+
+}
+.materials {
+    margin-top: .5em;
+    margin-left: 1em;
+}
+.tags-container .material {
+    color: #fff;
+    margin-top: 1em;
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--text-color);
+    border: 1.75px solid var(--accent-color);
+    transition: color .2s ease-in-out, border-color .2s ease-in-out;
+
+}
+.tags-container .material:hover {
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+.item-info h3 {
+    font-weight: 500;
+    text-decoration: underline;
+    font-size: 45px;
+    margin: 0 auto;
+}
+.tags {
+    font-size: 18px;
+    font-weight: 500;
+
+    display: flex;
+    flex-direction: column;
+
+    border-bottom: 2px solid var(--border-color-light);
+}
+.item-info h4 {
+    margin: 0 0;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: var(--text-color-secondary);
+}
+.discounted-price {
+    color: var(--accent-co2or);
+    font-size: 24px;
+    font-weight: bold;
+}

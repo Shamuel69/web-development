@@ -54,7 +54,7 @@ app.get("/inventory", (req, res) =>{
 });
 
 app.get("/inventory/:id", (req, res) => {
-    const itemID = inventory.find(item => item.id === parseInt(req.params.id));
+    const itemID = inventory.find(item => item.id === req.params.id);
     if(itemID){
         res.json({item: itemID});
     } else {
