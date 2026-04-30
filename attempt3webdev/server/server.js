@@ -16,7 +16,9 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(express.json());
-// {"inventory":}
+
+let profiles = [{'id': 'EwXdSEfLYp', 'name': 'John Doe', 'age': 30, 'email': 'examplemail@gmail.com', 'password': 'password123'},]
+
 let inventory = [{'label': 'Ring', 'description': 'A stunning ring with a brilliant cut diamond.', 'price': 250, 'tags': ['Gold', 'Diamond'], 'name': 'Gold Diamond Ring'},
     {'id': 'EwXdSEfLYp', 'label': 'Ring', 'description': 'A stunning ring with a brilliant cut diamond.', 'price': 250, 'tags': ['Gold', 'Diamond'], 'name': 'Gold Diamond Ring'},
     {'id': 'a27hkwk6fL', 'label': 'Necklace', 'description': 'A beautiful necklace with a pendant design.', 'price': 100, 'tags': ['Silver', 'Ruby'], 'name': 'Silver Ruby Necklace'},
@@ -41,12 +43,15 @@ let inventory = [{'label': 'Ring', 'description': 'A stunning ring with a brilli
     {'id': 'myOioyBath', 'label': 'Necklace', 'description': 'An elegant necklace made with high-quality materials.', 'price': 150, 'tags': ['Platinum', 'Emerald'], 'name': 'Platinum Emerald Necklace'},
     {'id': 'VZE-3L0gP5', 'label': 'Ring', 'description': 'A stunning ring with a brilliant cut diamond.', 'price': 250, 'tags': ['Gold', 'Diamond'], 'name': 'Gold Diamond Ring'},
     {'id': 'fAAvwuFfnq', 'label': 'Necklace', 'description': 'A beautiful necklace with intricate designs.', 'price': 120, 'tags': ['Silver', 'Ruby'], 'name': 'Silver Ruby Necklace'},
-    
     {'id': 'GYYD37o-tz', 'label': 'Ring', 'description': 'A stunning ring with a brilliant cut diamond.', 'price': 250, 'tags': ['Gold', 'Diamond'], 'name': 'Gold Diamond Ring'}]
+
 inventory.forEach(item => {
     if(!item.name){
         item.name = item.tags.map(tag => tag).join(" ") + " " + item.label;
     }
+});
+app.get("/profiles", (req, res) => {
+    res.json({profiles: profiles});
 });
 
 app.get("/inventory", (req, res) =>{
@@ -61,6 +66,18 @@ app.get("/inventory/:id", (req, res) => {
         res.status(404).json({error: "Item not found"});
     }
 });
+
+app.post("/profiles", (req, res) => {
+    const newProfile = req.body;
+    const exists = profiles.some(profile => profile.email === newProfile.email);
+    if(!exists){
+        profiles.push(newProfile);
+        res.json({message: "Profile created successfully", profiles});
+    } else {
+        res.status(400).json({error: "Profile already exists"});
+    }
+});
+
 app.post("/inventory", (req, res) => {
     const newItems = req.body;
     let inventory = [];

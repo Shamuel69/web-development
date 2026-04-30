@@ -24,7 +24,7 @@
 }
 .inventory-item img {
     width: 50%;
-
+    background-color: rgb(17, 17, 17);
     object-fit: scale-down;
 }
 

@@ -9,9 +9,8 @@ import necklace from '../assets/necklacemodel.jpg';
 import earrings from '../assets/earring.jpg';
 import bracelets from '../assets/bracelet.jpg';
 import arrowdown from '../assets/arrow-down.svg';
-import cart from '../assets/shopping-cart.svg';
 import { nanoid } from "nanoid";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 
 
@@ -34,6 +33,10 @@ const decorations = [
 function Inventory() {
     const [checkedItems, setCheckedItems] = useState({});
     // const { addToCart } = useContext(CartContext);
+
+    const [searchParams] = useSearchParams();
+    const  filterTag = searchParams.get("filter");
+    
     const [inventory, setInventory] = useState([]);
     const [inventoryWithID, setInventoryWithID] = useState([]);
     const [error, setError] = useState(null);
@@ -43,8 +46,10 @@ function Inventory() {
     console.log("New inventory state:", newInventory);
     
     useEffect(() =>{
-        setInventoryWithID(inventory.map(item => item.id ? item : {id: nanoid(10), ...item}))
-    }, [inventory]);
+        if (filterTag) {
+            setCheckedItems({ [filterTag]: true});
+        }
+    }, [filterTag]);
     
     useEffect(() => {
             
@@ -109,11 +114,22 @@ function Inventory() {
     };
 
     const filteredInventory = inventory ? inventory.filter((item) => {
-            const price = parseFloat(item.price);
+        // const price = parseFloat(item.price);
 
-            const materialMatch = !Object.keys(checkedItems).some((key) => checkedItems[key] && materials.some((material) => material.name === key));
-            const decorationMatch = !Object.keys(checkedItems).some((key) => checkedItems[key] && decorations.some((decoration) => decoration.name === key));
-            return materialMatch && decorationMatch;
+        const materialMatch = !Object.keys(checkedItems).some((key) => {
+            return (checkedItems[key] && materials.some((material) => material.name === key && item.tags.includes(key)));
+        });
+        const decorationMatch = !Object.keys(checkedItems).some((key) =>{
+            return (checkedItems[key] && decorations.some((decoration) => decoration.name === key && item.tags.includes(key)));
+        });
+        
+        const hasFilters = Object.values(checkedItems).some(value => value);
+
+        if (!hasFilters) {
+            return true;
+        }
+
+        return materialMatch && decorationMatch;
         
     }) : [];
     // const handleAddToCart = (item) => {

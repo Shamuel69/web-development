@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 // import './css/inventory.css'
 import './css/inventoryitem.css'
@@ -67,9 +67,11 @@ function InventoryItem() {
                             <div className="materials">
                                 <h4 className="label">Materials:</h4>
                                 <div className="tags-container">
-                                    {item.tags.map(material => (
-                                        <h4 className="material">{material}</h4>
-                                    ))}                            
+                                    {item.tags && item.tags.map((tag) => (
+                                        <Link key={tag} to={`/inventory?filter=${tag}`}>
+                                            <span className="tag-link" >{tag}</span>
+                                        </Link>
+                                    ))}
                                 </div>
                             </div>
                         </div>

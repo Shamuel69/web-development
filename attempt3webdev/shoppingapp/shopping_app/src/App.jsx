@@ -7,6 +7,7 @@ import Search from './assets/search-icon.svg'
 import shoppingCart from './assets/shopping-cart.svg'
 
 import './App.css'
+import './subpages/css/cartoverlay.css'
 
 import Home from './subpages/Home.jsx'
 import BestDeals from './subpages/BestDeals.jsx'
@@ -27,6 +28,38 @@ function BottomCredits() {
   );
 }
 
+function CartOverlay( { isCartOverlay, user, login, onClose } ) {
+  const logerin = login;
+
+  return (
+    // Make these:
+
+    // Cart items - Each item shows image, name, price, quantity controls, remove button
+    // Quantity controls - +/- buttons to adjust amounts
+    // Summary - Subtotal, shipping, tax, total
+    // Action buttons - Continue shopping, checkout
+    // Close button - Easy way to close the overlay
+    // Scrollable - For when cart has many items
+    
+    <div className={`cart-overlay ${isCartOverlay ? 'clicked' : ''}`} onClick={onClose}>
+      <div className={`cart-overlay-content ${isCartOverlay ? 'clicked' : ''}`} onClick={(e) => e.stopPropagation()}>
+        <div className="cart-overlay-container">
+          <h2 >{user ? user.name : "Guest"}</h2>
+
+          <h4>plans to use login function but its under development</h4>
+          <h2>Cart</h2>
+          <p>This is a demo app. Cart functionality is not implemented.</p>
+          
+        </div>
+        <button onClick={() => logerin()}>Login</button>
+        
+      </div>
+    </div>
+
+  )
+}
+
+
 function Profile( { isClicked , user, handleLogout} ) {
   return (
     user ? (
@@ -38,8 +71,8 @@ function Profile( { isClicked , user, handleLogout} ) {
         <div className="profile-dropdown-list-buttons">
           <ul>
             <li><Link to="/profile">Profile</Link></li>
-            <li><Link to="/orders">Orders</Link></li>
-            <li><Link to="/cart">Cart</Link></li>
+            <li><Link to="/cartcheckout/recipts">Orders</Link></li>
+            <li><Link to="/cartcheckout">Cart</Link></li>
             <li><Link to="/wishlist">Wishlist</Link></li>
             <li><Link to="/checkout">Checkout</Link></li>
             <li><Link to="/contact">Contact</Link></li>
@@ -75,6 +108,7 @@ function App() {
   const { user, logout } = useContext(AuthContext);
   const hidetopbar = location.pathname === '/signin' || location.pathname === '/contact' || location.pathname === '/signup' || location.pathname === '/forgotpassword';
   const [isClicked, setIsClicked] = useState(false);
+  const [isCartOverlay, setIsCartOverlay] = useState(false);
   const displayRef = useRef(null);
   const lastScroll = useRef(0);
   const [isShrunk, setIsShrunk] = useState(false); 
@@ -136,7 +170,10 @@ function App() {
                   }
                   <Profile isClicked={isClicked} user={user} handleLogout={handleLogout}/>                             
                 </div>
-                <img className="App-cart" src={shoppingCart} alt="Cart" />
+                <div className={`App-cart-container ${isShrunk ? 'shrink' : ''}`}>
+                  <img className="App-cart" src={shoppingCart} alt="Cart" onClick={() => setIsCartOverlay(true)}/>
+                  <CartOverlay isCartOverlay={isCartOverlay} user={user} login={handleLogout} onClose={() => setIsCartOverlay(false)} />
+                </div>
               </div>
             </div>
             <div className="App-menu-container" >
@@ -153,8 +190,8 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/bestdeals" element={<BestDeals />} />
-            <Route path="/inventory" element={<Inventory />} />
             <Route path="/inventory/:id" element={<InventoryItem />} />
+            <Route path="/inventory/:tag?" element={<Inventory />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/signin" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />
