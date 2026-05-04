@@ -1,9 +1,10 @@
 import React, { useState, useContext } from "react";
 import { Link, useNavigate} from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext2";
 import mail from '../../assets/mail.svg';
 import lock from '../../assets/login-password.svg';
 import '../css/signin.css';
+import { nanoid } from "nanoid";
     
 function Signup() {
     const [email, setEmail] = useState('');
@@ -12,7 +13,7 @@ function Signup() {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [name, setName] = useState('');
-    const { login } = useContext(AuthContext);
+    const { signup } = useContext(AuthContext);
     
     const navigate = useNavigate();
 
@@ -50,11 +51,13 @@ function Signup() {
         setLoading(true);
         setTimeout(() => {
             const userData = {
+                id: nanoid(10),
                 email: email,
                 name: name,
-                loginTime: new Date().toISOString()
+                cart: [],
+                
             };
-            login(userData);
+            signup(userData);
             setLoading(false);
             navigate('/');
         }, 500);

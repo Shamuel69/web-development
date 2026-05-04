@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect} from "react";
 
 import BestDeals, { Topsales } from './BestDeals.jsx'
-import { CartContext } from '../context/CartContext.jsx';
+import { CartContext } from '../context/CartContext2.jsx';
 import './css/inventory.css';
 
 import ring from '../assets/randoring.jpg';
@@ -32,7 +32,7 @@ const decorations = [
 
 function Inventory() {
     const [checkedItems, setCheckedItems] = useState({});
-    // const { addToCart } = useContext(CartContext);
+    const { addToCart } = useContext(CartContext);
 
     const [searchParams] = useSearchParams();
     const  filterTag = searchParams.get("filter");

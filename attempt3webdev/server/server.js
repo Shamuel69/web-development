@@ -9,15 +9,16 @@ const corsOptions = {
     origin: ["http://localhost:5173"]
 };
 
-
+ 
 
 // started the server now basically we want to allow cross-origin requests from our frontend which is running on port 5173
 // connect those two together and allow them to talk to each other
 app.use(cors(corsOptions));
-
+ 
 app.use(express.json());
 
-let profiles = [{'id': 'EwXdSEfLYp', 'name': 'John Doe', 'age': 30, 'email': 'examplemail@gmail.com', 'password': 'password123'},]
+let profiles = [{'id': 'EwXdSEfLYp', 'name': 'John Doe', 'age': 30,    'email': 'examplemail@gmail.com', 'password': 'password123', 'cart': []}, 
+    {'id': 'a27hkwk6fL', 'name': 'Jane Smith', 'age': 25, 'email': 'examplemail2@gmail.com', 'password': 'password456', 'cart': []},]
 
 let inventory = [{'label': 'Ring', 'description': 'A stunning ring with a brilliant cut diamond.', 'price': 250, 'tags': ['Gold', 'Diamond'], 'name': 'Gold Diamond Ring'},
     {'id': 'EwXdSEfLYp', 'label': 'Ring', 'description': 'A stunning ring with a brilliant cut diamond.', 'price': 250, 'tags': ['Gold', 'Diamond'], 'name': 'Gold Diamond Ring'},
@@ -69,29 +70,61 @@ app.get("/inventory/:id", (req, res) => {
 
 app.post("/profiles", (req, res) => {
     const newProfile = req.body;
+    
+    // Check if email already exists
     const exists = profiles.some(profile => profile.email === newProfile.email);
-    if(!exists){
-        profiles.push(newProfile);
-        res.json({message: "Profile created successfully", profiles});
-    } else {
-        res.status(400).json({error: "Profile already exists"});
+    
+    if(exists){
+        return res.status(400).json({error: "Profile already exists with this email"});
     }
+    
+    // Add new profile
+    profiles.push(newProfile);
+    
+    // ✅ Return the created user, not the entire profiles array
+    res.status(201).json({
+        message: "Profile created successfully", 
+        user: newProfile
+    });
 });
-
+app.put("/profiles/:id", (req, res) => {
+    const userId = req.params.id;
+    const updatedData = req.body;
+    
+    const userIndex = profiles.findIndex(profile => profile.id === userId);
+    
+    if (userIndex === -1) {
+        return res.status(404).json({error: "User not found"});
+    }
+    
+    // Update the user with new data
+    profiles[userIndex] = { ...profiles[userIndex], ...updatedData };
+    
+    res.json({
+        message: "Profile updated successfully", 
+        user: profiles[userIndex]
+    });
+});
 app.post("/inventory", (req, res) => {
     const newItems = req.body;
-    let inventory = [];
-    newItems.forEach(newItem => {
-        const exists = inventory.some((item => item.id === newItem.id) || (item => item.name === newItem.name && item.tags.join() === newItem.tags.join()))
-        if (!exists) {
-            inventory.push(newItem);
-
-        }
+    
+    // Filter out items that already exist by ID or name+tags
+    const itemsToAdd = newItems.filter(newItem => {
+        return !inventory.some(existingItem => 
+            existingItem.id === newItem.id || 
+            (existingItem.name === newItem.name && JSON.stringify(existingItem.tags.sort()) === JSON.stringify(newItem.tags.sort()))
+        );
     });
     
-    inventory = [...inventory, ...newItems];
-    res.json({message : "Items added successfully", inventory});
-})
+    // Add only new items
+    inventory.push(...itemsToAdd);
+    
+    res.json({
+        message: `${itemsToAdd.length} items added successfully`,
+        inventory: inventory,
+        itemsAdded: itemsToAdd.length
+    });
+});
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

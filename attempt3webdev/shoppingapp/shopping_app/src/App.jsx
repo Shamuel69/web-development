@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
-import { AuthContext } from './context/AuthContext';
+import { AuthContext } from './context/AuthContext2.jsx';
+import { CartContext } from './context/CartContext2.jsx';
 
 import profile from './assets/profile-icon.svg'
 import Search from './assets/search-icon.svg'
@@ -30,29 +31,99 @@ function BottomCredits() {
 
 function CartOverlay( { isCartOverlay, user, login, onClose } ) {
   const logerin = login;
+  const [inventory, setInventory] = useState([]);
+  const { getTotalPrice, removeFromCart, updateCartItemQuantity, cartItems } = useContext(CartContext);
+  
+  
+  useEffect(() => {
+    const fetchInventory = async() => {
+      try {
+        const res = await fetch('http://localhost:8080/inventory');
+        const data = await res.json();
+        setInventory(data.inventory); 
+        
+      } catch (err) {
+        console.error("Error fetching inventory:", err);
+      }
+    }
+    fetchInventory(); 
+  }, []);
+
+  const subtotal = getTotalPrice();
+  const shipping = subtotal > 0 ? 5 : 0; 
+  const tax = subtotal * 0.1; 
+  const total = subtotal + shipping + tax;
 
   return (
-    // Make these:
-
-    // Cart items - Each item shows image, name, price, quantity controls, remove button
-    // Quantity controls - +/- buttons to adjust amounts
-    // Summary - Subtotal, shipping, tax, total
-    // Action buttons - Continue shopping, checkout
-    // Close button - Easy way to close the overlay
-    // Scrollable - For when cart has many items
     
     <div className={`cart-overlay ${isCartOverlay ? 'clicked' : ''}`} onClick={onClose}>
       <div className={`cart-overlay-content ${isCartOverlay ? 'clicked' : ''}`} onClick={(e) => e.stopPropagation()}>
         <div className="cart-overlay-container">
           <h2 >{user ? user.name : "Guest"}</h2>
+          {user ? (
+            <div>
+              <p>Welcome back, {user.name}!</p>
+              {cartItems.length === 0 ? (
+                <p>Your cart is empty.</p>
+              ) : (
+                <>
+                  // cart items with image, name, price, quantity controls, remove button
+                  <div className="cart-items">
+                    {cartItems.map(cartItem => {
+                      const item = inventory.find(invItem => invItem.id === cartItem.id);
+                      if (!item) return null;
+                      return (
+                        <div key={cartItem.id} className="cart-item">
+                          <img src={item.image} alt={item.name} className="cart-item-image"/>
+                          <div className="cart-item-details">
+                            <h4>{item.name}</h4>
+                            <p>${item.price}</p>
+                            <div className="quantity-controls">
+                              <input type="number" name="quantity" value={cartItem.quantity} readOnly/>
+                              <button onClick={() => updateCartItemQuantity(cartItem.id, cartItem.quantity + 1)}>+</button>
+                              <button onClick={() => updateCartItemQuantity(cartItem.id, cartItem.quantity - 1)}>-</button>
+                            </div>
+                            <div className="cart-item-actions">
+                              <p className="item-total">${item.price * cartItem.quantity} </p>
+                              <button onClick={() => removeFromCart(cartItem.id)}>Remove</button>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })};
+                  </div>
+                  // cart summery
+                  
+                  <div className="cart-summary">
+                    <div className="cart-summary-item">
+                      <p>Subtotal</p>
+                      <p>${subtotal}</p>
+                    </div>
+                    <div className="cart-summary-item">
+                      <p>Shipping</p>
+                      <p>${shipping}</p>
+                    </div>
+                    <div className="cart-summary-item">
+                      <p>Tax</p>
+                      <p>${tax}</p>
+                    </div>
+                    <div className="cart-summary-total">
+                      <p>Total</p>
+                      <p>${total}</p>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
 
-          <h4>plans to use login function but its under development</h4>
-          <h2>Cart</h2>
-          <p>This is a demo app. Cart functionality is not implemented.</p>
-          
+          ) : (
+            <>
+            <p>Please sign in to view your cart.</p>
+            <button onClick={() => logerin()}>login</button>
+            
+            </>
+          )}
         </div>
-        <button onClick={() => logerin()}>Login</button>
-        
       </div>
     </div>
 
@@ -106,6 +177,8 @@ function App() {
   const [isshown, setIsShown] = useState(false);
   const location = useLocation();
   const { user, logout } = useContext(AuthContext);
+
+
   const hidetopbar = location.pathname === '/signin' || location.pathname === '/contact' || location.pathname === '/signup' || location.pathname === '/forgotpassword';
   const [isClicked, setIsClicked] = useState(false);
   const [isCartOverlay, setIsCartOverlay] = useState(false);
@@ -113,7 +186,7 @@ function App() {
   const lastScroll = useRef(0);
   const [isShrunk, setIsShrunk] = useState(false); 
   const handleLogout = () => {
-    logout();
+    logout(user);
   }
   
   useEffect(() => {

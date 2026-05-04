@@ -1,8 +1,9 @@
-import React, { useState, useEffect} from "react";
+import React, { useContext, useState, useEffect} from "react";
 import { Link, useParams } from "react-router-dom";
 
 // import './css/inventory.css'
 import './css/inventoryitem.css'
+import { CartContext } from "../context/CartContext2.jsx";
 
 import ring from '../assets/randoring.jpg'
 import necklace from '../assets/necklacemodel.jpg'
@@ -14,6 +15,8 @@ function InventoryItem() {
     const {id} = useParams();
     const [item, setItem] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+
+    const { addToCart } = useContext(CartContext);
 
     const discountedPrice = item ? item.price - item.price * item.discountRate : 0;
 
@@ -40,10 +43,14 @@ function InventoryItem() {
         fetchedItem();
     }, [id]);
 
-    if (!item) {
+    if (isLoading || !item) {
         return <div>Loading...</div>;
     }
 
+    const handleAddToCart = () => {
+        addToCart(item);  // Pass full item object
+        alert(`${item.name} added to cart!`);
+    };
     return (
         <div className="root">
             <div className="inventory-item">
@@ -79,8 +86,10 @@ function InventoryItem() {
                         <p className="description">{item.description}</p>
                         
                     </div>
-                    <button className="add-to-cart">Add to Cart</button>
 
+                    <button className="add-to-cart" onClick={handleAddToCart}>
+                        Add to Cart
+                    </button>
                 </div>
                 
             </div>

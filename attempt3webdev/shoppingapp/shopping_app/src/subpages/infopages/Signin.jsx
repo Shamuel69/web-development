@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext } from '../../context/AuthContext2.jsx';
 import { Link, useNavigate } from "react-router-dom";
 
 
@@ -10,17 +10,19 @@ import '../css/signin.css';
 
 
 function Signin() {
-    const { login } = useContext(AuthContext);
+    const { error, login } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const [loginInput, setLoginInput] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
+    const [error1, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
-
+        // if (error.length > 1) {
+        //     setError(error);
+        // }
         if (!loginInput || !password) {
             setError('Please fill in all fields.');
             return;
@@ -56,9 +58,9 @@ function Signin() {
         <div className="signin-container">
             <div className="signin-inner-container">
                 <h2>Sign In</h2>
-
+        
+                {error1 && <p className="error-message">{error1}</p>}
                 {error && <p className="error-message">{error}</p>}
-                
                 <form className="signin-form" onSubmit={handleSubmit}>
                     <div className="email-container">
                         <div className="text-container">
