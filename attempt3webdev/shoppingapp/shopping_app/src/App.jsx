@@ -6,6 +6,11 @@ import { CartContext } from './context/CartContext2.jsx';
 import profile from './assets/profile-icon.svg'
 import Search from './assets/search-icon.svg'
 import shoppingCart from './assets/shopping-cart.svg'
+import ring from './assets/randoring.jpg'
+import necklace from './assets/necklacemodel.jpg'
+import earrings from './assets/earring.jpg'
+import bracelets from './assets/bracelet.jpg'
+
 
 import './App.css'
 import './subpages/css/cartoverlay.css'
@@ -54,63 +59,75 @@ function CartOverlay( { isCartOverlay, user, login, onClose } ) {
   const tax = subtotal * 0.1; 
   const total = subtotal + shipping + tax;
 
+  const itemLabels = {
+    'Ring': ring,
+    'Necklace': necklace,
+    'Earrings': earrings,
+    'Bracelets': bracelets
+  }
+
   return (
     
     <div className={`cart-overlay ${isCartOverlay ? 'clicked' : ''}`} onClick={onClose}>
       <div className={`cart-overlay-content ${isCartOverlay ? 'clicked' : ''}`} onClick={(e) => e.stopPropagation()}>
         <div className="cart-overlay-container">
-          <h2 >{user ? user.name : "Guest"}</h2>
+          <h2 >{user ? user.name + "'s Cart" : "Guest"}</h2>
           {user ? (
             <div>
               <p>Welcome back, {user.name}!</p>
               {cartItems.length === 0 ? (
-                <p>Your cart is empty.</p>
+                <>
+                  <p>Your cart is empty.</p>
+                  <Link to="/inventory"><button>Start Shopping</button></Link>
+                </>
               ) : (
                 <>
-                  // cart items with image, name, price, quantity controls, remove button
                   <div className="cart-items">
                     {cartItems.map(cartItem => {
                       const item = inventory.find(invItem => invItem.id === cartItem.id);
                       if (!item) return null;
                       return (
                         <div key={cartItem.id} className="cart-item">
-                          <img src={item.image} alt={item.name} className="cart-item-image"/>
+                          <img src={itemLabels[item.label]} alt={item.name} className="cart-item-image"/>
                           <div className="cart-item-details">
-                            <h4>{item.name}</h4>
-                            <p>${item.price}</p>
+                            <span className="item-name">{item.name}</span>
+                            <span className="item-price">${item.price}</span>
+                          </div>
+                          <div className="quantity-container">
                             <div className="quantity-controls">
+                              <button onClick={() => updateCartItemQuantity(cartItem.id, cartItem.quantity - 1)}>-</button>
                               <input type="number" name="quantity" value={cartItem.quantity} readOnly/>
                               <button onClick={() => updateCartItemQuantity(cartItem.id, cartItem.quantity + 1)}>+</button>
-                              <button onClick={() => updateCartItemQuantity(cartItem.id, cartItem.quantity - 1)}>-</button>
                             </div>
                             <div className="cart-item-actions">
-                              <p className="item-total">${item.price * cartItem.quantity} </p>
-                              <button onClick={() => removeFromCart(cartItem.id)}>Remove</button>
+                              <span className="item-total">${item.price * cartItem.quantity}</span>
+                              <button className="remove-button" onClick={() => removeFromCart(cartItem.id)}>X</button>
                             </div>
+                            
                           </div>
                         </div>
                       );
-                    })};
+                    })}
                   </div>
-                  // cart summery
                   
                   <div className="cart-summary">
                     <div className="cart-summary-item">
-                      <p>Subtotal</p>
-                      <p>${subtotal}</p>
+                      <p>Subtotal: </p>
+                      <span>${subtotal}</span>
                     </div>
                     <div className="cart-summary-item">
-                      <p>Shipping</p>
-                      <p>${shipping}</p>
+                      <p>Shipping: </p>
+                      <span>${shipping}</span>
                     </div>
                     <div className="cart-summary-item">
-                      <p>Tax</p>
-                      <p>${tax}</p>
+                      <p>Tax: </p>
+                      <span>${tax}</span>
                     </div>
                     <div className="cart-summary-total">
-                      <p>Total</p>
-                      <p>${total}</p>
+                      <p>Total: </p>
+                      <span>${total}</span>
                     </div>
+                    <Link to="/cartcheckout"><button>Checkout</button></Link>
                   </div>
                 </>
               )}

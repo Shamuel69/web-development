@@ -106,7 +106,7 @@ app.put("/profiles/:id", (req, res) => {
     });
 });
 app.post("/inventory", (req, res) => {
-    const newItems = req.body;
+    const newItems = req.body; 
     
     // Filter out items that already exist by ID or name+tags
     const itemsToAdd = newItems.filter(newItem => {

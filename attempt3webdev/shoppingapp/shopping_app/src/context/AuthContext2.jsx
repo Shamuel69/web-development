@@ -38,10 +38,6 @@ export const AuthProvider = ({ children }) => {
         setLoading(true);
         
         try {
-            if (!userData.id) {
-                userData.id = nanoid(10);
-                userData.cart = [];
-            }
             
             console.log("PROFILES IN DATABASE: \n\n", profiles);
             setUser(userData);
@@ -68,7 +64,8 @@ export const AuthProvider = ({ children }) => {
     try {
         setLoading(true);
         
-        if (profiles.some(p => p.email === userData.email)) {
+        console.log("PLEASE CHECK PROFILES:", profiles, profiles.forEach(p => console.log("Profile email:", p.email)));
+        if ( profiles.forEach(p => p.email === userData.email)) {
             setError("User already exists with this email.");
             return;
         }
