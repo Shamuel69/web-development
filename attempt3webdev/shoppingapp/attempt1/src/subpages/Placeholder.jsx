@@ -1,14 +1,14 @@
 import react, { useState, useEffect, useContext } from 'react'
 import { Routes, Route, Link } from 'react-router-dom';
-import './css/signin.css';
+import './css/placeholder.css';
 
-function Signin() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+import sign from '../assets/ap71421.png'
 
+function Placeholder() {
     return (
         <>
-        <div className="signin-container">
+        <div className="placeholder-container">
+            <img src={sign} alt="sign"/>
             <h1>UNDER CONSTRUCTION</h1>
             <p>Please check back later.</p>
         </div>
@@ -16,4 +16,4 @@ function Signin() {
     );
 }
 
-export default Signin;
+export default Placeholder;

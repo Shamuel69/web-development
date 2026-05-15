@@ -1,0 +1,27 @@
+
+
+.placeholder-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+    background-color: var(--bg-primary);
+    transition: all 0.3s ease-in;
+    & h1 {
+        font: 56px/65.5% var(--heading);
+        color: var(--text-primary);
+        border-bottom: 2px solid var(--accent);
+        padding: 10px;
+        margin-bottom: 20px;
+    }    
+    & p {
+        font: 34px/26.5% var(--heading);
+        color: var(--text-secondary);
+    }
+    & img {
+        width: 150px;
+        margin-bottom: 20px;
+        filter: drop-shadow(0 0 5px var(--accent));
+    }
+}

@@ -2,19 +2,66 @@
 #header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 32px 0;
-
+    padding: 16px 0;
+    height: 80px;
+    background-color: var(--bg-secondary);
     @media (max-width: 1024px) {
+        height: 60px;
         flex-direction: column;
         gap: 20px;
         padding: 20px 0;
     }
+    
 }
 
-.header-title {
-    font: 28px/.5% var(--heading);
+
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+    width: 80%;
+    
     color: var(--text-primary);
-    margin: 0 10px;
+
+    transition: color 0.3s ease-in-out;
+    @media (max-width: 1024px) {
+        width: 100%;
+        gap: 20px;
+    }
+    & .header-title {
+    font: 28px/4.5% var(--heading);
+    }
+    & h3{
+        font-weight: 100;
+        font: 18px/1.5% var(--heading);
+        color: var(--text-primary);
+    }
+    & :hover{
+        cursor: pointer;
+        color: var(--accent);
+    }
+    & .auth-buttons {
+        flex: 1;
+        width: 145px;
+        display: flex;
+        justify-content: space-between;
+    }
+    & button {
+        padding: 16px 8px;
+        background-color: var(--accent);
+        color: var(--text-primary);
+        border: none;
+        border-radius: 6px;
+        font: 18px/1.5% var(--body);
+        transition: background-color 0.3s ease-in-out;
+        &:hover {
+            background-color: var(--accent-secondary);
+        }
+    }
+    & .scrolling {
+        height: 60px;
+    }
 }
-  
+
