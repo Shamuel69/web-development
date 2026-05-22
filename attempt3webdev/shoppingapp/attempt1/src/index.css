@@ -6,7 +6,7 @@
   --accent: #3b82f6;
   --accent-secondary: #8b5cf6;
 
-  --text-primary: #f1f5f9;    
+  --text-primary: rgb(241, 245, 249);    
   --text-secondary: #cbd5e1;  
   --text-muted: #94a3b8; 
   
@@ -28,7 +28,7 @@
   --border-radius: 8px;
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
-  font: 16px/5.5% var(--body);
+  font: 16px/1.5 var(--body);
   background: var(--bg-primary);
   
 

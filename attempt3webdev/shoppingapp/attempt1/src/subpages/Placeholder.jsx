@@ -1,5 +1,3 @@
-import react, { useState, useEffect, useContext } from 'react'
-import { Routes, Route, Link } from 'react-router-dom';
 import './css/placeholder.css';
 
 import sign from '../assets/ap71421.png'
