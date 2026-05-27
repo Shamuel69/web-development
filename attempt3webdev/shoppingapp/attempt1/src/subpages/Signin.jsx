@@ -5,24 +5,52 @@ import { AuthContext } from '../context/AuthContext';
 import './css/signin.css';
 
 function Signin() {
-    const { login } = useContext(AuthContext);
+    const { error, login } = useContext(AuthContext);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    const [loading, setLoading] = useState(false);
+    const [error1, setError] = useState('');
+
     const handleSubmit = async (e) => {
+        
         e.preventDefault();
         console.log('Sign in button clicked');
-        
+
+        if (!username || !password) {
+            setError('Please fill in all fields.');
+            return;
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (username.includes('@')) {
+            if (!emailRegex.test(username)) {
+                setError('Please enter a valid email address.');
+                return;
+            }
+        }
+        if (password.length < 6) {
+            setError('Password must be at least 6 characters long.');
+            return;
+        }
+        setTimeout(() => {
+            const userData = {
+                email: userData.email,
+                password: userData.password,
+            }
+            login(userData);
+
+        }, 500);
     }
 
     return (
         <>
         <div className="signin-container">
             <h1>Sign in</h1>
+            {error && <p>{error}</p>}
             <form onSubmit={handleSubmit}>
                 <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
                 <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                <button>Sign in</button>
+                <button type="submit" onClick={handleSubmit}>Sign in</button>
             </form>
             <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
         </div>
