@@ -1,8 +1,9 @@
-import React, { useEffect, useState} from "react";
+import React, { createContext, useEffect, useState} from "react";
 import { nanoid } from "nanoid";
-export const AuthContext = React.createContext({});
 
-export const Authprovider = ({ children }) => {
+export const AuthContext = createContext();
+
+export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [profiles, setProfiles] = useState([]);
     const [error, setError] = useState(null);
@@ -21,7 +22,7 @@ export const Authprovider = ({ children }) => {
         const quickLogin = async () => {
             const savedUser = localStorage.getItem("user");
             if(!savedUser){ 
-                const res = await fetch("http://localhost:8080/profiles");
+                const res = await fetch("http://localhost:8080/accounts");
                 const data = await res.json();
                 console.log(data.profiles);
                 return setProfiles(data.profiles);
@@ -56,7 +57,7 @@ export const Authprovider = ({ children }) => {
             return;
         }
         const packagedData = {
-            userName: userData.userName,
+            username: userData.username,
             email: userData.email,
             password: userData.password,
             id: nanoid(10),
@@ -66,7 +67,7 @@ export const Authprovider = ({ children }) => {
             wishlist: [],
             favorites: []
         }
-        const res = await fetch("http://localhost:8080/profiles", {
+        const res = await fetch("http://localhost:8080/accounts", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(packagedData)
@@ -94,7 +95,7 @@ export const Authprovider = ({ children }) => {
         }
     }
     return (
-        <AuthContext.Provider value={{ user, login, logout, signup, profiles, error }}>
+        <AuthContext.Provider value={{ user, profiles, error, login, signup, logout }}>
             {children}
         </AuthContext.Provider>
     );

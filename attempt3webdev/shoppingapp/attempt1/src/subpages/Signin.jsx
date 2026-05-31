@@ -1,5 +1,5 @@
 import react, { useState, useEffect, useContext } from 'react'
-import { Routes, Route, Link } from 'react-router-dom';
+import { navigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 import './css/signin.css';
@@ -27,6 +27,13 @@ function Signin() {
                 setError('Please enter a valid email address.');
                 return;
             }
+            const userData = {
+                username: username,
+                password: password,
+            }
+            login(userData);
+            navigate('/');
+            return;
         }
         if (password.length < 6) {
             setError('Password must be at least 6 characters long.');
@@ -34,11 +41,11 @@ function Signin() {
         }
         setTimeout(() => {
             const userData = {
-                email: userData.email,
-                password: userData.password,
+                email: username,
+                password: password,
             }
             login(userData);
-
+            navigate('/');
         }, 500);
     }
 
