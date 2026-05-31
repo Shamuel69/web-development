@@ -13,7 +13,14 @@ export const AuthProvider = ({ children }) => {
         const user = typeof savedUser === "string" ? JSON.parse(savedUser) : savedUser;
         const fetched_data = profiles.find(profile => profile.id === user.id) || null;
         if (fetched_data) {
-            return { ...fetched_data, cart: user.cart, recentlyViewed: user.recentlyViewed, collections: user.collections, wishlist: user.wishlist, favorites: user.favorites   };
+            return { 
+                ...fetched_data, 
+                cart: user.cart, 
+                recentlyViewed: user.recentlyViewed, 
+                collections: user.collections, 
+                wishlist: user.wishlist, 
+                favorites: user.favorites   
+            };
         }
         return null;
     }
