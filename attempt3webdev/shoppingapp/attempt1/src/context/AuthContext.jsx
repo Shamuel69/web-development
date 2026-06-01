@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
         const quickLogin = async () => {
             const savedUser = localStorage.getItem("user");
             if(!savedUser){ 
-                const res = await fetch("http://localhost:8080/accounts");
+                const res = await fetch("http://localhost:8080/profiles");
                 const data = await res.json();
                 console.log(data.profiles);
                 return setProfiles(data.profiles);
@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         console.error("Issue finding the profiles: ", error);
-        alert("(Backend) Failed to load profiles \n error: " + error.message);
+        alert("(Backend) Failed to load profiles \n error: " + error);
     }, [error]);
     
     const login = async (userData) => {
@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }) => {
             wishlist: [],
             favorites: []
         }
-        const res = await fetch("http://localhost:8080/accounts", {
+        const res = await fetch("http://localhost:8080/profiles", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(packagedData)

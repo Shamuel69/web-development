@@ -16,7 +16,7 @@ let collections = [
         username: "John Doe"
     }
 ];
-let accounts = [
+let profiles = [
     {
         "id": "EwXdSEfLYp",
         "username": "John Doe",
@@ -57,13 +57,13 @@ let inventory = [{
 app.use(cors(corsOptions));
 app.use(express.json());
 
-app.put("/accounts/:id", (req, res) => {
-    const userIndex = accounts.findIndex(account => account.id === req.params.id);
+app.put("/profiles/:id", (req, res) => {
+    const userIndex = profiles.findIndex(account => account.id === req.params.id);
     if(userIndex !== -1){
-        accounts[userIndex] = {...accounts[userIndex], ...req.body};
+        profiles[userIndex] = {...profiles[userIndex], ...req.body};
         res.json({
             message: "Account updated successfully",
-            user: accounts[userIndex]
+            user: profiles[userIndex]
         });
     }
     return res.status(404).json({error: "User not found"});
@@ -80,8 +80,8 @@ app.put("/collections/:id", (req, res) => {
     return res.status(404).json({error: "Collection not found"});
 })
 
-app.get("/accounts", (req, res) => {
-    res.json({accounts: accounts});
+app.get("/profiles", (req, res) => {
+    res.json({profiles: profiles});
 });
 
 app.get("/inventory", (req, res) => {
@@ -113,13 +113,13 @@ app.get("inventory/:id", (req, res) => {
     }
     res.json({item: itemID});
 });
-app.post("/accounts", (req, res) => {
+app.post("/profiles", (req, res) => {
     const newAccount = req.body;
 
-    const accountexist = accounts.some(account => account.email === newAccount.email || account.id === newAccount.id);
+    const accountexist = profiles.some(account => account.email === newAccount.email || account.id === newAccount.id);
 
     if(!accountexist){
-        accounts.push(newAccount);
+        profiles.push(newAccount);
     
         res.status(201).json({
             message: "Account created successfully",
@@ -129,10 +129,10 @@ app.post("/accounts", (req, res) => {
     return res.status(400).json({error: "Account already exists with this email"});
 });
 
-app.get("/accounts/:id", (req, res) => {
-    const userIndex = accounts.findIndex(account => account.id === req.params.id);
+app.get("/profiles/:id", (req, res) => {
+    const userIndex = profiles.findIndex(account => account.id === req.params.id);
     if(userIndex !== -1){
-        res.json({user: accounts[userIndex]});
+        res.json({user: profiles[userIndex]});
     }
     return res.status(404).json({error: "User not found"});
 });

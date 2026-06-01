@@ -1,5 +1,5 @@
 import react, { useState, useEffect, useContext } from 'react'
-import { navigate, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 import './css/signin.css';
@@ -32,7 +32,7 @@ function Signin() {
                 password: password,
             }
             login(userData);
-            navigate('/');
+            useNavigate('/');
             return;
         }
         if (password.length < 6) {
@@ -45,7 +45,7 @@ function Signin() {
                 password: password,
             }
             login(userData);
-            navigate('/');
+            useNavigate('/');
         }, 500);
     }
 
