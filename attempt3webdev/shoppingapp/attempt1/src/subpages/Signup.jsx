@@ -50,17 +50,21 @@ function Signup() {
                 {error1 && <p className="error-message">{error1}</p>}
                 {error && <p className="error-message">{error}</p>}
                 <form onSubmit={handleSubmit}>
-                    <div classname="form-group">
-                        <label for="username">Username</label>
+                    <div className="form-group">
+                        <label htmlFor="username">Username:</label>
                         <input type="text" id="username" name="username" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
                     </div>
-                    <div classname="form-group">
-                        <label for="email">Email</label>
+                    <div className="form-group">
+                        <label htmlFor="email">Email:</label>
                         <input type="email" id="email" name="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
                     </div>
-                    <div classname="form-group">
-                        <label for="password">Password</label>
+                    <div className="form-group">
+                        <label htmlFor="password">Password:</label>
                         <input type="password" id="password" name="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="confirmPassword">Confirm Password:</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" value={password} onChange={(e) => setPassword(e.target.value)} />
                     </div>
                     <button type="submit" onClick={handleSubmit}>Sign Up</button>
                     <p>Already have an account? <Link to="/signin">Sign In</Link></p>

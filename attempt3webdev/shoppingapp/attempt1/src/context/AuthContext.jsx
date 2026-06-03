@@ -27,22 +27,32 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const quickLogin = async () => {
-            const savedUser = localStorage.getItem("user");
+            const savedUser = localStorage.getItem("user") || null;
             if(!savedUser){ 
-                const res = await fetch("http://localhost:8080/profiles");
-                const data = await res.json();
-                console.log(data.profiles);
-                return setProfiles(data.profiles);
+                try{
+                    const res = await fetch("http://localhost:8080/profiles");
+                    const data = await res.json();
+                    console.log(data.profiles);
+                    return setProfiles(data.profiles);
+            
+                } catch (err) {
+                    setUser(JSON.parse(savedUser));
+                    setProfiles(JSON.parse(savedUser));
+                    setError("(Backend) Failed to load profiles \n error: " + err.message);
+                }
             }
-            // localStorage.setItem("user", JSON.stringify(data.profiles[0])); make a quick function that updates the localstorage
+            
+                // localStorage.setItem("user", JSON.stringify(data.profiles[0])); make a quick function that updates the localstorage
             return setUser();
         }
         quickLogin();
     }, []);
 
     useEffect(() => {
-        console.error("Issue finding the profiles: ", error);
-        alert("(Backend) Failed to load profiles \n error: " + error);
+        if (error) {
+            console.error("Issue finding the profiles: ", error);
+            alert("(Backend) Failed to load profiles \n error: " + error);
+        }
     }, [error]);
     
     const login = async (userData) => {
@@ -64,16 +74,17 @@ export const AuthProvider = ({ children }) => {
             return;
         }
         const packagedData = {
+            id: nanoid(10),
             username: userData.username,
             email: userData.email,
             password: userData.password,
-            id: nanoid(10),
             cart: [],
             recentlyViewed: [],
             collections: [],
             wishlist: [],
             favorites: []
         }
+        console.log("Attempting to sign up user with data:", packagedData);
         const res = await fetch("http://localhost:8080/profiles", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
@@ -86,6 +97,7 @@ export const AuthProvider = ({ children }) => {
             console.log("Successfully signed up user:", packagedData);
         }
         const data = await res.json();
+        console.log("Received response from server after signup:", data, "Profiles:", data.profiles);
         if (data.profiles) {
             const found_profile = data.profiles.find(item => item.id === packagedData.id) || null;
             

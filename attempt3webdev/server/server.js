@@ -55,13 +55,13 @@ let inventory = [{
 }]
 
 app.use(cors(corsOptions));
-app.use(express.json());
+app.use(express.json());  
 
 app.put("/profiles/:id", (req, res) => {
     const userIndex = profiles.findIndex(account => account.id === req.params.id);
     if(userIndex !== -1){
         profiles[userIndex] = {...profiles[userIndex], ...req.body};
-        res.json({
+        res.json({ 
             message: "Account updated successfully",
             user: profiles[userIndex]
         });

@@ -1,5 +1,5 @@
-import react, { useState, useEffect, useContext } from 'react'
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react'
+import { Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 import './css/signin.css';
@@ -32,7 +32,7 @@ function Signin() {
                 password: password,
             }
             login(userData);
-            useNavigate('/');
+            Link('/');
             return;
         }
         if (password.length < 6) {
@@ -45,24 +45,33 @@ function Signin() {
                 password: password,
             }
             login(userData);
-            useNavigate('/');
+            Link('/');
         }, 500);
     }
 
     return (
-        <>
         <div className="signin-container">
-            <h1>Sign in</h1>
-            {error && <p>{error}</p>}
-            <form onSubmit={handleSubmit}>
-                <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
-                <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                <button type="submit" onClick={handleSubmit}>Sign in</button>
-            </form>
-            <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
+            <div className="signin-form">
+                <h2>Sign In</h2>
+                {error1 && <p className="error-message">{error1}</p>}
+                {error && <p className="error-message">{error}</p>}
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label htmlFor="username">Username or Email:</label>
+                        <input type="text" id="username" name="username" placeholder="Username or Email" value={username} onChange={(e) => setUsername(e.target.value)} />
+                    </div>
+                    
+                    <div className="form-group">
+                        <label htmlFor="password">Password:</label>
+                        <input type="password" id="password" name="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    </div>
+                    <button type="submit" onClick={handleSubmit}>Sign In</button>
+                    <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
+                </form>
+            </div>
         </div>
-        </>
     );
 }
+
 
 export default Signin;
