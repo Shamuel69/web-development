@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 import './css/signin.css';
@@ -8,7 +8,7 @@ function Signin() {
     const { error, login } = useContext(AuthContext);
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-
+    const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [error1, setError] = useState('');
 
@@ -32,7 +32,7 @@ function Signin() {
                 password: password,
             }
             login(userData);
-            Link('/');
+            navigate('/');
             return;
         }
         if (password.length < 6) {

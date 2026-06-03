@@ -28,23 +28,18 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const quickLogin = async () => {
             const savedUser = localStorage.getItem("user") || null;
-            if(!savedUser){ 
-                try{
-                    const res = await fetch("http://localhost:8080/profiles");
-                    const data = await res.json();
-                    console.log(data.profiles);
-                    return setProfiles(data.profiles);
-            
-                } catch (err) {
-                    setUser(JSON.parse(savedUser));
-                    setProfiles(JSON.parse(savedUser));
-                    setError("(Backend) Failed to load profiles \n error: " + err.message);
+            try{
+                const res = await fetch("http://localhost:8080/profiles");
+                const data = await res.json();
+                setProfiles(data.profiles);
+                if(savedUser){ 
+                    setUser(JSON.parse(savedUser))
                 }
+            } catch (err) {
+                setError("(Backend) Failed to load profiles \n error: " + err.message);
             }
-            
-                // localStorage.setItem("user", JSON.stringify(data.profiles[0])); make a quick function that updates the localstorage
-            return setUser();
         }
+                // localStorage.setItem("user", JSON.stringify(data.profiles[0])); make a quick function that updates the localstorage
         quickLogin();
     }, []);
 
@@ -56,12 +51,14 @@ export const AuthProvider = ({ children }) => {
     }, [error]);
     
     const login = async (userData) => {
+        
         const user_profile = profiles.find(item => 
-            item.userName === userData.userName ||
-            item.email === userData.email ||
-            item.id === userData.id
+            item.username === userData.email
         )
+        console.log("Attempting to log in user with data:", profiles, userData);
+        console.log("Found user profile:", user_profile);
         if (user_profile) {
+
             setUser(user_profile);
             localStorage.setItem("user", JSON.stringify(user_profile));
         } else {

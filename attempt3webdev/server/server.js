@@ -79,10 +79,8 @@ app.put("/collections/:id", (req, res) => {
     }
     return res.status(404).json({error: "Collection not found"});
 })
+ 
 
-app.get("/profiles", (req, res) => {
-    res.json({profiles: profiles});
-});
 
 app.get("/inventory", (req, res) => {
     res.json({inventory: inventory});
@@ -123,19 +121,14 @@ app.post("/profiles", (req, res) => {
     
         res.status(201).json({
             message: "Account created successfully",
-            user: newAccount
+            user: newAccount,
+            profiles: profiles
         });
     }
     return res.status(400).json({error: "Account already exists with this email"});
 });
 
-app.get("/profiles/:id", (req, res) => {
-    const userIndex = profiles.findIndex(account => account.id === req.params.id);
-    if(userIndex !== -1){
-        res.json({user: profiles[userIndex]});
-    }
-    return res.status(404).json({error: "User not found"});
-});
+
 app.get("/inventory", (req, res) => {
     res.json({inventory: inventory});
 });
