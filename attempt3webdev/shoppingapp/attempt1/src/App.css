@@ -262,11 +262,10 @@
 }
 .profile-container {
     position: absolute;
-    top: 60px;
+    top: 50px;
     right: 0;
     background-color: var(--bg-secondary);
-    border: 2px solid var(--border);
-    border-radius: var(--border-radius);
+    border-left: 2px solid var(--accent);
     width: 200px;
     padding: 10px;
     display: none;
@@ -274,17 +273,65 @@
     & .profile-menu {
         display: flex;
         flex-direction: column;
-        gap: 10px;
-        & a {
-            color: var(--text-primary);
-            text-decoration: none;
-            padding: 8px 12px;
-            border-radius: var(--border-radius);
-            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-            &:hover {
-                background-color: var(--accent);
-                color: var(--text-primary);
-            }
+        gap: 20px;
+        & img {
+            max-width: 108px;
+            max-height: 108px;
+            border-radius: 25%;
+            width: 108px;
+            height: 108px;
+            object-fit: cover;
+            margin: 0 auto;
         }
+        & h3 {
+            font-size: 16px;
+            margin: 0 auto;
+            color: var(--text-primary);
+        }   
+        & .profile-dropdown {
+            background-color: var(--bg-primary);
+            position: relative;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            & li {
+                padding: 4px 0px;
+                transition: box-shadow 0.2s ease-in-out, color 0.3s ease-in-out;
+                list-style: none;
+                width: 100%;
+                border: 2px solid transparent;
+                border-left: none;
+                border-bottom: 2px solid var(--border);
+                &:hover {
+                    box-shadow: inset 2px 0 0 0 var(--accent);
+
+                    color: var(--text-primary);
+                }
+            }
+            & li:last-child {
+                padding: 4px 0px;
+                transition: box-shadow 0.3s ease-in-out, color 0.3s ease-in-out;
+                list-style: none;
+                border: 2px solid transparent;
+                border-left: none;
+                border-bottom: 2px solid var(--border);
+                &:hover {
+                    box-shadow: inset 2px 0 0 0 var(--warning);
+                    color: var(--text-primary);
+                }
+            }
+            
+            & a {
+                color: var(--text-primary);
+                text-decoration: none;
+                border: none;
+                transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+                &:hover {
+                    background-color: transparent;
+                    color: var(--text-primary);
+                }
+            }
+        }     
     }
 }

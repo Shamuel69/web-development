@@ -31,9 +31,10 @@ function SideMenu({ activeMenu, setActiveMenu, user, profiles }) {
         </div>
     )
 }
-function ProfileMenu({ user, profiles, active}) {
+
+function ProfileMenu({ user, logout, active}) {
     return (
-        <div className="profile-container" style={{ display: active ? 'block' : 'none' }}>
+        <div className="profile-container" style={{ display: active ? 'block' : 'none', opacity: active ? 1 : 0, transition: 'opacity 0.3s ease-in-out', }}>
             <div className="profile-menu">
                 {user ? (
                     <>
@@ -50,13 +51,11 @@ function ProfileMenu({ user, profiles, active}) {
                                     <li><Link to="/checkout">Checkout</Link></li>
                                     <li><Link to="/contact">Contact</Link></li>
                                     <li><Link to="/about">About</Link></li>
+                                    <li onClick ={() => logout()}><Link to="/">Logout</Link></li>
                                 </ul>
                             </div>
                         </div> 
-                        <button onClick={() => {
-                            localStorage.removeItem("user");
-                            window.location.href = "/";
-                        }}>Logout</button>
+                        
                     </>
                 ) : (
                     <div className="auth-buttons">
@@ -64,21 +63,18 @@ function ProfileMenu({ user, profiles, active}) {
                         <Link to="/signin">Login</Link>
                     </div>
                 )}
-                <p>{user ? user.username : profiles[0] ? profiles[0].username : profiles}</p>
             </div>
         </div>
     )
 }
 
 function App() {
-    const [loggedin, setLogin] = useState(false);
-    const [username, setUsername] = useState('');
     const [activeMenu, setActiveMenu] = useState(false);
     const [activeDropdownMenu, setActiveDropdownMenu] = useState(false);
     const [scrolling, setScrolling] = useState(false);
     const displayRef = useRef(null);
     const lastScroll = useRef(0);
-    const { user, profiles } = useContext(AuthContext);
+    const { user, profiles, logout } = useContext(AuthContext);
 
     useEffect(() => {
         const el = displayRef.current;
@@ -125,7 +121,7 @@ function App() {
                                 <img src={search} alt="profile image" /> 
                                 <h3>{user.username}</h3>
                             </div>
-                            <ProfileMenu user={user} profiles={profiles} active={activeDropdownMenu} />
+                            <ProfileMenu user={user} profiles={profiles} logout={logout} active={activeDropdownMenu} />
                         </>
                         ) : (
                         <div className="auth-buttons">
