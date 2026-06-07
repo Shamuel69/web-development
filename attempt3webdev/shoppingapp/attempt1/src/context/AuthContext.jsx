@@ -51,7 +51,6 @@ export const AuthProvider = ({ children }) => {
     }, [error]);
     
     const login = async (userData) => {
-        
         const user_profile = profiles.find(item => 
             item.username === userData.email
         )
@@ -66,6 +65,7 @@ export const AuthProvider = ({ children }) => {
         }
     }
     const signup = async (userData) => {
+        
         if(profiles.find(item => item.email === userData.email)){
             setError("User already exists with this email.");
             return;

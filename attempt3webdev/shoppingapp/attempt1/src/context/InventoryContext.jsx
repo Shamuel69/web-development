@@ -1,5 +1,5 @@
-import React, { createContext, useState } from 'react';
-
+import React, { createContext, useState, useEffect } from 'react';
+import { AuthContext } from './AuthContext';
 export const InventoryContext = createContext();
 
 export const InventoryProvider = ({ children }) => {
@@ -24,17 +24,27 @@ export const InventoryProvider = ({ children }) => {
             } catch (err) {
                 setError(err.message);
             } finally {
+                
                 setLoading(false);
             }
         };
 
         fetchInventory();
     }, []);
-
+    const popularItems = () => {
+        const popular = inventory.sort((a, b) => (b["times-interacted"] || 0) - (a["times-interacted"] || 0)).slice(0, 10);
+        return popular;
+    }
+    const addToRecent = (item) => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        const updatedUser = {...user, recentlyViewed: [...user.recentlyViewed, item]};
+        localStorage.setItem("user", JSON.stringify(updatedUser));
+    }
     const handleInventoryChange = async (updatedInventory) => {
+        
         try {
             const res = await fetch("http://localhost:8080/inventory", {
-                method: "PUT",
+                method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(updatedInventory),
             });
@@ -49,7 +59,7 @@ export const InventoryProvider = ({ children }) => {
             setError(err.message);
         }
     };
-
+    
     const updateInventory = (newInventory, quantity = false) => {
         if (quantity) {
             const updatedInventory = inventory.map(item => {
@@ -71,7 +81,6 @@ export const InventoryProvider = ({ children }) => {
         }).filter(item => item.quantity > 0);
         handleInventoryChange(updatedInventory);
     }
-    const 
     return (
         <InventoryContext.Provider value={{ inventory, setInventory, loading, setLoading, error, setError, updateInventory, removeFromInventory }}>
             {children}
