@@ -7,13 +7,13 @@ import { InventoryProvider } from '../context/InventoryContext.jsx';
 function FrontPageItems({inventory}) {
     const frontPageItems = inventory.filter(item => item.front_page === true);
     return (
-        <div className="front-page-items">
+        <div className="front-page">
             <h2>Front Page Items</h2>
-            <div className="front-page-items-container">
+            <div className="front-page-container">
                 {frontPageItems.map(item => (
                     <div className="front-page-item" key={item.id}>
-                        <img src={item.image} alt={item.title} />
-                        <p>{item.title}</p>
+                        <img src={item.image} alt={item.label} />
+                        <p>{item.label}</p>
                         <span>{item.price}</span>
                     </div>
                 ))}
@@ -28,9 +28,9 @@ function GetQuick({inventory}) {
             <h2>Quick Items</h2>
             <div className="front-page-container">
                 {quickItems.map(item => (
-                    <div className="quick-item" key={item.id}>
-                        <img src={item.image} alt={item.title} />
-                        <p>{item.title}</p>
+                    <div className="front-page-item" key={item.id}>
+                        <img src={item.image} alt={item.label} />
+                        <p>{item.label}</p>
                         <span>{item.price}</span>
                     </div>
                 ))}
@@ -51,15 +51,31 @@ function HotItems({inventory, vertical=false}) {
                 <h2>Hot Items</h2>
                 <div className="front-page-container-vertical">
                     {hotItems.map(item => (
-                        <div className="hot-item" key={item.id}>
-                            <img src={item.image} alt={item.title} />
-                            <p>{item.title}</p>
+                        <div className="front-page-item" key={item.id}>
+                            <img src={item.image} alt={item.label} />
+                            <p>{item.label}</p>
+                            <span>{item.price}</span>
+
                         </div>
                     ))}
                 </div>
             </div>
         );
     }
+    return (
+            <div className="front-page">
+                <h2>Hot Items</h2>
+                <div className="front-page-container">
+                    {hotItems.map(item => (
+                        <div className="front-page-item" key={item.id}>
+                            <img src={item.image} alt={item.label} />
+                            <p>{item.label}</p>
+                            <span>{item.price}</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
 }
 function Inventory() {
     const { user } = useContext(AuthContext);

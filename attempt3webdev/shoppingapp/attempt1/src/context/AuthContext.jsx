@@ -110,8 +110,31 @@ export const AuthProvider = ({ children }) => {
             setError("There was a problem retrieving profile data.");
         }
     }
+    const updateProfile = async (userData) => {
+        try {
+            if (userData.id) {
+                const res = await fetch(`http://localhost:8080/profiles/${userData.id}`, {
+                    method: "PATCH",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(userData)
+                });
+                if (!res.ok) {
+                    const errorText = await res.text();
+                    throw new Error(`Server error ${res.status}: ${errorText}`);
+                }
+                const data = await res.json();
+                console.log("Received response from server after update:", data);
+
+            } else {
+                setError("(Called from updateProfile) User id not found.");
+            }
+        } catch (err) {
+            setError("(Called from updateProfile) Failed to update profile \n error: " + err.message);
+        }
+    }
+
     return (
-        <AuthContext.Provider value={{ user, profiles, error, login, signup, logout }}>
+        <AuthContext.Provider value={{ user, profiles, error, login, signup, logout, updateProfile}}>
             {children}
         </AuthContext.Provider>
     );

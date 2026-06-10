@@ -7,6 +7,7 @@
     position: fixed;
     width: 100%;
     z-index: 997;
+    top: 0;
     background-color: var(--bg-primary);
     border-bottom: 2px solid var(--bg-secondary);
     @media (max-width: 1024px) {
@@ -79,7 +80,9 @@
         height: 60px;
     }
 
-
+#display-area {
+    margin-top: 60px; 
+}
 
 .background-blur {
     position: fixed;
