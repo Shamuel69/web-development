@@ -4,13 +4,16 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './App.jsx'
 import { AuthProvider } from './context/AuthContext.jsx';
+import { CollectionsProvider } from './context/CollectionsContext.jsx';
 import { InventoryProvider } from './context/InventoryContext.jsx';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <AuthProvider>
         <InventoryProvider>
-          <App />
+          <CollectionsProvider>
+            <App />
+          </CollectionsProvider>
         </InventoryProvider>
       </AuthProvider>
     </BrowserRouter>

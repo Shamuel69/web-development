@@ -7,7 +7,8 @@ import { Routes, Route, Link, useLocation } from 'react-router-dom';
 
 import Signup from './subpages/Signup.jsx'
 import Signin from './subpages/Signin.jsx'
-import { GetQuick, FrontPageItems, HotItems } from './subpages/Inventory.jsx'
+import Collections from './subpages/Collections.jsx'
+import { Inventory, GetQuick, FrontPageItems, HotItems } from './subpages/Inventory.jsx'
 import Placeholder from './subpages/Placeholder.jsx'
 import './App.css'
 
@@ -33,7 +34,7 @@ function SideMenu({ activeMenu, setActiveMenu, user, profiles }) {
                 <h3>Menu</h3>
                 <p>{user ? user.username : profiles[0] ? profiles[0].username : profiles}</p>
                 <ul>
-                    <li>Shop</li>
+                    <li><Link to="/shop">Shop</Link></li>
                     <li>Collections</li>
                     <li>My Collections</li>
                     <li>Wishlist</li>
@@ -111,11 +112,11 @@ function App() {
         <>
         <section id="header">
             <div className={`header-content ${scrolling ? "active" : ""}`}>
-                <h2 className="header-title">CarlShop</h2>
+                <h2 className="header-title"><Link to="/" className="ignore-element">CarlShop</Link></h2>
                 <div className="header-container">
                     <div className="header-links">
-                        <h3 className="bare-element">Shop</h3>
-                        <h3 className="disposable-element">Collections</h3> {/* thinkin this could be perfect for a playlist maker */}
+                        <h3 className="bare-element"><Link to="/shop" className="ignore-element">Shop</Link></h3> 
+                        <h3 className="disposable-element"><Link to="/collections" className="ignore-element">Collections</Link></h3> {/* thinkin this could be perfect for a playlist maker */} 
                         <h3 className="disposable-element">Best Deals</h3>
                         
                     </div>
@@ -156,8 +157,8 @@ function App() {
         <section id="display-area" ref={displayRef}>
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/shop" element={<Placeholder />} />
-                <Route path="/collections" element={<Placeholder />} />
+                <Route path="/shop" element={<Inventory />} />
+                <Route path="/collections" element={<Collections />} />
                 <Route path="/best-deals" element={<Placeholder />} />
                 <Route path="/my-collections" element={<Placeholder />} />
                 <Route path="/wishlist" element={<Placeholder />} />

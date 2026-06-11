@@ -75,7 +75,25 @@
         }
     }
 }
-
+.ignore-element {
+    color: var(--text-primary);
+    text-decoration: none;
+    background-color: transparent;
+    &:hover {
+        background-color: transparent;
+        color: var(--text-primary);
+    }
+    & a {
+        color: red;
+        text-decoration: none;
+        border: none;
+        background-color: transparent;
+        &:hover {
+            background-color: transparent;
+            color: var(--text-primary);
+        }
+    }
+}
 .header-content.active {
         height: 60px;
     }

@@ -28,9 +28,10 @@ function Signin() {
                 return;
             }
             const userData = {
-                username: username,
+                email: username,
                 password: password,
             }
+            
             login(userData);
             navigate('/');
             return;
@@ -41,11 +42,11 @@ function Signin() {
         }
         setTimeout(() => {
             const userData = {
-                email: username,
+                username: username,
                 password: password,
             }
             login(userData);
-            Link('/');
+            navigate('/');
         }, 500);
     }
 

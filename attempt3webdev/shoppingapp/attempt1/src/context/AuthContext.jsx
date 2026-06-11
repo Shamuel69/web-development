@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState} from "react";
-import { nanoid } from "nanoid";
+import {nanoid}  from "nanoid";
 
 export const AuthContext = createContext();
 
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
     
     const login = async (userData) => {
         const user_profile = profiles.find(item => 
-            item.username === userData.email
+            item.username === userData.username || item.email === userData.email
         )
         console.log("Attempting to log in user with data:", profiles, userData);
         console.log("Found user profile:", user_profile);

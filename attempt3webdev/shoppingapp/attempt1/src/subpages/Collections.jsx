@@ -2,30 +2,31 @@ import React, { useState, useEffect, useRef, useContext } from 'react'
 
 import './css/collections.css';
 
-import { CollectionsProvider } from '../context/CollectionsContext.jsx';
+import { CollectionsContext } from '../context/CollectionsContext.jsx';
 
 import { AuthContext } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 
 
-const Collections = () => {
+function Collections() {
     const { user } = useContext(AuthContext);
     const { collections, error, addCollection, updateCollection } = useContext(CollectionsContext);
-    const {activeMenu, setActiveMenu} = useState(false);
-    const {showYourCollections, setShowYourCollections} = useState(false);
+    const [showYourCollections, setShowYourCollections] = useState(false);
     return (
         <div className="collections-container">
             {collections.length <= 0 ? (
                 <>
+                <div className="header">
                     <h1>No Collections</h1>
                     <h3>There seems to be no collections, be the first to create one!</h3>
-                    <button onClick={() => setShowYourCollections(true)}>Create a Collection</button>
+                    <button onClick={() => addCollection(user)}>Create a Collection</button>
+                </div>
                 </>
             ) : (
                 <>
                     <div className="header">
                         <h1>Collections</h1>
-                        <button onClick={() => setShowYourCollections(!showYourCollections)}>
+                        <button onClick={() => setShowYourCollections(prevState => !prevState)}>
                             {showYourCollections ? 'Hide Your Collections' : 'Show Your Collections'}
                         </button>
                     </div>
@@ -71,4 +72,4 @@ const Collections = () => {
     )
 }
 
-export default Collections
+export default Collections;

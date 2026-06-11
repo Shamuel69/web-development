@@ -1,8 +1,8 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { AuthContext } from './AuthContext';
 export const CollectionsContext = createContext();
 
-import nanoid from "nanoid";
+import {nanoid} from "nanoid";
 
 export const CollectionsProvider = ({ children }) => {
     const { user, updateProfile } = useContext(AuthContext);
