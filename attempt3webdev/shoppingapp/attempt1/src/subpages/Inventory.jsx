@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
-
+import useNavigate from 'react-router-dom';
 import './css/inventory.css';
 
 import { InventoryContext } from '../context/InventoryContext.jsx';
@@ -14,7 +14,10 @@ function FrontPageItems({inventory}) {
                     <div className="front-page-item" key={item.id}>
                         <img src={item.image} alt={item.label} />
                         <p>{item.label}</p>
-                        <span>{item.price}</span>
+                        <div className="inventory-item-info">
+                            <span>${item.price}</span>
+                            <span>{item.averageRating}</span>
+                        </div>
                     </div>
                 ))}
             </div>
@@ -31,7 +34,10 @@ function GetQuick({inventory}) {
                     <div className="front-page-item" key={item.id}>
                         <img src={item.image} alt={item.label} />
                         <p>{item.label}</p>
-                        <span>{item.price}</span>
+                        <div className="inventory-item-info">
+                            <span>${item.price}</span>
+                            <span>{item.averageRating}</span>
+                        </div>
                     </div>
                 ))}
             </div>
@@ -54,7 +60,10 @@ function HotItems({inventory, vertical=false}) {
                         <div className="front-page-item" key={item.id}>
                             <img src={item.image} alt={item.label} />
                             <p>{item.label}</p>
-                            <span>{item.price}</span>
+                            <div className="inventory-item-info">
+                                <span>${item.price}</span>
+                                <span>{item.averageRating}</span>
+                            </div>
 
                         </div>
                     ))}
@@ -70,7 +79,10 @@ function HotItems({inventory, vertical=false}) {
                         <div className="front-page-item" key={item.id}>
                             <img src={item.image} alt={item.label} />
                             <p>{item.label}</p>
-                            <span>{item.price}</span>
+                            <div className="inventory-item-info">
+                                <span>${item.price}</span>
+                                <span>{item.averageRating}</span>
+                            </div>
                         </div>
                     ))}
                 </div>
@@ -79,6 +91,87 @@ function HotItems({inventory, vertical=false}) {
 }
 function Inventory() {
     const { inventory, loading, error } = useContext(InventoryContext);
+    const navigate = useNavigate();
+    const [filters, setFilters] = useState({
+        accessory: [],
+        price: [],
+        rating: [],
+        tags: [],
+    });
+
+    const filteredInventory = inventory.filter(item => {
+        const filtered_items = [];
+        if (filters.accessory.length === 0 || item.label.includes(filters.accessory.map(itemtoCheck => itemtoCheck.toLowerCase()))){
+            filtered_items.push(item);
+            console.log(filtered_items);
+        }
+        if (filters.price.length === 0 || item.price.includes(filters.price)){
+            console.log(item, item.price, filters.price);
+        }
+        
+        
+        
+        // return (
+        //     filters.accessory.length === 0 || item.label.includes(item.accessory) &&
+        //     filters.price.length === 0 || item.price.includes(item.price) &&
+        //     filters.rating.length === 0 || filters.rating.includes(item.rating) &&
+        //     filters.tags.length === 0 || item.tags.some(tag => filters.tags.includes(tag))
+        // );
+    })
+
+    const priceRanges = (value) => {
+        const numbers = value.match(/\d+/g);
+        console.log(parseInt(numbers));
+        if (value.includes("Under")) {
+            setFilters(prevFilters => ({
+                ...prevFilters,
+                price: prevFilters.price.filter(item => item <= parseInt(numbers)),
+            }))
+        }else if (value.includes("Over")) {
+            setFilters(prevFilters => ({
+                ...prevFilters,
+                price: prevFilters.price.filter(item => item >= parseInt(numbers)),
+            }))
+        } else {
+            setFilters(prevFilters => ({
+                ...prevFilters,
+                price: prevFilters.price.filter(item => item === parseInt(numbers)),
+            }))
+        }
+    } 
+    const handleCheckboxChange = (category, value) => {
+        const lowercaseCategory = category.toLowerCase();
+        if (lowercaseCategory === "rating") {
+            setFilters(prevFilters => ({
+                ...prevFilters,
+                [lowercaseCategory]: prevFilters[lowercaseCategory].includes(value) 
+                ? prevFilters[lowercaseCategory].filter(item => item >= parseInt(value)) 
+                : [...prevFilters[lowercaseCategory], parseInt(value)],
+            }))
+            console.log(filters);
+            console.log(filteredInventory);
+
+            return;
+        }
+        if (lowercaseCategory === "price") {
+            priceRanges(value);
+            console.log(filters);
+            console.log(filteredInventory);            
+            return;
+        }
+        setFilters(prevFilters => ({
+            ...prevFilters,
+            [lowercaseCategory]: prevFilters[lowercaseCategory].includes(value) 
+            ? prevFilters[lowercaseCategory].filter(item => item !== value) 
+            : [...prevFilters[lowercaseCategory], value],
+        }))
+        console.log(filteredInventory);
+    }
+
+    const accessory = ["Necklace", "Earrings", "Bracelet", "Ring"];
+    const price = ["Under $50", "$50 - $100", "$100 - $150", "$150 - $200", "Over $200"];
+    const rating = ["1 Star", "2 Star", "3 Star", "4 Star", "5 Star"];
+    const tags = ["Silver", "Gold", "Platinum", "Sapphire", "Black Steel", "Rose Gold", "Emerald"];
 
     return (
         <div className="inventory-container">
@@ -87,44 +180,53 @@ function Inventory() {
             <section id="sort"> 
                 <h3>Sort: </h3>   
                 <h4>Accessory: </h4>
-                <ul>
-                    <li>Necklace</li>
-                    <li>Earrings</li>
-                    <li>Bracelet</li>
-                    <li>Ring</li>
-                </ul>
+                    <ul>
+                        {accessory.map(item => (
+                            <li key={item}>
+                                <input type="checkbox" checked={filters.accessory.includes(item)} onChange={() => handleCheckboxChange("accessory", item)} />
+                                <label htmlFor={`accessory-${item}`}>{item}</label>
+                            </li>
+                        ))}
+                    </ul>
                 <h4>Price: </h4>
                 <ul>
-                    <li>Under $50</li>
-                    <li>$50 - $100</li>
-                    <li>$100 - $150</li>
-                    <li>$150 - $200</li>
-                    <li>Over $200</li>
+                    {price.map(item => (
+                        <li key={item}>
+                            <input type="checkbox" checked={filters.price.includes(item)} onChange={() => handleCheckboxChange("price", item)} />
+                            <label htmlFor={`price-${item}`}>{item}</label>
+                        </li>
+                    ))}
                 </ul>
                 <h4>Rating: </h4>
                 <ul>
-                    <li>1 Star</li>
-                    <li>2 Star</li>
-                    <li>3 Star</li>
-                    <li>4 Star</li>
-                    <li>5 Star</li>
+                    {rating.map(item => (
+                        <li key={item}>
+                            <input type="checkbox" checked={filters.rating.includes(item)} onChange={() => handleCheckboxChange("rating", item)} />
+                            <label htmlFor={`rating-${item}`}>{item}</label>
+                        </li>
+                    ))}
                 </ul>
                 <h4>Tags: </h4>
                 <ul>
-                    <li>Silver</li>
-                    <li>Gold</li>
-                    <li>Platinum</li>
+                    {tags.map(item => (
+                        <li key={item}>
+                            <input type="checkbox" checked={filters.tags.includes(item)} onChange={() => handleCheckboxChange("tags", item)} />
+                            <label htmlFor={`tags-${item}`}>{item}</label>
+                        </li>
+                    ))}
                 </ul>
             </section>
             {/* just the inventory so in the middle  */}
             <section id="inventory">
                 <div className="inventory-stock-container">
                     {inventory.map(item => (
-                        <div className="inventory-item" key={item.id}>
+                        <div className="inventory-item" key={item.id} onClick={() => navigate(`/shop/${item.id}`)}>
                             <img src={item.image} alt={item.label} />
-                            <p>{item.label}</p>
-                            <span>{item.rating}</span>
-                            <span>{item.price}</span>
+                            <p>{item.tags[0]} and {item.tags[1]} {item.label}</p>
+                            <div className="inventory-item-info">
+                                <span>${item.price}</span>
+                                <span>{item.averageRating}</span>
+                            </div>
                         </div>
                     ))}
                 </div>
