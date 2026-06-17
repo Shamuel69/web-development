@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
-import useNavigate from 'react-router-dom';
+import React, { useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom';
 import './css/inventory.css';
 
 import { InventoryContext } from '../context/InventoryContext.jsx';
@@ -89,6 +89,11 @@ function HotItems({inventory, vertical=false}) {
             </div>
         );
 }
+
+function InventoryItem(){
+    // when you press the product, it quickly uploads it to the localstorage and redirects to the item    
+}
+
 function Inventory() {
     const { inventory, loading, error } = useContext(InventoryContext);
     const navigate = useNavigate();

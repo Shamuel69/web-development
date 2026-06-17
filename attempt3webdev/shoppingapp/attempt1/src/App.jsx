@@ -158,7 +158,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/shop" element={<Inventory />} />
-                <Route path="/shop/:id" element={<Inventory />} />
+                {/* <Route path="/shop/:id" element={<Inventory />} /> */}
                 <Route path="/collections" element={<Collections />} />
                 <Route path="/best-deals" element={<Placeholder />} />
                 <Route path="/my-collections" element={<Placeholder />} />
