@@ -53,7 +53,7 @@ export const CollectionsProvider = ({ children }) => {
 
             const data = await res.json();
             setRecentlyMade(packagedCollection);
-            setCollections([data.collection]);
+            setCollections([...collections, data.collection]);
         }catch (err) {
             setError(err.message);
         }

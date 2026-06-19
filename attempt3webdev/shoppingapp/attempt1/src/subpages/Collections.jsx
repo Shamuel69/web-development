@@ -5,7 +5,7 @@ import './css/collections.css';
 import { CollectionsContext } from '../context/CollectionsContext.jsx';
 
 import { AuthContext } from '../context/AuthContext';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 function Collections() {

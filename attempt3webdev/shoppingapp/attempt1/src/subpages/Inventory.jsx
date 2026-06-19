@@ -1,7 +1,7 @@
-import React, { useState, useContext } from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from 'react'
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import './css/inventory.css';
-
+import { CartContext } from '../context/CartContext.jsx';
 import { InventoryContext } from '../context/InventoryContext.jsx';
 
 function FrontPageItems({inventory}) {
@@ -11,14 +11,17 @@ function FrontPageItems({inventory}) {
             <h2>Front Page Items</h2>
             <div className="front-page-container">
                 {frontPageItems.map(item => (
-                    <div className="front-page-item" key={item.id}>
-                        <img src={item.image} alt={item.label} />
-                        <p>{item.label}</p>
-                        <div className="inventory-item-info">
-                            <span>${item.price}</span>
-                            <span>{item.averageRating}</span>
+                    <Link to={`/shop/${item.id}`}>
+                        <div className="front-page-item" key={item.id}>
+                            <img src={item.image} alt={item.label} />
+                            <p>{item.label}</p>
+                            <div className="inventory-item-info">
+                                <span>${item.price}</span>
+                                <span>{item.averageRating}</span>
+                            </div>
                         </div>
-                    </div>
+
+                    </Link>
                 ))}
             </div>
         </div>
@@ -31,14 +34,17 @@ function GetQuick({inventory}) {
             <h2>Quick Items</h2>
             <div className="front-page-container">
                 {quickItems.map(item => (
-                    <div className="front-page-item" key={item.id}>
-                        <img src={item.image} alt={item.label} />
-                        <p>{item.label}</p>
-                        <div className="inventory-item-info">
-                            <span>${item.price}</span>
-                            <span>{item.averageRating}</span>
+                    <Link to={`/shop/${item.id}`}>
+                        <div className="front-page-item" key={item.id}>
+                            <img src={item.image} alt={item.label} />
+                            <p>{item.label}</p>
+                            <div className="inventory-item-info">
+                                <span>${item.price}</span>
+                                <span>{item.averageRating}</span>
+                            </div>
                         </div>
-                    </div>
+
+                    </Link>
                 ))}
             </div>
         </div>
@@ -47,25 +53,133 @@ function GetQuick({inventory}) {
 function ForYou() {
     
 }
+function InventoryItem() {
+    const {id} = useParams();
+    const [item, setItem] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [favorite, setFavorite] = useState(false);
+    const [quantity, setQuantity] = useState(1);
+    const {addToCart} = useContext(CartContext);
+    const {addToRecent} = useContext(InventoryContext);
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    const handleIncrement = () => {
+        if (quantity < item.quantity) {
+            setQuantity(quantity + 1);
+        }
+    };
+
+    const handleDecrement = () => {
+        if (quantity > 1) {
+            setQuantity(quantity - 1);
+        }
+    }
+    useEffect(() => {
+        const fetchItem = async () => {
+            try {
+                const res = await fetch(`http://localhost:8080/inventory/${id}`)
+                if (!res.ok) throw new Error("Item not found");
+                const data = await res.json();
+                setItem(data.item);
+                console.log(item);
+                addToRecent(item);
+                setLoading(false);
+            } catch (error) {
+                console.error("Error fetching item:", error);
+                setLoading(false);
+            }
+        }
+        fetchItem();
+    }, [id]);
+
+    useEffect(() => {
+        const fetchWishlist = async () => {
+            try {
+                addToRecent(item, true);
+            } catch (error) {
+                console.error("Error fetching item:", error);
+            }finally{
+                setFavorite(false);
+            }
+        }
+        fetchWishlist();
+    }, [favorite])
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+    if (!item) {
+        return <div>Item not found</div>;
+    }
+
+    return (
+        <>
+            <div className="inventory-item-page">
+                {(user) ? (
+                    <>  
+                        <div className="inventory-item-page-image">
+                            <img src={item.image} alt={item.label} />
+                        </div>
+                        <div className="inventory-item-page-container">
+                            <h4>{item.label} - {item.tags[0]} and {item.tags[1]}</h4>
+                            <h2>{item.tags[0]} and {item.tags[1]} {item.label}</h2>
+                            <p>{item.description}</p>
+                            <div className="inventory-item-page-quantity">
+                                <label className="price">${item.price}</label>
+                                <div >
+                                    <label htmlFor="quantity">Quantity: </label>
+                                    <input type="number" id="quantity" name="quantity" placeholder="1" min="1" max={item.quantity} />
+                                    <div className='arrow-buttons'>
+                                        <button className="add-button" onClick={() => document.getElementById("quantity").stepUp()}>+</button>
+                                        <button className="subtract-button" onClick={() => document.getElementById("quantity").stepDown()}>-</button>
+                                    </div>
+                                </ div>
+                            </div>
+                                
+                            <label><span className="star">&#9733;</span> {item.averageRating}</label>
+                            <div className="inventory-item-info-page">
+                                <div className="inventory-item-page-buttons">
+                                    <button onClick={() => addToCart(item)} className="cart-button">Add to Cart</button>
+                                    <button onClick={() => setFavorite(true)} className="wishlist-button">Add to Wishlist</button>
+                                </div>
+                                <button onClick={() => addToCart(item)} className="buy-button">Buy Now</button>
+                            </div>
+                        </div>
+                    </>
+                ):(
+                    <>
+                        <img src={item.image} alt={item.label} />
+                        <p>{item.label}</p>
+                        <div className="inventory-item-info">
+                            <span>{item.averageRating}</span>
+                            <span>${item.price}</span>
+                        </div>
+                        <button onClick={() => setFavorite(true)}>Add to Wishlist</button>
+                        <button onClick={() => addToCart(item)}>Add to Cart</button>
+                    </>
+                )}
+            </div>
+        </>
+    )
+}
 function HotItems({inventory, vertical=false}) {
     const hotItems = inventory.sort((a, b) => (b.times_interacted || 0) - (a.times_interacted || 0)).slice(0, 5);
-    
-
     if(vertical){
         return (
             <div className="front-page-vertical">
                 <h2>Hot Items</h2>
                 <div className="front-page-container-vertical">
                     {hotItems.map(item => (
-                        <div className="front-page-item" key={item.id}>
+                        <Link to={`/shop/${item.id}`} key={item.id}>
+                            <div className="front-page-item" >
                             <img src={item.image} alt={item.label} />
                             <p>{item.label}</p>
                             <div className="inventory-item-info">
                                 <span>${item.price}</span>
                                 <span>{item.averageRating}</span>
                             </div>
-
                         </div>
+                    </Link>
                     ))}
                 </div>
             </div>
@@ -76,27 +190,26 @@ function HotItems({inventory, vertical=false}) {
                 <h2>Hot Items</h2>
                 <div className="front-page-container">
                     {hotItems.map(item => (
-                        <div className="front-page-item" key={item.id}>
-                            <img src={item.image} alt={item.label} />
-                            <p>{item.label}</p>
-                            <div className="inventory-item-info">
-                                <span>${item.price}</span>
-                                <span>{item.averageRating}</span>
+                        <Link to={`/shop/${item.id}`}>
+                            <div className="front-page-item" key={item.id}>
+                                <img src={item.image} alt={item.label} />
+                                <p>{item.label}</p>
+                                <div className="inventory-item-info">
+                                    <span>${item.price}</span>
+                                    <span>{item.averageRating}</span>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>
         );
 }
 
-function InventoryItem(){
-    // when you press the product, it quickly uploads it to the localstorage and redirects to the item    
-}
+
 
 function Inventory() {
-    const { inventory, loading, error } = useContext(InventoryContext);
-    const navigate = useNavigate();
+    const { inventory } = useContext(InventoryContext);
     const [filters, setFilters] = useState({
         accessory: [],
         price: [],
@@ -225,14 +338,17 @@ function Inventory() {
             <section id="inventory">
                 <div className="inventory-stock-container">
                     {inventory.map(item => (
-                        <div className="inventory-item" key={item.id} onClick={() => navigate(`/shop/${item.id}`)}>
-                            <img src={item.image} alt={item.label} />
-                            <p>{item.tags[0]} and {item.tags[1]} {item.label}</p>
-                            <div className="inventory-item-info">
-                                <span>${item.price}</span>
-                                <span>{item.averageRating}</span>
+                        <Link to={`/shop/${item.id}`} key={item.id}>
+                        
+                            <div className="inventory-item" key={item.id} >
+                                <img src={item.image} alt={item.label} />
+                                <p>{item.tags[0]} and {item.tags[1]} {item.label}</p>
+                                <div className="inventory-item-info">
+                                    <span>${item.price}</span>
+                                    <span>{item.averageRating}</span>
+                                </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
 
@@ -246,4 +362,4 @@ function Inventory() {
 }
 
 
-export {Inventory, FrontPageItems, GetQuick, HotItems};
+export {Inventory, FrontPageItems, GetQuick, HotItems, InventoryItem};

@@ -35,15 +35,31 @@ export const InventoryProvider = ({ children }) => {
         const popular = inventory.sort((a, b) => (b["times-interacted"] || 0) - (a["times-interacted"] || 0)).slice(0, 10);
         return popular;
     }
-    const addToRecent = (item) => {
-        const user = JSON.parse(localStorage.getItem("user"));
-        const updatedUser = {...user, recentlyViewed: [...user.recentlyViewed, item]};
-        localStorage.setItem("user", JSON.stringify(updatedUser));
+    const addToRecent = async (item, Wishlist=false) => {
+        try {
+            const user = JSON.parse(localStorage.getItem("user"));
+            if(!user) {
+                const updateditem = {...item, times_interacted: (item.times_interacted || 0) + 1};
+                handleInventoryChange(updateditem);
+                return
+            };
+            if(Wishlist){
+                const updatedUser = {...user, wishlist: [...user.wishlist, item.id]};
+                localStorage.setItem("user", JSON.stringify(updatedUser));
+            }else{
+                const updatedUser = {...user, recentlyViewed: [...user.recentlyViewed, item.id]};
+                localStorage.setItem("user", JSON.stringify(updatedUser));
+                const updateditem = {...item, times_interacted: (item.times_interacted || 0) + 1};
+                handleInventoryChange(updateditem);
+            }
+        } catch (err) {
+            setError(err.message);
+        }
     }
-    const handleInventoryChange = async (updatedInventory) => {
+    const handleInventoryChange = async (itemID, updatedInventory) => {
         
         try {
-            const res = await fetch("http://localhost:8080/inventory", {
+            const res = await fetch(`http://localhost:8080/inventory/${itemID}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(updatedInventory),
@@ -82,7 +98,7 @@ export const InventoryProvider = ({ children }) => {
         handleInventoryChange(updatedInventory);
     }
     return (
-        <InventoryContext.Provider value={{ inventory, setInventory, loading, setLoading, error, setError, updateInventory, removeFromInventory }}>
+        <InventoryContext.Provider value={{ inventory, setInventory, addToRecent, loading, setLoading, error, setError, updateInventory, removeFromInventory }}>
             {children}
         </InventoryContext.Provider>
     );

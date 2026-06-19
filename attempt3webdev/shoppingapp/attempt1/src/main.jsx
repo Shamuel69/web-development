@@ -6,14 +6,17 @@ import App from './App.jsx'
 import { AuthProvider } from './context/AuthContext.jsx';
 import { CollectionsProvider } from './context/CollectionsContext.jsx';
 import { InventoryProvider } from './context/InventoryContext.jsx';
+import { CartProvider } from './context/CartContext.jsx';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <AuthProvider>
         <InventoryProvider>
-          <CollectionsProvider>
-            <App />
-          </CollectionsProvider>
+          <CartProvider>
+            <CollectionsProvider>
+              <App />
+            </CollectionsProvider>
+          </CartProvider>
         </InventoryProvider>
       </AuthProvider>
     </BrowserRouter>
