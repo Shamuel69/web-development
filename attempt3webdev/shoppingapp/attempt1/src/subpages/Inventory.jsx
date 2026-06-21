@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import './css/inventory.css';
 import { CartContext } from '../context/CartContext.jsx';
 import { InventoryContext } from '../context/InventoryContext.jsx';
+import { CollectionsContext } from '../context/CollectionsContext.jsx';
 
 function FrontPageItems({inventory}) {
     const frontPageItems = inventory.filter(item => item.front_page === true);
@@ -20,7 +21,6 @@ function FrontPageItems({inventory}) {
                                 <span>{item.averageRating}</span>
                             </div>
                         </div>
-
                     </Link>
                 ))}
             </div>
@@ -43,7 +43,6 @@ function GetQuick({inventory}) {
                                 <span>{item.averageRating}</span>
                             </div>
                         </div>
-
                     </Link>
                 ))}
             </div>
@@ -53,27 +52,77 @@ function GetQuick({inventory}) {
 function ForYou() {
     
 }
+function CollectionPopup( {user, item, active} ) {
+    const [collections, setCollections] = useState([]);
+    const {buttonClickHandler, updateCollection} = useContext(CollectionsContext);
+    useEffect(() => {
+
+        const createCollection = async () => {
+            try{
+                buttonClickHandler(item);
+            }catch (error) {
+                console.error("Error creating collection:", error);
+            }
+        }
+        if (collections === "create a collection") {
+            createCollection();
+        } else {
+            updateCollection(collections);
+        }
+    }, [collections]);
+    useEffect(() => {
+        const fetchCollections = async () => {
+            try {
+                const res = await fetch(`http://localhost:8080/collections/${user.id}`)
+                if (!res.ok) throw new Error("Collections not found");
+                const data = await res.json();
+                setCollections(data.collections);
+            } catch (error) {
+                setCollections([]);
+            }
+        }
+        fetchCollections();
+    }, [user]);
+    return (
+        <>
+            <div className={`collection-popup-container ${active ? "active" : ""}`} onClick={() => active(false)} >
+                    <div className="collection-popup" onClick={(e) => e.stopPropagation()}>
+                        {collections.length > 0 ? (
+                            <div className="collection-popup-container">
+                                <h2>My Collections</h2>
+                                <ul>
+                                    {collections.map(collection => (
+                                        <li key={collection.id}>
+                                            <img src={collection.image || null} alt={collection.name} />
+                                            <label>{collection.name}</label>
+                                            <label className="collection-item-count">{collection.items.length}</label>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        ) : (
+                            <div className="collection-popup-container">
+                                <h2>No Collections</h2>
+                                <button>Create a Collection</button>
+                            </div>
+                        )}
+                            
+                    </div>
+                </div>
+        </>
+    )
+}
+
 function InventoryItem() {
     const {id} = useParams();
     const [item, setItem] = useState(null);
+    const [collection, setCollection] = useState(false);
     const [loading, setLoading] = useState(true);
     const [favorite, setFavorite] = useState(false);
-    const [quantity, setQuantity] = useState(1);
     const {addToCart} = useContext(CartContext);
     const {addToRecent} = useContext(InventoryContext);
     const user = JSON.parse(localStorage.getItem('user'));
 
-    const handleIncrement = () => {
-        if (quantity < item.quantity) {
-            setQuantity(quantity + 1);
-        }
-    };
-
-    const handleDecrement = () => {
-        if (quantity > 1) {
-            setQuantity(quantity - 1);
-        }
-    }
     useEffect(() => {
         const fetchItem = async () => {
             try {
@@ -126,11 +175,11 @@ function InventoryItem() {
                             <p>{item.description}</p>
                             <div className="inventory-item-page-quantity">
                                 <label className="price">${item.price}</label>
-                                <div >
+                                <div className="quantity-container">
                                     <label htmlFor="quantity">Quantity: </label>
-                                    <input type="number" id="quantity" name="quantity" placeholder="1" min="1" max={item.quantity} />
                                     <div className='arrow-buttons'>
                                         <button className="add-button" onClick={() => document.getElementById("quantity").stepUp()}>+</button>
+                                        <input type="number" id="quantity" name="quantity" placeholder="1" min="1" max={item.quantity} />
                                         <button className="subtract-button" onClick={() => document.getElementById("quantity").stepDown()}>-</button>
                                     </div>
                                 </ div>
@@ -142,9 +191,12 @@ function InventoryItem() {
                                     <button onClick={() => addToCart(item)} className="cart-button">Add to Cart</button>
                                     <button onClick={() => setFavorite(true)} className="wishlist-button">Add to Wishlist</button>
                                 </div>
+                                <button onClick={() => setCollection(true)} className="collection-button">Add to Collection</button>
                                 <button onClick={() => addToCart(item)} className="buy-button">Buy Now</button>
                             </div>
                         </div>
+                        <CollectionPopup user={user} item={item} active={collection} />
+                        
                     </>
                 ):(
                     <>
