@@ -52,14 +52,15 @@ function GetQuick({inventory}) {
 function ForYou() {
     
 }
-function CollectionPopup( {user, item, active} ) {
+function CollectionPopup( {user, item, active, setActive} ) {
     const [collections, setCollections] = useState([]);
     const {buttonClickHandler, updateCollection} = useContext(CollectionsContext);
+    const [collectionName, setCollectionName] = useState("");
+    const [buttonClicked, setButtonClicked] = useState(false);
     useEffect(() => {
-
         const createCollection = async () => {
             try{
-                buttonClickHandler(item);
+                buttonClickHandler(item, collectionName || `${collections.length + 1} Collection`);
             }catch (error) {
                 console.error("Error creating collection:", error);
             }
@@ -70,25 +71,28 @@ function CollectionPopup( {user, item, active} ) {
             updateCollection(collections);
         }
     }, [collections]);
+
     useEffect(() => {
         const fetchCollections = async () => {
             try {
-                const res = await fetch(`http://localhost:8080/collections/${user.id}`)
+                const res = await fetch(`http://localhost:8080/profiles/${user.id}`);
                 if (!res.ok) throw new Error("Collections not found");
                 const data = await res.json();
                 setCollections(data.collections);
-            } catch (error) {
-                setCollections([]);
+            } catch (err) {
+                console.error("Error fetching collections:", err);
+                // setCollections([]);
             }
         }
         fetchCollections();
+        console.log(active, setActive);
     }, [user]);
     return (
         <>
-            <div className={`collection-popup-container ${active ? "active" : ""}`} onClick={() => active(false)} >
-                    <div className="collection-popup" onClick={(e) => e.stopPropagation()}>
-                        {collections.length > 0 ? (
-                            <div className="collection-popup-container">
+            <div className={`collection-popup-background ${active ? "active" : ""}`} onClick={() => setActive(false) && console.log(active)} >
+                    <div className={`collection-popup`} onClick={(e) => e.stopPropagation()}>
+                        {collections && collections.length > 0 ? (
+                            <div className={`collection-popup-container`}>
                                 <h2>My Collections</h2>
                                 <ul>
                                     {collections.map(collection => (
@@ -101,9 +105,27 @@ function CollectionPopup( {user, item, active} ) {
                                 </ul>
                             </div>
                         ) : (
-                            <div className="collection-popup-container">
-                                <h2>No Collections</h2>
-                                <button>Create a Collection</button>
+                            <div className={`collection-popup-container`}>
+                                {buttonClicked ? (
+                                    <div>
+                                        <div className="collection-popup-title">
+                                            <h2>Create a Collection</h2>
+                                            <button onClick={() => setButtonClicked(false)}>Cancel</button>
+                                        </div>
+                                        <div className="collection-popup-input">
+                                            <input type="text" placeholder="Collection Name" value={collectionName} onChange={(e) => setCollectionName(e.target.value)} />
+                                            <button onClick={() => buttonClickHandler(item, collectionName)}>Create</button>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <div className="collection-popup-title">
+                                            <h2>My Collections</h2>
+                                        </div>
+                                        <button onClick={() => setButtonClicked(true)}>Create a Collection</button>
+                                    </>
+                                )}
+                                
                             </div>
                         )}
                             
@@ -191,11 +213,11 @@ function InventoryItem() {
                                     <button onClick={() => addToCart(item)} className="cart-button">Add to Cart</button>
                                     <button onClick={() => setFavorite(true)} className="wishlist-button">Add to Wishlist</button>
                                 </div>
-                                <button onClick={() => setCollection(true)} className="collection-button">Add to Collection</button>
+                                <button onClick={() => setCollection(prevState => !prevState)} className="collection-button">Add to Collection</button>
                                 <button onClick={() => addToCart(item)} className="buy-button">Buy Now</button>
                             </div>
                         </div>
-                        <CollectionPopup user={user} item={item} active={collection} />
+                        <CollectionPopup user={user} item={item} active={collection} setActive={setCollection} />
                         
                     </>
                 ):(
@@ -279,8 +301,6 @@ function Inventory() {
             console.log(item, item.price, filters.price);
         }
         
-        
-        
         // return (
         //     filters.accessory.length === 0 || item.label.includes(item.accessory) &&
         //     filters.price.length === 0 || item.price.includes(item.price) &&
@@ -346,7 +366,6 @@ function Inventory() {
     return (
         <div className="inventory-container">
             
-            {/* have this on the left */}
             <section id="sort"> 
                 <h3>Sort: </h3>   
                 <h4>Accessory: </h4>
@@ -386,7 +405,6 @@ function Inventory() {
                     ))}
                 </ul>
             </section>
-            {/* just the inventory so in the middle  */}
             <section id="inventory">
                 <div className="inventory-stock-container">
                     {inventory.map(item => (
@@ -403,9 +421,7 @@ function Inventory() {
                         </Link>
                     ))}
                 </div>
-
             </section>
-            {/* have this on the right */}
             <section id="hot-items">
                     <HotItems inventory={inventory} vertical={true} />
             </section>

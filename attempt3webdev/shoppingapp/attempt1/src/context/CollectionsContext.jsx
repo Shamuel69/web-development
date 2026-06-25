@@ -77,11 +77,11 @@ export const CollectionsProvider = ({ children }) => {
             setError("(Called from updateCollection) Failed to update collection \n error: " + err.message);
         }
     }
-    const buttonClickHandler = (item) => {
+    const buttonClickHandler = (item, name=null) => {
         // used when creating a new collection under a item, like where it says "add to collection" in an item page
         const collection_id = nanoid(10);
         
-        addCollection(user, collection_id);
+        addCollection(user, collection_id, name);
         updateCollection(recentlyMade, item);
     }
     return (
