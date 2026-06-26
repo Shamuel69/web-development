@@ -53,24 +53,24 @@ function ForYou() {
     
 }
 function CollectionPopup( {user, item, active, setActive} ) {
-    const [collections, setCollections] = useState([]);
-    const {buttonClickHandler, updateCollection} = useContext(CollectionsContext);
+    const [userCollections, setUserCollections] = useState([]);
+    const {buttonClickHandler, updateCollection, collections} = useContext(CollectionsContext);
     const [collectionName, setCollectionName] = useState("");
     const [buttonClicked, setButtonClicked] = useState(false);
     useEffect(() => {
         const createCollection = async () => {
             try{
-                buttonClickHandler(item, collectionName || `${collections.length + 1} Collection`);
+                buttonClickHandler(item, collectionName || `${userCollections.length + 1} Collection`);
             }catch (error) {
                 console.error("Error creating collection:", error);
             }
         }
-        if (collections === "create a collection") {
+        if (userCollections === "create a collection") {
             createCollection();
         } else {
-            updateCollection(collections);
+            updateCollection(userCollections);
         }
-    }, [collections]);
+    }, [userCollections]);
 
     useEffect(() => {
         const fetchCollections = async () => {
@@ -78,24 +78,26 @@ function CollectionPopup( {user, item, active, setActive} ) {
                 const res = await fetch(`http://localhost:8080/profiles/${user.id}`);
                 if (!res.ok) throw new Error("Collections not found");
                 const data = await res.json();
-                setCollections(data.collections);
+                const thingy = data.user.collections;
+                const b = thingy.map(collection => collections.filter(item => item.id === collection));
+                console.log(b[0]);
+                setUserCollections(thingy.map(collection => collections.filter(item => item.id === collection))[0]);
             } catch (err) {
                 console.error("Error fetching collections:", err);
-                // setCollections([]);
             }
         }
         fetchCollections();
-        console.log(active, setActive);
+        console.log(active, userCollections);
     }, [user]);
     return (
         <>
-            <div className={`collection-popup-background ${active ? "active" : ""}`} onClick={() => setActive(false) && console.log(active)} >
+            <div className={`collection-popup-background ${active ? "active" : ""}`} onClick={() => setActive(false) && console.log( "mi illamo greg", collections) && setButtonClicked(false)} >
                     <div className={`collection-popup`} onClick={(e) => e.stopPropagation()}>
                         {collections && collections.length > 0 ? (
                             <div className={`collection-popup-container`}>
                                 <h2>My Collections</h2>
                                 <ul>
-                                    {collections.map(collection => (
+                                    {userCollections.map(collection => (
                                         <li key={collection.id}>
                                             <img src={collection.image || null} alt={collection.name} />
                                             <label>{collection.name}</label>
@@ -103,6 +105,7 @@ function CollectionPopup( {user, item, active, setActive} ) {
                                         </li>
                                     ))}
                                 </ul>
+                                <button onClick={() => setButtonClicked(true)}>New Collection+</button>
                             </div>
                         ) : (
                             <div className={`collection-popup-container`}>
@@ -123,6 +126,7 @@ function CollectionPopup( {user, item, active, setActive} ) {
                                             <h2>My Collections</h2>
                                         </div>
                                         <button onClick={() => setButtonClicked(true)}>Create a Collection</button>
+                                        
                                     </>
                                 )}
                                 
