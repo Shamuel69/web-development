@@ -49,6 +49,7 @@ export const CollectionsProvider = ({ children }) => {
             }
             
             const updated_user = {...user, collections: [...user.collections, packagedCollection.id]};
+            console.log("(I AM IN COLLECTIONS CONTEXT line 52) updated_user", updated_user);
             await updateProfile(updated_user);
 
             const data = await res.json();

@@ -75,13 +75,16 @@ function CollectionPopup( {user, item, active, setActive} ) {
     useEffect(() => {
         const fetchCollections = async () => {
             try {
+                // this can be heavily improved if i accessed this through localstorage instead,
+                // this will do though for now. Next website please draw this out in a better way
                 const res = await fetch(`http://localhost:8080/profiles/${user.id}`);
                 if (!res.ok) throw new Error("Collections not found");
                 const data = await res.json();
                 const thingy = data.user.collections;
                 const b = thingy.map(collection => collections.filter(item => item.id === collection));
-                console.log(b[0]);
-                setUserCollections(thingy.map(collection => collections.filter(item => item.id === collection))[0]);
+                const a = collections.filter(collection => collection.user_id === user.id);
+                setUserCollections(a);
+                console.log(b[0], a);
             } catch (err) {
                 console.error("Error fetching collections:", err);
             }
@@ -93,7 +96,8 @@ function CollectionPopup( {user, item, active, setActive} ) {
         <>
             <div className={`collection-popup-background ${active ? "active" : ""}`} onClick={() => setActive(false) && console.log( "mi illamo greg", collections) && setButtonClicked(false)} >
                     <div className={`collection-popup`} onClick={(e) => e.stopPropagation()}>
-                        {collections && collections.length > 0 ? (
+                        {userCollections && userCollections.length > 0 ? (
+                            
                             <div className={`collection-popup-container`}>
                                 <h2>My Collections</h2>
                                 <ul>
@@ -117,7 +121,7 @@ function CollectionPopup( {user, item, active, setActive} ) {
                                         </div>
                                         <div className="collection-popup-input">
                                             <input type="text" placeholder="Collection Name" value={collectionName} onChange={(e) => setCollectionName(e.target.value)} />
-                                            <button onClick={() => buttonClickHandler(item, collectionName)}>Create</button>
+                                            <button onClick={() => buttonClickHandler(item, collectionName) && setActive(false)}>Create</button>
                                         </div>
                                     </div>
                                 ) : (
