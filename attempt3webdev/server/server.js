@@ -7,39 +7,10 @@ const PORT = 8080;
 const corsOptions = {
     origin: ["http://localhost:5173"]
 };
-let collections = [
-    {
-        "id": "hyfysdfhsdf",
-        title: "My Collection 1",
-        description: "Description of My Collection 1",
-        items: ["item1", "item2", "item3"],
-        username: "John Doe"
-    }
-];
-let profiles = [
-    {
-        "id": "EwXdSEfLYp",
-        "username": "John Doe",
-        "email": "examplemail@gmail.com",
-        "password": "password123",
-        "cart": [],
-        "recentlyViewed": [],
-        "collections": ["hyfysdfhsdf"],
-        "wishlist": [],
-        "favorites": []
-    },
-    {
-        "id": "a27hkwk6fL",
-        "username": "Jane Smith",
-        "email": "examplemail2@gmail.com",
-        "password": "password456",
-        "cart": [],
-        "recentlyViewed": [],
-        "collections": [],
-        "wishlist": [],
-        "favorites": []
-    }
-];
+let collections = [{"id":"hyfysdfhsdf","name":"My Collection 1","description":"Description of My Collection 1","items":["item1","item2","item3"],"username":"John Doe"},{"name":"spagettie cards","id":"Jjkzf-qm9X","user_id":"Gj_4yxb48y","items":[],"description":"This is a new collection.","image":"http://localhost:8080/bracelet1.png","rating":0}];
+let profiles = [{"id":"EwXdSEfLYp","username":"John Doe","email":"examplemail@gmail.com","password":"password123","cart":[],"recentlyViewed":[],"collections":["hyfysdfhsdf"],"wishlist":[],"favorites":[]},
+{"id":"a27hkwk6fL","username":"Jane Smith","email":"examplemail2@gmail.com","password":"password456","cart":[],"recentlyViewed":[],"collections":[],"wishlist":[],"favorites":[]},
+{"id":"Gj_4yxb48y","username":"MantisTheUltimate","email":"tobbanganmantis@gmail.com","password":"Mantis@123","cart":[],"recentlyViewed":[],"collections":[],"wishlist":[],"favorites":[]}];
 let inventory = [{id: 'KUjvgOzFfb', label: 'ring', description: 'A classic yellow gold ring featuring a brilliant-cut diamond centerpiece.', price: 249, tags: ['Gold', 'Diamond'], name: 'Classic Diamond Ring', image: 'http://localhost:8080/bracelet1.png', quantity: 8, reviews: [], averageRating: 4.6, times_interacted: 0, ratings: [], front_page: 'true'},
 {id: 'z-1o1kJwAJ', label: 'ring', description: 'An elegant white gold ring accented with sapphire stones.', price: 319, tags: ['White Gold', 'Sapphire'], name: 'Sapphire Elegance Ring', image: 'http://localhost:8080/bracelet2.png', quantity: 5, reviews: [], averageRating: 4.8, times_interacted: 0, ratings: [], front_page: 'false'},
 {id: 'Yl5xcAproa', label: 'ring', description: 'A luxurious rose gold band featuring a ruby centerpiece.', price: 389, tags: ['Rose Gold', 'Ruby'], name: 'Ruby Blossom Ring', image: 'http://localhost:8080/bracelet3.png', quantity: 3, reviews: [], averageRating: 4.7, times_interacted: 0, ratings: [], front_page: 'true'},

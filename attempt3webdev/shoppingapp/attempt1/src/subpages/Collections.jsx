@@ -5,13 +5,66 @@ import './css/collections.css';
 import { CollectionsContext } from '../context/CollectionsContext.jsx';
 
 import { AuthContext } from '../context/AuthContext';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
+function LookingatCollection() {
+    const { id } = useParams();
+    const { collections, updateCollection } = useContext(CollectionsContext);
+    const collection = collections.find(c => c.id === id);
+    const [owner, setOwner] = useState(null);
+    const user = JSON.parse(localStorage.getItem('user'));
+    useEffect(() => {
+        const fetchOwner = async () => {
+            if (collection) {
+                try {
+                    if (collection.user_id === user.id) {
+                        setOwner(true);
+                    }
+                    else {
+                        setOwner(false);
+                    }
+                } catch (error) {
+                    console.error('Error fetching owner:', error);
+                    setOwner(false);
+                }
+            }
+        };
+        fetchOwner();
+
+    }, [collection]);
+
+    useEffect(() => {
+        console.log("LookingatCollection: id", id);
+        console.log("LookingatCollection: collection", collection);
+    }, [id]);
+
+    return (
+        <div className="collection">
+            <h2>my name grewg{collection.name}
+                id: {id}
+            </h2>
+            {/* <p>{collection[0].description}</p> */}
+            {owner && (
+                <button onClick={() => updateCollection(collection)}>Edit Collection</button>
+            )}
+            <h3>Items in this Collection:</h3>
+            <div className="items">
+                {collection.items.map(item => (
+                    <div className="item" key={item.id}>
+                        <img src={item.image} alt={item.name} />
+                        <p>{item.name}</p>
+                    </div>
+                ))}
+            </div>  
+        </div>
+    );
+}
 
 function Collections() {
     const { user } = useContext(AuthContext);
     const { collections, error, addCollection, updateCollection } = useContext(CollectionsContext);
     const [showYourCollections, setShowYourCollections] = useState(false);
+    
     return (
         <div className="collections-container">
             {collections.length <= 0 ? (
@@ -72,4 +125,4 @@ function Collections() {
     )
 }
 
-export default Collections;
+export  {LookingatCollection, Collections} 

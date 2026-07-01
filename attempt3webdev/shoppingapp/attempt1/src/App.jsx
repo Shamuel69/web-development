@@ -7,7 +7,7 @@ import { Routes, Route, Link, useLocation } from 'react-router-dom';
 
 import Signup from './subpages/Signup.jsx'
 import Signin from './subpages/Signin.jsx'
-import Collections from './subpages/Collections.jsx'
+import {Collections, LookingatCollection} from './subpages/Collections.jsx'
 import { Inventory, GetQuick, FrontPageItems, HotItems, InventoryItem} from './subpages/Inventory.jsx'
 import Placeholder from './subpages/Placeholder.jsx'
 import './App.css'
@@ -160,6 +160,7 @@ function App() {
                 <Route path="/shop" element={<Inventory />} />
                 <Route path="/shop/:id" element={<InventoryItem />} />
                 <Route path="/collections" element={<Collections />} />
+                <Route path="/collections/:id" element={<LookingatCollection />} />
                 <Route path="/best-deals" element={<Placeholder />} />
                 <Route path="/my-collections" element={<Placeholder />} />
                 <Route path="/wishlist" element={<Placeholder />} />
