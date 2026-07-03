@@ -12,6 +12,7 @@ function LookingatCollection() {
     const { collections, updateCollection } = useContext(CollectionsContext);
     const collection = collections.find(c => c.id === id);
     const [owner, setOwner] = useState(null);
+    const [editing, setEditing] = useState(null);
     const user = JSON.parse(localStorage.getItem('user'));
     useEffect(() => {
         const fetchOwner = async () => {
@@ -34,7 +35,7 @@ function LookingatCollection() {
     }, [collection]);
 
     useEffect(() => {
-        console.log("LookingatCollection: id", id);
+        console.log("LookingatCollection: id ", id);
         console.log("LookingatCollection: collection", collection);
     }, [id]);
 
@@ -45,7 +46,15 @@ function LookingatCollection() {
             </h2>
             {/* <p>{collection[0].description}</p> */}
             {owner && (
-                <button onClick={() => updateCollection(collection)}>Edit Collection</button>
+                <button onClick={() => setEditing(prevState => !prevState)}>Edit Collection</button>
+            )}
+            {editing && (
+                <div className="edit-collection">
+                    <h3>Edit Collection</h3>                    
+                    <input type="text" placeholder={collection.name} />
+                    <input type="text" placeholder={collection.description} />
+                    <button onClick={() => updateCollection(collection) && setEditing(prevState => !prevState)}>Save</button>
+                </div>
             )}
             <h3>Items in this Collection:</h3>
             <div className="items">

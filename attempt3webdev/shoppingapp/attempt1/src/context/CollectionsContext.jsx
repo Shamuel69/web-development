@@ -59,31 +59,73 @@ export const CollectionsProvider = ({ children }) => {
             setError(err.message);
         }
     }
-    const updateCollection = async(collection) =>{
+    const updateCollection = async(collection, item =null, action = "add") =>{
         // updates collection items like description, image, or if you add more items
         try {
+            if (!collection || !collection.id) {
+                console.error("updateCollection: Invalid collection object", collection);
+                throw new Error("Collection not found or invalid collection object.");
+            }
+            const currentItems = Array.isArray(collection.items) ? collection.items.slice() : [];
+            let updatedItems; 
+            if (item) {
+                if (action === "add") {
+                    updatedItems = [...currentItems, item];
+                    console.log("updateCollectionx: item", item);
+                }else if (action === "remove") {
+                    updatedItems = currentItems.filter(i => i !== item);
+                    console.log("updateCollection: removing item", item);
+                } else {
+                    updatedItems = currentItems;
+                };
+            }else {
+                updatedItems = currentItems;
+            }
+            const payload = { items: updatedItems };
+            console.log("updateCollection: payload", payload, "collection", collection.id);
             const res = await fetch(`http://localhost:8080/collections/${collection.id}`, {
                 method: "PATCH",
                 headers: {"Content-Type": "application/json"},
-                body: JSON.stringify(collection)
+                body: JSON.stringify(payload)
             })
             if (!res.ok) {
                 const errorText = await res.text();
                 throw new Error(`Server error ${res.status}: ${errorText}`);
             }
             const data = await res.json();
-            setCollections(collections.filter(collection => collection.id !== data.collection.id));
-            setCollections([...collections, data.collection]);
+            console.log("collection updated: ", data);
+            setCollections(prev => {
+                const exist = prev.find(c => c.id === data.collection.id);
+                if (exist) {
+                    return prev.map(c => c.id === data.collection.id ? data.collection : c);
+                } else {
+                    return [...prev, data.collection];
+                }
+            });
         }catch (err) {
             setError("(Called from updateCollection) Failed to update collection \n error: " + err.message);
         }
     }
-    const buttonClickHandler = (item, name=null) => {
+    const buttonClickHandler = async (item, collection=null) => {
         // used when creating a new collection under a item, like where it says "add to collection" in an item page
-        const collection_id = nanoid(10);
-        
-        addCollection(user, collection_id, name);
-        updateCollection(recentlyMade, item);
+        try {
+            if (!item) throw new Error("buttonClickHandler: item is required.");
+            if (!collection) {
+                console.log("I AM IN PAIN");
+
+                throw new Error("buttonClickHandler: collection is required.");
+            }
+            if(!collection.id) {
+                console.log("collection.id is null" + collection);
+                const collectionID_checked = nanoid(10);
+                addCollection(user, collectionID_checked, collection);
+            }
+            console.log("buttonClickHandler: item", item, "collectionName", collection, "collectionID", collection.id || "nothing found");
+            updateCollection(collection, item);
+        }catch (err) {
+            setError(err.message);
+            return;
+        }
     }
     return (
         <CollectionsContext.Provider value={{ collections, addCollection, updateCollection, recentlyMade, setRecentlyMade, recentlyViewed, setRecentlyViewed, buttonClickHandler}}>

@@ -7,7 +7,7 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [profiles, setProfiles] = useState([]);
     const [error, setError] = useState(null);
-    const logout = () => setUser(null);
+    const logout = () => setUser(null) && localStorage.removeItem("user");
 
     function merge_profiles(data, savedUser) {
         const user = typeof savedUser === "string" ? JSON.parse(savedUser) : savedUser;
