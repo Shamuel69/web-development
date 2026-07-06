@@ -29,7 +29,7 @@ export const CollectionsProvider = ({ children }) => {
         // adds a new collection to the users profile
         try {
             const packagedCollection = {
-                name: name || "New Collection",
+                name: name.name || "New Collection",
                 id: collection_id,
                 user_id: user.id,
                 items: [], 
@@ -62,7 +62,7 @@ export const CollectionsProvider = ({ children }) => {
     const updateCollection = async(collection, item =null, action = "add") =>{
         // updates collection items like description, image, or if you add more items
         try {
-            if (!collection || !collection.id) {
+            if (!collection ) {
                 console.error("updateCollection: Invalid collection object", collection);
                 throw new Error("Collection not found or invalid collection object.");
             }
@@ -119,9 +119,11 @@ export const CollectionsProvider = ({ children }) => {
                 console.log("collection.id is null" + collection);
                 const collectionID_checked = nanoid(10);
                 addCollection(user, collectionID_checked, collection);
+                updateCollection(collection, item);
+            }else {
+                console.log("buttonClickHandler: item", item, "collectionName", collection, "collectionID", collection.id || "nothing found");
+                updateCollection(collection, item);
             }
-            console.log("buttonClickHandler: item", item, "collectionName", collection, "collectionID", collection.id || "nothing found");
-            updateCollection(collection, item);
         }catch (err) {
             setError(err.message);
             return;

@@ -95,7 +95,7 @@ app.post("/profiles", (req, res) => {
     
         res.status(201).json({
             message: "Account created successfully",
-            user: newAccount,
+            user: newAccount, 
             profiles: profiles
         });
     }
@@ -119,9 +119,9 @@ app.patch("/profiles/:id", (req, res) => {
             message: "Account updated successfully",
             user: profiles[userIndex]
         });
-    }
+    } 
     return res.status(404).json({error: "User not found"});
-})
+}) 
 
 app.get("/inventory", (req, res) => {
     res.json({inventory: inventory});

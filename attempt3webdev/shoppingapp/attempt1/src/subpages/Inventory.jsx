@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link,  useParams } from 'react-router-dom';
 import './css/inventory.css';
 import { CartContext } from '../context/CartContext.jsx';
 import { InventoryContext } from '../context/InventoryContext.jsx';
@@ -79,6 +79,11 @@ function CollectionPopup( {user, item, active, setActive} ) {
         fetchCollections();
         console.log(active, userCollections);
     }, [user]);
+
+    const handleCreateCollection = () => {
+        setButtonClicked(false);
+        setActive(false);
+    };
     return (
         <>
             <div className={`collection-popup-background ${active ? "active" : ""}`} onClick={() => setActive(false) && console.log( "mi illamo greg", collections) && setButtonClicked(false)} >
@@ -109,7 +114,7 @@ function CollectionPopup( {user, item, active, setActive} ) {
                                         <div className="collection-popup-input">
                                             <input type="text" placeholder="Collection Name" value={collectionName} onChange={(e) => setCollectionName(e.target.value)} />
                                         </div>
-                                        <button onClick={() => buttonClickHandler(item, { name: collectionName }) && setActive(false)}>Create</button>
+                                        <button onClick={() => buttonClickHandler(item, { name: collectionName }) && handleCreateCollection()}>Create</button>
                                     </div>
                                 ) : (
                                     <>
