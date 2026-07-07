@@ -79,24 +79,31 @@ function Collections() {
             {collections.length <= 0 ? (
                 <>
                 <div className="header">
-                    <h1>No Collections</h1>
-                    <h3>There seems to be no collections, be the first to create one!</h3>
-                    <button onClick={() => addCollection(user)}>Create a Collection</button>
+                    <div className="header-content">
+                        <h1>No Collections</h1>
+                        <h3>There seems to be no collections, be the first to create one!</h3>
+                        <button onClick={() => addCollection(user)}>Create a Collection</button>
+                    </div>
                 </div>
                 </>
             ) : (
                 <>
                     <div className="header">
                         <h1>Collections</h1>
+                        
+                    </div>
+                    <div className="your-collections-toggle">
                         <button onClick={() => setShowYourCollections(prevState => !prevState)}>
-                            {showYourCollections ? 'Hide Your Collections' : 'Show Your Collections'}
+                            {showYourCollections ? "Hide Your Collections" : "Show Your Collections"}
                         </button>
                     </div>
-
                     {showYourCollections && (
                         user ? (
-                            <div className="your-collections">
+                            <div className={`your-collections ${showYourCollections ? "show" : ""}`}>
                                 <h2>Your Collections</h2>
+                                <div className="collection-item-container">
+                                    
+                                </div>
                                 {collections.map(collection => (
                                     <div className="collection-item" key={collection.id}>
                                         <Link to={`/collections/${collection.id}`}>
@@ -108,7 +115,7 @@ function Collections() {
                                 ))}
                             </div>
                         ) : (
-                            <div className="your-collections">
+                            <div className={`your-collections ${showYourCollections ? "show" : ""}`}>
                                 <h3>It does not seem like you are logged in. Please log in to create a collection</h3>
                                 <Link to="/signin">Sign In</Link>
                                 <Link to="/signup">Sign Up</Link>
@@ -116,8 +123,8 @@ function Collections() {
                         )
                     )}
 
+                    <h2>All Collections</h2>
                     <div className="all-collections">
-                        <h2>All Collections</h2>
                         {collections.map(collection => (
                             <div className="collection-item" key={collection.id}>
                                 <Link to={`/collections/${collection.id}`}>
