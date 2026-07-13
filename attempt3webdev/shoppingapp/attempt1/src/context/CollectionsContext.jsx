@@ -81,6 +81,7 @@ export const CollectionsProvider = ({ children }) => {
             }else {
                 updatedItems = currentItems;
             }
+
             const payload = { items: updatedItems };
             console.log("updateCollection: payload", payload, "collection", collection.id);
             const res = await fetch(`http://localhost:8080/collections/${collection.id}`, {
@@ -119,7 +120,7 @@ export const CollectionsProvider = ({ children }) => {
                 console.log("collection.id is null" + collection);
                 const collectionID_checked = nanoid(10);
                 addCollection(user, collectionID_checked, collection);
-                updateCollection(collection, item);
+                updateCollection({id: collectionID_checked}, item);
             }else {
                 console.log("buttonClickHandler: item", item, "collectionName", collection, "collectionID", collection.id || "nothing found");
                 updateCollection(collection, item);

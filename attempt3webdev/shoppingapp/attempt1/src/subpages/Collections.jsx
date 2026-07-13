@@ -41,13 +41,13 @@ function LookingatCollection() {
 
     return (
         <div className="collection">
-            <h2>my name grewg{collection.name}
-                id: {id}
-            </h2>
-            {/* <p>{collection[0].description}</p> */}
-            {owner && (
-                <button onClick={() => setEditing(prevState => !prevState)}>Edit Collection</button>
-            )}
+            
+            <div className="collection-header">
+                <h2>{collection.name}</h2>
+                {owner && (
+                    <button onClick={() => setEditing(prevState => !prevState)}>Edit Collection</button>
+                )}
+            </div>
             {editing && (
                 <div className="edit-collection">
                     <h3>Edit Collection</h3>                    
@@ -56,13 +56,21 @@ function LookingatCollection() {
                     <button onClick={() => updateCollection(collection) && setEditing(prevState => !prevState)}>Save</button>
                 </div>
             )}
+            <p>{collection.description}</p>
+
             <h3>Items in this Collection:</h3>
             <div className="items">
                 {collection.items.map(item => (
-                    <div className="item" key={item.id}>
-                        <img src={item.image} alt={item.name} />
-                        <p>{item.name}</p>
-                    </div>
+                    <Link to={`/shop/${item.id}`}>
+                        <div className="item" key={item.id}>
+                            <img src={item.image} alt={item.name} />
+                            <div className="item-info">
+                                <p>{item.name}</p>
+                                <p>${item.price}</p>
+                                <p>&#9733; {item.averageRating}</p>
+                            </div>
+                        </div>
+                    </Link>
                 ))}
             </div>  
         </div>
@@ -102,17 +110,17 @@ function Collections() {
                             <div className={`your-collections ${showYourCollections ? "show" : ""}`}>
                                 <h2>Your Collections</h2>
                                 <div className="collection-item-container">
+                                    {collections.map(collection => (
+                                        <div className="my-collection-item" key={collection.id}>
+                                            <Link to={`/collections/${collection.id}`}>
+                                                <img src={collection.image} alt={collection.name} />
+                                                <h3>{collection.name}</h3>
+                                                <p>&#9733; {collection.rating}</p>
+                                            </Link>
+                                        </div>
+                                    ))}
                                     
                                 </div>
-                                {collections.map(collection => (
-                                    <div className="collection-item" key={collection.id}>
-                                        <Link to={`/collections/${collection.id}`}>
-                                            <img src={collection.image} alt={collection.name} />
-                                            <h3>{collection.name}</h3>
-                                            <p>{collection.rating}</p>
-                                        </Link>
-                                    </div>
-                                ))}
                             </div>
                         ) : (
                             <div className={`your-collections ${showYourCollections ? "show" : ""}`}>
@@ -123,17 +131,22 @@ function Collections() {
                         )
                     )}
 
-                    <h2>All Collections</h2>
                     <div className="all-collections">
-                        {collections.map(collection => (
-                            <div className="collection-item" key={collection.id}>
-                                <Link to={`/collections/${collection.id}`}>
-                                    <img src={collection.image} alt={collection.name} />
-                                    <h3>{collection.name}</h3>
-                                    <p>{collection.rating}</p>
-                                </Link>
-                            </div>
-                        ))}
+                        <div className="regular-collections">
+                            <h2>All Collections</h2>
+                            {collections.map(collection => (
+                                <div className="collection-item" key={collection.id}>
+                                    <Link to={`/collections/${collection.id}`}>
+                                        <img src={collection.image} alt={collection.name} />
+                                        <h3>{collection.name}</h3>
+                                        <div className="collection-item-footer">
+                                            <p>{collection.user_id}</p>
+                                            <p>&#9733; {collection.rating}</p>
+                                        </div>
+                                    </Link>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </>
             )}
