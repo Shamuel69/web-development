@@ -1,3 +1,4 @@
+@import "tailwindcss";
 :root{
   --bg-primary: #111111;
   --bg-secondary: #212121;    
@@ -6,7 +7,7 @@
   --accent: #3b82f6;
   --accent-secondary: #8b5cf6;
 
-  --text-primary: rgb(241, 245, 249);    
+  --text-primary: #f1f5f9;    
   --text-secondary: #cbd5e1;  
   --text-muted: #94a3b8; 
   
@@ -42,10 +43,14 @@
         opacity: 1;
     }
 }
+button{
+  font-size: medium;
+}
 a{
   text-decoration: none;
   color: var(--text-primary);
 }
+
 *{
   margin: 0;
   padding: 0;

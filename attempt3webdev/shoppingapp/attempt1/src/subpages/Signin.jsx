@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import { useState,  useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
@@ -9,7 +9,7 @@ function Signin() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
     const [error1, setError] = useState('');
 
     const handleSubmit = async (e) => {

@@ -1,10 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Link,  useParams } from 'react-router-dom';
 import './css/inventory.css';
+
 import { CartContext } from '../context/CartContext.jsx';
 import { InventoryContext } from '../context/InventoryContext.jsx';
 import { CollectionsContext } from '../context/CollectionsContext.jsx';
-
+import { AuthContext } from '../context/AuthContext.jsx'
 function FrontPageItems({inventory}) {
     const frontPageItems = inventory.filter(item => item.front_page === true);
     return (
@@ -48,6 +49,48 @@ function GetQuick({inventory}) {
             </div>
         </div>
     )
+}
+function RecentViewed(collection=false) {
+    const {showRecentViewed} = useContext(InventoryContext);
+    const {profiles} = useContext(AuthContext)
+    const namesofCreator = showRecentViewed(collections=true).map(collection =>{
+            const author = profiles.find(profiles => profiles.id === collection.user)
+            return author ? author.name : null
+    })
+    
+    return (
+        <>
+        {collection && (showRecentViewed(collections=true).length > 0) ? (
+            <>
+                <h2 className='text-[--text-primary]'>Recently Viewed Collections:</h2>
+                <h4 className='text-[--text-secondary]'>Here to show you your recently viewed collections</h4>
+                {showRecentViewed(collections=true).map(item => (
+                    <div id={item.id}>
+                        <img src={item.img} alt={item.name}/>
+                        <h3>{item.name}</h3>
+                        <h5>{namesofCreator}</h5>
+                        <h5>{item.rating}</h5>
+                    </div>
+                ))}
+
+            </>
+        ) : (
+            <>
+                <h2 className='text-[--text-primary]'>Recently Viewed Items:</h2>
+                <h4 className='text-[--text-secondary]'>Here to show you your recently viewed items</h4>
+                {showRecentViewed().map(item => (
+                    <div id={item.id}>
+                        <img src={item.img} alt={item.name}/>
+                        <h3>{item.name}</h3>
+                        <h5>{item.rating}</h5>
+                    </div>
+                ))}
+            </>
+        )}
+
+        </>
+    )
+
 }
 function ForYou() {
     
@@ -94,14 +137,14 @@ function CollectionPopup( {user, item, active, setActive} ) {
                                 <h2>My Collections</h2>
                                 <ul>
                                     {userCollections.map(collection => (
-                                        <li key={collection.id} className="collection-item" onClick={() => buttonClickHandler(item, collection) && setActive(false)}>
+                                        <li key={collection.id} className="collection-item-container" onClick={() => buttonClickHandler(item, collection) && setActive(false)}>
                                             <img src={collection.image || null} alt={collection.name} />
                                             <label>{collection.name}</label>
                                             <label className="collection-item-count">{collection.items.length}</label>
                                         </li>
                                     ))}
                                 </ul>
-                                <button onClick={() => setButtonClicked(true)}>New Collection+</button>
+                                <button onClick={() => setButtonClicked(true)} className="container-button">New Collection+</button>
                             </div>
                         ) : (
                             <div className={`collection-popup-container`}>
@@ -143,6 +186,8 @@ function InventoryItem() {
     const {addToCart} = useContext(CartContext);
     const {addToRecent} = useContext(InventoryContext);
     const user = JSON.parse(localStorage.getItem('user')) || null;
+
+    const [quantity, setQuantity] = useState(1)
 
     useEffect(() => {
         const fetchItem = async () => {
@@ -200,7 +245,7 @@ function InventoryItem() {
                                     <label htmlFor="quantity">Quantity: </label>
                                     <div className='arrow-buttons'>
                                         <button className="add-button" onClick={() => document.getElementById("quantity").stepUp()}>+</button>
-                                        <input type="number" id="quantity" name="quantity" placeholder="1" min="1" max={item.quantity} />
+                                        <input type="number" id="quantity" name="quantity" placeholder="1" min="1" max={item.quantity} onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}/>
                                         <button className="subtract-button" onClick={() => document.getElementById("quantity").stepDown()}>-</button>
                                     </div>
                                 </ div>
@@ -209,11 +254,11 @@ function InventoryItem() {
                             <label><span className="star">&#9733;</span> {item.averageRating}</label>
                             <div className="inventory-item-info-page">
                                 <div className="inventory-item-page-buttons">
-                                    <button onClick={() => addToCart(item)} className="cart-button">Add to Cart</button>
+                                    <button onClick={() => addToCart(item, quantity)} className="cart-button">Add to Cart</button>
                                     <button onClick={() => setFavorite(true)} className="wishlist-button">Add to Wishlist</button>
                                 </div>
                                 <button onClick={() => setCollection(prevState => !prevState)} className="collection-button">Add to Collection</button>
-                                <button onClick={() => addToCart(item)} className="buy-button">Buy Now</button>
+                                <button onClick={() => addToCart(item, quantity)} className="buy-button">Buy Now</button>
                             </div>
                         </div>
                         <CollectionPopup user={user} item={item} active={collection} setActive={setCollection} />
@@ -234,7 +279,7 @@ function InventoryItem() {
                                     <label htmlFor="quantity">Quantity: </label>
                                     <div className='arrow-buttons'>
                                         <button className="add-button" onClick={() => document.getElementById("quantity").stepUp()}>+</button>
-                                        <input type="number" id="quantity" name="quantity" placeholder="1" min="1" max={item.quantity} />
+                                        <input type="number" id="quantity" name="quantity" placeholder="1" min="1" max={item.quantity} onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}/>
                                         <button className="subtract-button" onClick={() => document.getElementById("quantity").stepDown()}>-</button>
                                     </div>
                                 </ div>
@@ -243,11 +288,11 @@ function InventoryItem() {
                             <label><span className="star">&#9733;</span> {item.averageRating}</label>
                             <div className="inventory-item-info-page">
                                 <div className="inventory-item-page-buttons">
-                                    <button onClick={() => addToCart(item)} className="cart-button">Add to Cart</button>
+                                    <button onClick={() => addToCart(item, quantity)} className="cart-button">Add to Cart</button>
                                     <button onClick={() => setFavorite(true)} className="wishlist-button">Add to Wishlist</button>
                                 </div>
                                 <button onClick={() => setCollection(prevState => !prevState)} className="collection-button">Add to Collection</button>
-                                <button onClick={() => addToCart(item)} className="buy-button">Buy Now</button>
+                                <button onClick={() => addToCart(item, quantity)} className="buy-button">Buy Now</button>
                             </div>
                         </div>
                         <CollectionPopup user={user} item={item} active={collection} setActive={setCollection} />
@@ -452,4 +497,4 @@ function Inventory() {
 }
 
 
-export {Inventory, FrontPageItems, GetQuick, HotItems, InventoryItem};
+export {Inventory, FrontPageItems, GetQuick, HotItems, InventoryItem, RecentViewed};

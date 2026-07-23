@@ -6,7 +6,13 @@ import { CollectionsContext } from '../context/CollectionsContext.jsx';
 
 import { AuthContext } from '../context/AuthContext';
 import { Link, useParams } from 'react-router-dom';
-
+import { InventoryProvider } from '../context/InventoryContext.jsx';
+function RecentlymadeCollections() {
+    const {collections, updateCollection} = useContext(CollectionsContext);
+    useEffect(() => {
+        
+    })
+}
 function LookingatCollection() {
     const { id } = useParams();
     const { collections, updateCollection } = useContext(CollectionsContext);
@@ -14,6 +20,7 @@ function LookingatCollection() {
     const [owner, setOwner] = useState(null);
     const [editing, setEditing] = useState(null);
     const user = JSON.parse(localStorage.getItem('user'));
+    const recentlyViewed = JSON.parse(localStorage.getItem("recently-viewed")) 
     useEffect(() => {
         const fetchOwner = async () => {
             if (collection) {
@@ -27,6 +34,16 @@ function LookingatCollection() {
                 } catch (error) {
                     console.error('Error fetching owner:', error);
                     setOwner(false);
+                } finally{
+                    let parselist = {
+                        image: collection.image,
+                        rating: collection.rating,
+                        name: collection.name,
+                        id: collection.id,
+                        user: collection.user_id
+                        
+                    }
+                    localStorage.setItem("recently-viewed", [ ...recentlyViewed, JSON.stringify(parselist)])
                 }
             }
         };
@@ -45,15 +62,16 @@ function LookingatCollection() {
             <div className="collection-header">
                 <h2>{collection.name}</h2>
                 {owner && (
-                    <button onClick={() => setEditing(prevState => !prevState)}>Edit Collection</button>
+                    <button onClick={() => setEditing(prevState => !prevState)} className="w-30 bg-[#313131] rounded-[8px] transition-all duration-300 ease-in-out hover:bg-[#212121] active:scale-105 ">Edit Collection</button>
                 )}
             </div>
             {editing && (
+                
                 <div className="edit-collection">
-                    <h3>Edit Collection</h3>                    
-                    <input type="text" placeholder={collection.name} />
+                    <h3 >Edit Collection</h3>                    
+                    <input type="text" placeholder={collection.name} className="w-4/6 bg-[#212121]"/>
                     <input type="text" placeholder={collection.description} />
-                    <button onClick={() => updateCollection(collection) && setEditing(prevState => !prevState)}>Save</button>
+                    <button onClick={() => updateCollection(collection) && setEditing(prevState => !prevState)} className="bg-[#414141] w-40 rounded-[5px]">Save</button>
                 </div>
             )}
             <p>{collection.description}</p>
@@ -133,19 +151,23 @@ function Collections() {
 
                     <div className="all-collections">
                         <div className="regular-collections">
-                            <h2>All Collections</h2>
-                            {collections.map(collection => (
-                                <div className="collection-item" key={collection.id}>
-                                    <Link to={`/collections/${collection.id}`}>
-                                        <img src={collection.image} alt={collection.name} />
-                                        <h3>{collection.name}</h3>
-                                        <div className="collection-item-footer">
-                                            <p>{collection.user_id}</p>
-                                            <p>&#9733; {collection.rating}</p>
-                                        </div>
-                                    </Link>
-                                </div>
-                            ))}
+                            <div className="title">
+                                <h2>All Collections</h2>
+                            </div>
+                            <div className="body">
+                                {collections.map(collection => (
+                                    <div className="collection-item" key={collection.id}>
+                                        <Link to={`/collections/${collection.id}`}>
+                                            <img src={collection.image} alt={collection.name} />
+                                            <h3>{collection.name}</h3>
+                                            <div className="collection-item-footer">
+                                                <p>{collection.user_id}</p>
+                                                <p>&#9733; {collection.rating}</p>
+                                            </div>
+                                        </Link>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </>

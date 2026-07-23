@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
+import { useState, useEffect, useRef, useContext } from 'react'
 import menu from './assets/burger-menu-black-lines.svg'
 import search from './assets/search-icon.svg'
 import { AuthContext } from './context/AuthContext';
 import { InventoryContext } from './context/InventoryContext';
-import { Routes, Route, Link, useLocation } from 'react-router-dom';
+import { Routes, Route, Link,  } from 'react-router-dom';
 
 import Signup from './subpages/Signup.jsx'
 import Signin from './subpages/Signin.jsx'
 import {Collections, LookingatCollection} from './subpages/Collections.jsx'
-import { Inventory, GetQuick, FrontPageItems, HotItems, InventoryItem} from './subpages/Inventory.jsx'
+import { Inventory, RecentViewed, GetQuick, FrontPageItems, HotItems, InventoryItem} from './subpages/Inventory.jsx'
 import Placeholder from './subpages/Placeholder.jsx'
 import './App.css'
 
@@ -149,7 +149,12 @@ function App() {
                 </div>
             </div>
         </section>
-
+        <section id="recently-Viewed-Collection">
+            <RecentViewed collection={true}/>
+        </section>
+        <section id="recently-Viewed-Item">
+            <RecentViewed />
+        </section>
         <section id="menu-overlay">
             <SideMenu activeMenu={activeMenu} setActiveMenu={setActiveMenu} user={user} profiles={profiles} />
         </section>

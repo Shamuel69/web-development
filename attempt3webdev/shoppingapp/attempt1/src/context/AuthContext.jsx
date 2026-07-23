@@ -60,6 +60,7 @@ export const AuthProvider = ({ children }) => {
 
             setUser(user_profile);
             localStorage.setItem("user", JSON.stringify(user_profile));
+            localStorage.setItem("recently-viewed", "[]")
         } else {
             setError("User not found.");
         }
@@ -110,13 +111,28 @@ export const AuthProvider = ({ children }) => {
             setError("There was a problem retrieving profile data.");
         }
     }
-    const updateProfile = async (userData) => {
+    const updateProfile = async (userID, inputItem, action="add") => {
         try {
-            if (userData.id) {
-                const res = await fetch(`http://localhost:8080/profiles/${userData.id}`, {
+            if (inputItem) {
+                console.log("GAY LUIGI" + JSON.stringify(inputItem))
+                
+            }
+            let updatedCart; 
+            const currentCart = user.cart
+            if (inputItem) {
+                if (action === "add") {
+                    updatedCart = [...currentCart, inputItem];
+                    console.log("updateCollectionx: item", inputItem[0]);
+                }else if (action === "remove") {
+                    updatedCart = currentCart.filter(i => i !== inputItem[0]);
+                    console.log("updateCollection: removing item", inputItem[0]);
+                } else {
+                    updatedCart = currentCart;
+                };
+                const res = await fetch(`http://localhost:8080/profiles/${userID}`, {
                     method: "PATCH",
                     headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify(userData)
+                    body: JSON.stringify(inputItem)
                 });
                 if (!res.ok) {
                     const errorText = await res.text();

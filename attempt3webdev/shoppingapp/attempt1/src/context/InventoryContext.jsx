@@ -35,6 +35,21 @@ export const InventoryProvider = ({ children }) => {
         const popular = inventory.sort((a, b) => (b["times-interacted"] || 0) - (a["times-interacted"] || 0)).slice(0, 10);
         return popular;
     }
+    const showRecentViewed = async (collections=false) => {
+        try {
+            const recentlyViewed = JSON.parse(localStorage.getItem("recently-viewed"))
+            if(collections) {
+                console.log("showRecentViewed test: collection=true ", recentlyViewed.collections);
+                return recentlyViewed;
+            } else {
+                console.log("showRecentViewed test: collection=false ", recentlyViewed.items);
+                return recentlyViewed;
+            }
+        }catch (err){
+            setError(err.message)
+            alert("(INVENTORY CONTEXT) line 43 showRecentViewed: ", err.message)
+        }
+    }
     const addToRecent = async (item, Wishlist=false) => {
         try {
             const user = JSON.parse(localStorage.getItem("user"));
@@ -98,7 +113,7 @@ export const InventoryProvider = ({ children }) => {
         handleInventoryChange(updatedInventory);
     }
     return (
-        <InventoryContext.Provider value={{ inventory, setInventory, addToRecent, loading, setLoading, error, setError, updateInventory, removeFromInventory }}>
+        <InventoryContext.Provider value={{ inventory, setInventory, addToRecent, showRecentViewed,  setLoading, error, setError, updateInventory, removeFromInventory }}>
             {children}
         </InventoryContext.Provider>
     );
