@@ -53,22 +53,29 @@ function GetQuick({inventory}) {
 function RecentViewed(collection=false) {
     const {showRecentViewed} = useContext(InventoryContext);
     const {profiles} = useContext(AuthContext)
-    const namesofCreator = showRecentViewed(collections=true).map(collection =>{
-            const author = profiles.find(profiles => profiles.id === collection.user)
-            return author ? author.name : null
-    })
+    const [recentData, setRecentData] = useState([]);
+    const [nameofCreator, setNameofCreator] = useState([]);
+    useEffect(() => {
+        const data = collection ? showRecentViewed(true) : showRecentViewed(false);
+        
+        setRecentData(data);
+        setNameofCreator((collection_user_id) =>{
+            return profiles.map(profile => profile.id === collection_user_id)
+        });
+
+    }, [showRecentViewed, collection, profiles])
     
     return (
-        <>
-        {collection && (showRecentViewed(collections=true).length > 0) ? (
+        <div className="mt-12">
+        {collection && (recentData.length > 0 ) ? (
             <>
                 <h2 className='text-[--text-primary]'>Recently Viewed Collections:</h2>
                 <h4 className='text-[--text-secondary]'>Here to show you your recently viewed collections</h4>
-                {showRecentViewed(collections=true).map(item => (
+                {showRecentViewed(true).map(item => (
                     <div id={item.id}>
                         <img src={item.img} alt={item.name}/>
                         <h3>{item.name}</h3>
-                        <h5>{namesofCreator}</h5>
+                        <h5>{nameofCreator(item.user)}</h5>
                         <h5>{item.rating}</h5>
                     </div>
                 ))}
@@ -78,17 +85,17 @@ function RecentViewed(collection=false) {
             <>
                 <h2 className='text-[--text-primary]'>Recently Viewed Items:</h2>
                 <h4 className='text-[--text-secondary]'>Here to show you your recently viewed items</h4>
-                {showRecentViewed().map(item => (
+                {/* {showRecentViewed(false).map(item => (
                     <div id={item.id}>
                         <img src={item.img} alt={item.name}/>
                         <h3>{item.name}</h3>
                         <h5>{item.rating}</h5>
                     </div>
-                ))}
+                ))} */}
             </>
         )}
 
-        </>
+        </div>
     )
 
 }

@@ -48,9 +48,9 @@ export const CollectionsProvider = ({ children }) => {
                 throw new Error(`Server error ${res.status}: ${errorText}`);
             }
             
-            const updated_user = {...user, collections: [...user.collections, packagedCollection.id]};
-            console.log("(I AM IN COLLECTIONS CONTEXT line 52) updated_user", updated_user);
-            await updateProfile(updated_user);
+            // const updated_user = {...user, collections: [...user.collections, packagedCollection.id]};
+            console.log("(I AM IN COLLECTIONS CONTEXT line 52) updated_user", {collections: [...user.collections, packagedCollection.id]});
+            updateProfile(user.id, {collections: [...user.collections, packagedCollection.id]}, "collection");
 
             const data = await res.json();
             setRecentlyMade(packagedCollection);
@@ -70,8 +70,14 @@ export const CollectionsProvider = ({ children }) => {
             let updatedItems; 
             if (item) {
                 if (action === "add") {
-                    updatedItems = [...currentItems, item];
-                    console.log("updateCollectionx: item", item);
+                    const Exist = currentItems.some(insideItem => insideItem.id === item.id)
+                    if(!Exist) {
+                        updatedItems = [...currentItems, item];
+                        console.log("updateCollectionx: item", item);
+                    }else{
+                        updatedItems = currentItems
+                    }
+
                 }else if (action === "remove") {
                     updatedItems = currentItems.filter(i => i !== item);
                     console.log("updateCollection: removing item", item);

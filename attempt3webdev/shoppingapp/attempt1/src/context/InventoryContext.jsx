@@ -37,7 +37,7 @@ export const InventoryProvider = ({ children }) => {
     }
     const showRecentViewed = async (collections=false) => {
         try {
-            const recentlyViewed = JSON.parse(localStorage.getItem("recently-viewed"))
+            const recentlyViewed = JSON.parse(localStorage.getItem("recently-viewed")) 
             if(collections) {
                 console.log("showRecentViewed test: collection=true ", recentlyViewed.collections);
                 return recentlyViewed;
@@ -45,12 +45,12 @@ export const InventoryProvider = ({ children }) => {
                 console.log("showRecentViewed test: collection=false ", recentlyViewed.items);
                 return recentlyViewed;
             }
-        }catch (err){
-            setError(err.message)
-            alert("(INVENTORY CONTEXT) line 43 showRecentViewed: ", err.message)
+        }catch (error){
+            setError(error.message)
         }
     }
-    const addToRecent = async (item, Wishlist=false) => {
+
+    const addToRecent = async (item, Wishlist=false, ) => {
         try {
             const user = JSON.parse(localStorage.getItem("user"));
             if(!user) {
@@ -62,6 +62,7 @@ export const InventoryProvider = ({ children }) => {
                 const updatedUser = {...user, wishlist: [...user.wishlist, item.id]};
                 localStorage.setItem("user", JSON.stringify(updatedUser));
             }else{
+
                 const updatedUser = {...user, recentlyViewed: [...user.recentlyViewed, item.id]};
                 localStorage.setItem("user", JSON.stringify(updatedUser));
                 const updateditem = {...item, times_interacted: (item.times_interacted || 0) + 1};

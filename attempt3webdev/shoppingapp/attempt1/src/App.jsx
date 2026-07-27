@@ -13,13 +13,25 @@ import Placeholder from './subpages/Placeholder.jsx'
 import './App.css'
 
 
-function Home() {
+function Home(recentlyViewed= []) {
     const { inventory } = useContext(InventoryContext);
+    
     return (
         <div>
+            {recentlyViewed?.collections?.length > 1 ? (
+                <>
+                    <RecentViewed collection={true}/>
+                    <RecentViewed />    
+                </>
+                ) : (
+                    <></>
+                )
+            }
             <GetQuick inventory={inventory}/>
             <HotItems inventory={inventory} vertical={false}/>
             <FrontPageItems inventory={inventory}/>
+            {/* make this area able to spawn in and out when localhost has recentviewed */}
+            
         </div>
     )
 }
@@ -90,6 +102,7 @@ function App() {
     const displayRef = useRef(null);
     const lastScroll = useRef(0);
     const { user, profiles, logout } = useContext(AuthContext);
+    // const recentlyViewed = JSON.parse(localStorage.getItem("recently-viewed")) || ({collections: []})
 
     useEffect(() => {
         const el = displayRef.current;
@@ -149,19 +162,14 @@ function App() {
                 </div>
             </div>
         </section>
-        <section id="recently-Viewed-Collection">
-            <RecentViewed collection={true}/>
-        </section>
-        <section id="recently-Viewed-Item">
-            <RecentViewed />
-        </section>
+        
         <section id="menu-overlay">
             <SideMenu activeMenu={activeMenu} setActiveMenu={setActiveMenu} user={user} profiles={profiles} />
         </section>
         
         <section id="display-area" ref={displayRef}>
             <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Home />}/>
                 <Route path="/shop" element={<Inventory />} />
                 <Route path="/shop/:id" element={<InventoryItem />} />
                 <Route path="/collections" element={<Collections />} />

@@ -59,8 +59,9 @@ export const AuthProvider = ({ children }) => {
         if (user_profile) {
 
             setUser(user_profile);
+            const array = {collections:[], items: []}
             localStorage.setItem("user", JSON.stringify(user_profile));
-            localStorage.setItem("recently-viewed", "[]")
+            localStorage.setItem("recently-viewed", JSON.stringify(array))
         } else {
             setError("User not found.");
         }
@@ -126,7 +127,10 @@ export const AuthProvider = ({ children }) => {
                 }else if (action === "remove") {
                     updatedCart = currentCart.filter(i => i !== inputItem[0]);
                     console.log("updateCollection: removing item", inputItem[0]);
-                } else {
+                } else if (action === "collection"){
+                    updatedCart = inputItem;
+                } 
+                else {
                     updatedCart = currentCart;
                 };
                 const res = await fetch(`http://localhost:8080/profiles/${userID}`, {

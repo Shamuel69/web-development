@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
+import  { useState, useEffect,  useContext } from 'react'
 
 import './css/collections.css';
 
@@ -6,13 +6,12 @@ import { CollectionsContext } from '../context/CollectionsContext.jsx';
 
 import { AuthContext } from '../context/AuthContext';
 import { Link, useParams } from 'react-router-dom';
-import { InventoryProvider } from '../context/InventoryContext.jsx';
-function RecentlymadeCollections() {
-    const {collections, updateCollection} = useContext(CollectionsContext);
-    useEffect(() => {
+// function RecentlymadeCollections() {
+//     const {collections, updateCollection} = useContext(CollectionsContext);
+//     useEffect(() => {
         
-    })
-}
+//     })
+// }
 function LookingatCollection() {
     const { id } = useParams();
     const { collections, updateCollection } = useContext(CollectionsContext);
@@ -20,10 +19,10 @@ function LookingatCollection() {
     const [owner, setOwner] = useState(null);
     const [editing, setEditing] = useState(null);
     const user = JSON.parse(localStorage.getItem('user'));
-    const recentlyViewed = JSON.parse(localStorage.getItem("recently-viewed")) 
     useEffect(() => {
         const fetchOwner = async () => {
             if (collection) {
+                console.log("yeah baby n o monny")
                 try {
                     if (collection.user_id === user.id) {
                         setOwner(true);
@@ -43,7 +42,15 @@ function LookingatCollection() {
                         user: collection.user_id
                         
                     }
-                    localStorage.setItem("recently-viewed", [ ...recentlyViewed, JSON.stringify(parselist)])
+                    const recentlyViewed = JSON.parse(localStorage.getItem("recently-viewed"))
+
+                    {recentlyViewed?.collections ? (
+                        localStorage.setItem("recently-viewed", {collections: JSON.stringify([...recentlyViewed.collections, parselist])})
+                    
+                    ) : (
+                        localStorage.setItem("recently-viewed", JSON.stringify({collections: [parselist]}))
+                    )}
+
                 }
             }
         };
@@ -97,7 +104,7 @@ function LookingatCollection() {
 
 function Collections() {
     const { user } = useContext(AuthContext);
-    const { collections, error, addCollection, updateCollection } = useContext(CollectionsContext);
+    const { collections, addCollection,  } = useContext(CollectionsContext);
     const [showYourCollections, setShowYourCollections] = useState(false);
     
     return (

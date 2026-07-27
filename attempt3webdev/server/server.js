@@ -44,7 +44,21 @@ let inventory = [{id: 'KUjvgOzFfb', label: 'ring', description: 'A classic yello
 
 
 app.use(cors(corsOptions));
-app.use(express.json());  
+
+app.use((req, res, next) => {
+    res.setHeader(
+        "Content-Security-Policy",
+        "default-src 'self'; " +
+        "style-src 'self' 'unsafe-inline'; " +
+        "script-src 'self'; " +
+        "img-src 'self' http: https:; " +
+        "font-src 'self'; " +
+        "connect-src 'self' http://localhost:* https:;"
+    );
+    next();
+});
+app.use(express.json());
+
 
 app.get("/collections", (req, res) => {
     res.json({collections: collections});
