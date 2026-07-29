@@ -50,48 +50,63 @@ function GetQuick({inventory}) {
         </div>
     )
 }
-function RecentViewed(collection=false) {
+function RecentViewed({collection=false}) {
     const {showRecentViewed} = useContext(InventoryContext);
     const {profiles} = useContext(AuthContext)
+    const [loading, setLoading] = useState(true)
     const [recentData, setRecentData] = useState([]);
     const [nameofCreator, setNameofCreator] = useState([]);
-    useEffect(() => {
-        const data = collection ? showRecentViewed(true) : showRecentViewed(false);
-        
-        setRecentData(data);
-        setNameofCreator((collection_user_id) =>{
-            return profiles.map(profile => profile.id === collection_user_id)
-        });
+    const recentlyViewed = JSON.parse(localStorage.getItem("recently-viewed")) 
 
-    }, [showRecentViewed, collection, profiles])
+    useEffect(() => {
+        const fixData = async() => {
+            setRecentData(collection ?  recentlyViewed.collections : recentlyViewed.items) 
+            setLoading(false)
+
+        }
+        fixData()
+    }, [collection, profiles])
     
     return (
         <div className="mt-12">
-        {collection && (recentData.length > 0 ) ? (
+        {loading ? (
             <>
-                <h2 className='text-[--text-primary]'>Recently Viewed Collections:</h2>
-                <h4 className='text-[--text-secondary]'>Here to show you your recently viewed collections</h4>
-                {showRecentViewed(true).map(item => (
-                    <div id={item.id}>
-                        <img src={item.img} alt={item.name}/>
-                        <h3>{item.name}</h3>
-                        <h5>{nameofCreator(item.user)}</h5>
-                        <h5>{item.rating}</h5>
-                    </div>
-                ))}
-
             </>
-        ) : (
+        ):(
             <>
-                <h2 className='text-[--text-primary]'>Recently Viewed Items:</h2>
-                <h4 className='text-[--text-secondary]'>Here to show you your recently viewed items</h4>
-                {/* {showRecentViewed(false).map(item => (
-                    <div id={item.id}>
-                        <img src={item.img} alt={item.name}/>
-                        <h3>{item.name}</h3>
-                        <h5>{item.rating}</h5>
-                    </div>
-                ))} */}
+            {/* <h1 className="text-red-600">{recentData.name}</h1> */}
+                {collection ? (
+                    <>
+                        <h2 className='text-[var(--text-primary)]'>Recently Viewed Collections:</h2>
+                        <h4 className='text-[var(--text-secondary)]'>Here to show you your recently viewed collections</h4>
+                            <div className=" flex gap-4 mx-auto w-[95%] text-[var(--text-primary)] ">
+                                {recentlyViewed.collections.map(item => (
+                                    <div id={item.id} key={item.id} className="bg-[--bg-secondary] w-[220px] h-[180px] flex flex-col border-2 border-[var(--border)] rounded-[8px] hover:scale-[1.1] duration-200">
+                                        <img src={item.image} alt={item.name} className="object-cover h-[120px]"/>
+                                        <p>{item.name}</p>
+                                        <h5>{(item.user)}</h5>
+                                        <h5>{item.rating}</h5>
+                                    </div>
+                                ))}
+
+                            </div>
+
+
+                    </>
+                ) : (
+                    
+                    <>
+                        {/* <h2 className='text-[--text-primary]'>Recently Viewed Items:</h2>
+                        <h4 className='text-[--text-secondary]'>Here to show you your recently viewed items</h4>
+                        {recentlyViewed.map(item => (
+                            <div id={item.id} key={item.id}>
+                                <img src={item.img} alt={item.name}/>
+                                <h3>{item.name}</h3>
+                                <h5>{item.rating}</h5>
+                            </div>
+                        ))} */}
+                    </>
+                )}
             </>
         )}
 
@@ -203,8 +218,13 @@ function InventoryItem() {
                 if (!res.ok) throw new Error("Item not found");
                 const data = await res.json();
                 setItem(data.item);
-                console.log(item);
-                addToRecent(item);
+                const item_data = {
+                    id: data.item.id,
+                    name: data.item.name,
+                    price: data.item.price,
+                    image: data.item.image,
+                }
+                addToRecent(item_data, false, "item");
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching item:", error);
@@ -358,6 +378,7 @@ function HotItems({inventory, vertical=false}) {
 
 function Inventory() {
     const { inventory } = useContext(InventoryContext);
+    
     const [filters, setFilters] = useState({
         accessory: [],
         price: [],

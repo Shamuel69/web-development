@@ -13,18 +13,26 @@ import Placeholder from './subpages/Placeholder.jsx'
 import './App.css'
 
 
-function Home(recentlyViewed= []) {
+function Home(recentlyViewed= {collections: [], items: []}) {
     const { inventory } = useContext(InventoryContext);
     
     return (
         <div>
-            {recentlyViewed?.collections?.length > 1 ? (
+            {recentlyViewed.collections?.length > 0 ? (
+                <></>
+                ) : (
                 <>
                     <RecentViewed collection={true}/>
-                    <RecentViewed />    
+                </>
+                )
+            }
+            {recentlyViewed.items?.length >0 ?(
+                <>
                 </>
                 ) : (
-                    <></>
+                    <>
+                    <RecentViewed />    
+                    </>
                 )
             }
             <GetQuick inventory={inventory}/>

@@ -5,7 +5,8 @@ import './css/collections.css';
 import { CollectionsContext } from '../context/CollectionsContext.jsx';
 
 import { AuthContext } from '../context/AuthContext';
-import { Link, useParams } from 'react-router-dom';
+import {  Link, useParams } from 'react-router-dom';
+import { InventoryContext } from '../context/InventoryContext.jsx';
 // function RecentlymadeCollections() {
 //     const {collections, updateCollection} = useContext(CollectionsContext);
 //     useEffect(() => {
@@ -15,14 +16,15 @@ import { Link, useParams } from 'react-router-dom';
 function LookingatCollection() {
     const { id } = useParams();
     const { collections, updateCollection } = useContext(CollectionsContext);
+    const {addToRecent} = useContext(InventoryContext);
     const collection = collections.find(c => c.id === id);
     const [owner, setOwner] = useState(null);
+    const [loading, setLoading] = useState(true);
     const [editing, setEditing] = useState(null);
     const user = JSON.parse(localStorage.getItem('user'));
     useEffect(() => {
         const fetchOwner = async () => {
             if (collection) {
-                console.log("yeah baby n o monny")
                 try {
                     if (collection.user_id === user.id) {
                         setOwner(true);
@@ -42,15 +44,29 @@ function LookingatCollection() {
                         user: collection.user_id
                         
                     }
-                    const recentlyViewed = JSON.parse(localStorage.getItem("recently-viewed"))
-
-                    {recentlyViewed?.collections ? (
-                        localStorage.setItem("recently-viewed", {collections: JSON.stringify([...recentlyViewed.collections, parselist])})
-                    
-                    ) : (
-                        localStorage.setItem("recently-viewed", JSON.stringify({collections: [parselist]}))
-                    )}
-
+                    addToRecent(parselist, false, "collection")
+                    // const recentlyViewed = JSON.parse(localStorage.getItem("recently-viewed"))
+                    // if (!recentlyViewed) {
+                    //     localStorage.setItem("recently-viewed", JSON.stringify({collections: [parselist]}))
+                    // }else if (recentlyViewed.collections) {
+                    //     let updatedCollection;
+                    //     const exist = recentlyViewed.collections.some(item => item.id === collection.id)
+                    //     if(!exist) {
+                    //         localStorage.setItem("recently-viewed", JSON.stringify({collections: [parselist,...recentlyViewed.collections]}))
+                    //     }else {
+                    //         updatedCollection = recentlyViewed.collections;
+                    //         updatedCollection = updatedCollection.filter(item => item.id !== collection.id);
+                    //         if (updatedCollection.length > 0){
+                    //             console.log("noshot", {collections: [parselist, updatedCollection ]})
+                    //             localStorage.setItem("recently-viewed", JSON.stringify({collections: [parselist, ...updatedCollection]}))
+                    //         } else {
+                                
+                    //             localStorage.setItem("recently-viewed", JSON.stringify({collections: [parselist ]}))
+                    //             console.log()
+                    //         }
+                    //     }
+                    // }
+                    setLoading(false)
                 }
             }
         };
@@ -65,39 +81,44 @@ function LookingatCollection() {
 
     return (
         <div className="collection">
-            
-            <div className="collection-header">
-                <h2>{collection.name}</h2>
-                {owner && (
-                    <button onClick={() => setEditing(prevState => !prevState)} className="w-30 bg-[#313131] rounded-[8px] transition-all duration-300 ease-in-out hover:bg-[#212121] active:scale-105 ">Edit Collection</button>
-                )}
-            </div>
-            {editing && (
-                
-                <div className="edit-collection">
-                    <h3 >Edit Collection</h3>                    
-                    <input type="text" placeholder={collection.name} className="w-4/6 bg-[#212121]"/>
-                    <input type="text" placeholder={collection.description} />
-                    <button onClick={() => updateCollection(collection) && setEditing(prevState => !prevState)} className="bg-[#414141] w-40 rounded-[5px]">Save</button>
-                </div>
-            )}
-            <p>{collection.description}</p>
-
-            <h3>Items in this Collection:</h3>
-            <div className="items">
-                {collection.items.map(item => (
-                    <Link to={`/shop/${item.id}`}>
-                        <div className="item" key={item.id}>
-                            <img src={item.image} alt={item.name} />
-                            <div className="item-info">
-                                <p>{item.name}</p>
-                                <p>${item.price}</p>
-                                <p>&#9733; {item.averageRating}</p>
-                            </div>
+            {loading ? (
+                <></>
+            ):(
+                <>
+                    <div className="collection-header">
+                        <h2>{collection.name}</h2>
+                        {owner && (
+                            <button onClick={() => setEditing(prevState => !prevState)} className="w-30 bg-[#313131] rounded-[8px] transition-all duration-300 ease-in-out hover:bg-[#212121] active:scale-105 ">Edit Collection</button>
+                        )}
+                    </div>
+                    {editing && (
+                        
+                        <div className="edit-collection">
+                            <h3 >Edit Collection</h3>                    
+                            <input type="text" placeholder={collection.name} className="w-4/6 bg-[#212121]"/>
+                            <input type="text" placeholder={collection.description} />
+                            <button onClick={() => updateCollection(collection) && setEditing(prevState => !prevState)} className="bg-[#414141] w-40 rounded-[5px]">Save</button>
                         </div>
-                    </Link>
-                ))}
-            </div>  
+                    )}
+                    <p>{collection.description}</p>
+
+                    <h3>Items in this Collection:</h3>
+                    <div className="items">
+                        {collection.items.map(item => (
+                            <Link to={`/shop/${item.id}`}>
+                                <div className="item" key={item.id}>
+                                    <img src={item.image} alt={item.name} />
+                                    <div className="item-info">
+                                        <p>{item.name}</p>
+                                        <p>${item.price}</p>
+                                        <p>&#9733; {item.averageRating}</p>
+                                    </div>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>  
+                </>
+            )}
         </div>
     );
 }

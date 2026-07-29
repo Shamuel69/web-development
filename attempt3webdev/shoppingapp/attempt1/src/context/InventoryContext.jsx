@@ -1,5 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
-import { AuthContext } from './AuthContext';
+import  { createContext, useState, useEffect } from 'react';
 export const InventoryContext = createContext();
 
 export const InventoryProvider = ({ children }) => {
@@ -40,34 +39,124 @@ export const InventoryProvider = ({ children }) => {
             const recentlyViewed = JSON.parse(localStorage.getItem("recently-viewed")) 
             if(collections) {
                 console.log("showRecentViewed test: collection=true ", recentlyViewed.collections);
-                return recentlyViewed;
+                return recentlyViewed.collections;
             } else {
                 console.log("showRecentViewed test: collection=false ", recentlyViewed.items);
-                return recentlyViewed;
+                return recentlyViewed.items;
             }
         }catch (error){
             setError(error.message)
         }
     }
 
-    const addToRecent = async (item, Wishlist=false, ) => {
+    // if(!user) {
+    //     const updateditem = {...item, times_interacted: (item.times_interacted || 0) + 1};
+    //     handleInventoryChange(updateditem);
+    //     return
+    // };
+    const addToRecent = async (item, Wishlist=false, type="item" ) => {
         try {
             const user = JSON.parse(localStorage.getItem("user"));
-            if(!user) {
-                const updateditem = {...item, times_interacted: (item.times_interacted || 0) + 1};
-                handleInventoryChange(updateditem);
-                return
-            };
+            let recentlyViewed = JSON.parse(localStorage.getItem("recently-viewed")) || {collections: [], items:{}}
+            
+            
+            
             if(Wishlist){
                 const updatedUser = {...user, wishlist: [...user.wishlist, item.id]};
                 localStorage.setItem("user", JSON.stringify(updatedUser));
-            }else{
-
-                const updatedUser = {...user, recentlyViewed: [...user.recentlyViewed, item.id]};
-                localStorage.setItem("user", JSON.stringify(updatedUser));
-                const updateditem = {...item, times_interacted: (item.times_interacted || 0) + 1};
-                handleInventoryChange(updateditem);
+                return
             }
+        
+            // if (!recentlyViewed){
+            //     // localStorage.setItem("recently-viewed", JSON.stringify({items: [item]}))
+            // } 
+            if (type === "item"){
+                let updatedItems;
+                
+                if(recentlyViewed.items.length > 0){
+                    const exists = recentlyViewed.items.some(items => items.id === item.id)
+                    console.log("snatch")
+                    
+                    if(exists){
+                        updatedItems = recentlyViewed.items.filter(items=>items.id !== item.id);
+                        updatedItems = [item, ...updatedItems]
+                    } else{
+                        updatedItems = [item, ...recentlyViewed.items];        
+                    }
+                }else{
+                    updatedItems = [item];        
+                    console.log('baller ', updatedItems)
+                }
+                
+                const updated = {
+                    collections: recentlyViewed.collections || [],
+                    items: [...updatedItems]
+                }
+                localStorage.setItem("recently-viewed", JSON.stringify(updated));
+                console.log('baller swag', updated)
+
+            }else if(type==="collection") {
+                let updatedItems;
+                if(recentlyViewed.collections.length > 0){
+                    const exists = recentlyViewed.collections.some(collections => collections.id === item.id)
+                    
+                    if(exists){
+                        updatedItems = recentlyViewed.collections.filter(collections=>collections.id !== item.id);
+                        updatedItems = [item, ...updatedItems]
+                    } else{
+                        updatedItems = [item, ...recentlyViewed.collections];        
+
+                    }
+                } else{
+                    updatedItems = [item];
+                }
+
+                const updated = {
+                    collections: [...updatedItems],
+                    items: recentlyViewed.items || []
+                }
+                localStorage.setItem("recently-viewed", JSON.stringify(updated));
+                console.log('baller ', updated)
+
+            }
+            
+            // let updateditems;
+            // if(!recentlyViewed) {
+            //     updateditems = {items: [item]};
+            //     localStorage.setItem("recently-viewed", JSON.stringify(updateditems));
+            // }else {
+            //     if (!recentlyViewed.items) {
+            //         updateditems = {items: [item]};
+            //         localStorage.setItem("recently-viewed", JSON.stringify(updateditems));
+            //         console.log("reel", updateditems)
+            //     }else {
+            //         updateditems = recentlyViewed.items
+            //         const exist = recentlyViewed.items.some(indi => indi.id !== item.id)
+            //         console.log("keel", updateditems, exist)
+            //         // read this all out loud when your not tired
+            //         if (!exist){
+            //             localStorage.setItem("recently-viewed", JSON.stringify({items: [item, ...updateditems]}))
+            //             console.log("neel", updateditems)
+                        
+            //         }else {
+            //             updateditems = updateditems.filter(indi => indi.id !== item.id)
+            //             console.log("FILER TIME!", updateditems)
+            //             if (updateditems.length > 1){
+            //                 localStorage.setItem("recently-viewed", JSON.stringify({items: [item, ...updateditems]}))
+            //                 console.log("beel", updateditems)
+            //             } else{
+            //                 localStorage.setItem("recently-viewed", JSON.stringify({items: [item]}))
+            //                 console.log("weel", updateditems)
+            //             }
+            //         }
+            //         console.log("eel", updateditems)
+            //     }
+
+
+            
+            // const updateditem = {...item, times_interacted: (item.times_interacted || 0) + 1};
+            // handleInventoryChange(updateditem);
+        
         } catch (err) {
             setError(err.message);
         }
