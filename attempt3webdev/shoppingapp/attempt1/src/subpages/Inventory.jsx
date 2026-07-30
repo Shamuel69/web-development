@@ -58,6 +58,8 @@ function RecentViewed({collection=false}) {
     const [nameofCreator, setNameofCreator] = useState([]);
     const recentlyViewed = JSON.parse(localStorage.getItem("recently-viewed")) 
 
+
+
     useEffect(() => {
         const fixData = async() => {
             setRecentData(collection ?  recentlyViewed.collections : recentlyViewed.items) 
@@ -76,36 +78,56 @@ function RecentViewed({collection=false}) {
             <>
             {/* <h1 className="text-red-600">{recentData.name}</h1> */}
                 {collection ? (
-                    <>
-                        <h2 className='text-[var(--text-primary)]'>Recently Viewed Collections:</h2>
-                        <h4 className='text-[var(--text-secondary)]'>Here to show you your recently viewed collections</h4>
-                            <div className=" flex gap-4 mx-auto w-[95%] text-[var(--text-primary)] ">
-                                {recentlyViewed.collections.map(item => (
-                                    <div id={item.id} key={item.id} className="bg-[--bg-secondary] w-[220px] h-[180px] flex flex-col border-2 border-[var(--border)] rounded-[8px] hover:scale-[1.1] duration-200">
-                                        <img src={item.image} alt={item.name} className="object-cover h-[120px]"/>
-                                        <p>{item.name}</p>
-                                        <h5>{(item.user)}</h5>
-                                        <h5>{item.rating}</h5>
-                                    </div>
-                                ))}
-
+                    
+                        <>  
+                            <div className='w-[90%] mx-auto mb-5 border-b-2 border-(--border) p-3'>
+                                <h2 className='text-(--text-primary) text-[22px]'>Recently Viewed Collections:</h2>
+                                <h4 className='text-(--text-muted)'>Here to show you your recently viewed collections</h4>
                             </div>
+                            <div className=" flex gap-4 mx-auto w-[90%] h-[90px] overflow-x-auto items-center snap-x text-(--text-primary) " >
+                                {recentlyViewed.collections.map(item => (
+                                    <Link to={`/collections/${item.id}`} key={item.id}>
+                                        <div id={item.id} key={item.id} className=" w-[280px] h-[80px] snap-start flex flex-row border-2 border-(--bg-secondary) rounded-lg hover:scale-[1.05] duration-200">
+                                            <img src={item.image} alt={item.name} className="object-cover h-[100%]"/>
+                                            <div className='flex flex-col p-2'>
+                                                <label className='w-full text-[20px] '>{item.name}</label>
+                                                <div className="flex flex-row">
+                                                    <h5>{(item.user)}</h5>
+                                                    <h5>{item.rating}</h5>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </Link>
+                                ))}
+                            </div>
+                        </>
 
 
-                    </>
                 ) : (
                     
                     <>
-                        {/* <h2 className='text-[--text-primary]'>Recently Viewed Items:</h2>
-                        <h4 className='text-[--text-secondary]'>Here to show you your recently viewed items</h4>
-                        {recentlyViewed.map(item => (
-                            <div id={item.id} key={item.id}>
-                                <img src={item.img} alt={item.name}/>
-                                <h3>{item.name}</h3>
-                                <h5>{item.rating}</h5>
+                            <div className='w-[90%] mx-auto mb-5 border-b-2 border-(--border) p-3'>
+                                <h2 className='text-(--text-primary) text-[22px] '>Recently Viewed Items:</h2>
+                                <h4 className='text-(--text-muted) '>Here to show you your recently viewed items</h4>
                             </div>
-                        ))} */}
-                    </>
+                            {/* style={{maskImage: 'linear-gradient(to right, transparent 0%,  black 10%, black 90%, transparent 100%)'}} */}
+                            <div className=" flex gap-4 mx-auto w-[90%] h-[220px] overflow-x-auto items-center snap-x text-(--text-primary) p-1" style={{WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 0%, black 95%, transparent 100%)'}}>
+                            {recentlyViewed.items.map(item => (
+                                    <Link to={`/shop/${item.id}`} key={item.id}>
+                                        <div id={item.id} key={item.id} className=" w-[220px] h-[180px] snap-center flex flex-col border-2 border-(--bg-secondary) rounded-[8px] hover:scale-[1.05] duration-200">
+                                            <img src={item.image} alt={item.name} className="object-cover h-[120px] " style={{borderradius: '8px 0 8px 0',}}/>
+                                            <p className='text-[18px] w-[95%] mx-auto'>{item.name}</p>
+                                            <div className="flex flex-row w-[95%] mx-auto justify-between text-(--text-secondary)">
+                                                <h5>${item.price}</h5>
+                                                
+                                            </div>
+                                        </div>
+                                    </Link>
+                                ))}
+
+                            </div>
+                        </>
                 )}
             </>
         )}

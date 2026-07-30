@@ -18,6 +18,8 @@ function Home(recentlyViewed= {collections: [], items: []}) {
     
     return (
         <div>
+            <GetQuick inventory={inventory}/>
+            <HotItems inventory={inventory} vertical={false}/>
             {recentlyViewed.collections?.length > 0 ? (
                 <></>
                 ) : (
@@ -35,8 +37,6 @@ function Home(recentlyViewed= {collections: [], items: []}) {
                     </>
                 )
             }
-            <GetQuick inventory={inventory}/>
-            <HotItems inventory={inventory} vertical={false}/>
             <FrontPageItems inventory={inventory}/>
             {/* make this area able to spawn in and out when localhost has recentviewed */}
             
