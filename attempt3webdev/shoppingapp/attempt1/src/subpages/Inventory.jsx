@@ -9,11 +9,14 @@ import { AuthContext } from '../context/AuthContext.jsx'
 function FrontPageItems({inventory}) {
     const frontPageItems = inventory.filter(item => item.front_page === true);
     return (
-        <div className="front-page">
-            <h2>Front Page Items</h2>
+        <>
+            <div className='w-[90%] mx-auto mb-2 border-b-2 border-(--border) p-3 '>
+                <h2 className='text-(--text-primary) text-[22px]'>Quick Items</h2>
+            
+            </div>
             <div className="front-page-container">
                 {frontPageItems.map(item => (
-                    <Link to={`/shop/${item.id}`}>
+                    <Link to={`/shop/${item.id}`} >
                         <div className="front-page-item" key={item.id}>
                             <img src={item.image} alt={item.label} />
                             <p>{item.label}</p>
@@ -25,19 +28,23 @@ function FrontPageItems({inventory}) {
                     </Link>
                 ))}
             </div>
-        </div>
+        </>
     )
 }
 function GetQuick({inventory}) {
     const quickItems = inventory.filter(item => item.quantity <= 2 && item.quantity > 0);
     return (
-        <div className="front-page">
-            <h2>Quick Items</h2>
-            <div className="front-page-container">
+        <>
+            <div className='w-[90%] mx-auto mb-2 border-b-2 border-(--border) p-3 md:flex-row gap-8'>
+                <h2 className='text-(--text-primary) text-[22px]'>Quick Items</h2>
+                <h4 className='text-(--text-muted)'>Running low on these items, get them so you do not miss out!</h4>
+            </div>
+
+            <div className="w-[90%] mx-auto flex flex-col md:flex-row  p-2.5 gap-3 md:gap-8 overflow-x-auto items-center snap-x text-(--text-primary) " style={{WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 0%, black 95%, transparent 100%)'}}>
                 {quickItems.map(item => (
-                    <Link to={`/shop/${item.id}`}>
-                        <div className="front-page-item" key={item.id}>
-                            <img src={item.image} alt={item.label} />
+                    <Link to={`/shop/${item.id}`} className="mx-auto">
+                        <div className="front-page-item " key={item.id}>
+                            <img src={item.image} alt={item.label} className='w-full h-full object-cover rounded-[5px] '/>
                             <p>{item.label}</p>
                             <div className="inventory-item-info">
                                 <span>${item.price}</span>
@@ -47,8 +54,9 @@ function GetQuick({inventory}) {
                     </Link>
                 ))}
             </div>
-        </div>
+        </>
     )
+    {/* // <div className="front-page"> */}
 }
 function RecentViewed({collection=false}) {
     const {showRecentViewed} = useContext(InventoryContext);
@@ -84,10 +92,13 @@ function RecentViewed({collection=false}) {
                                 <h2 className='text-(--text-primary) text-[22px]'>Recently Viewed Collections:</h2>
                                 <h4 className='text-(--text-muted)'>Here to show you your recently viewed collections</h4>
                             </div>
-                            <div className=" flex gap-4 mx-auto w-[90%] h-[90px] overflow-x-auto items-center snap-x text-(--text-primary) " >
+                            <div className=" flex flex-col md:flex-row gap-4 mx-auto w-[90%]   text-(--text-primary) 
+                                            overflow-x-auto items-center snap-x h-fit md:h-[90px]" >
                                 {recentlyViewed.collections.map(item => (
                                     <Link to={`/collections/${item.id}`} key={item.id}>
-                                        <div id={item.id} key={item.id} className=" w-[280px] h-[80px] snap-start flex flex-row border-2 border-(--bg-secondary) rounded-lg hover:scale-[1.05] duration-200">
+                                        <div id={item.id} key={item.id} className=" w-[280px] h-[80px] snap-start flex flex-row 
+                                        border-2 border-(--bg-secondary) rounded-lg hover:scale-[1.05] duration-200">
+                                        
                                             <img src={item.image} alt={item.name} className="object-cover h-[100%]"/>
                                             <div className='flex flex-col p-2'>
                                                 <label className='w-full text-[20px] '>{item.name}</label>
@@ -112,7 +123,7 @@ function RecentViewed({collection=false}) {
                                 <h4 className='text-(--text-muted) '>Here to show you your recently viewed items</h4>
                             </div>
                             {/* style={{maskImage: 'linear-gradient(to right, transparent 0%,  black 10%, black 90%, transparent 100%)'}} */}
-                            <div className=" flex gap-4 mx-auto w-[90%] h-[220px] overflow-x-auto items-center snap-x text-(--text-primary) p-1" style={{WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 0%, black 95%, transparent 100%)'}}>
+                            <div className=" flex flex-col md:flex-row gap-4 mx-auto w-[90%] h-fit md:h-[220px] overflow-x-auto items-center snap-x text-(--text-primary) p-1" style={{WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 0%, black 95%, transparent 100%)'}}>
                             {recentlyViewed.items.map(item => (
                                     <Link to={`/shop/${item.id}`} key={item.id}>
                                         <div id={item.id} key={item.id} className=" w-[220px] h-[180px] snap-center flex flex-col border-2 border-(--bg-secondary) rounded-[8px] hover:scale-[1.05] duration-200">
@@ -138,6 +149,41 @@ function RecentViewed({collection=false}) {
 }
 function ForYou() {
     
+}
+
+function HeroBanner() {
+    const user = localStorage.getItem("user");
+    
+    return(
+        <>
+            {user ? (
+                <>
+                    <div className="bg-(--bg-primary) shadow-lg  overflow-hidden relative min-h-[340px] w-full  mt-18 md:w-[90%] mx-auto rounded-2xl ">
+                    <div className="w-[90%] h-[340px] mx-auto ">
+                        <div className="w-[80%] z-10 text-(--text-primary) mt-1 md:flex flex-col gap-4" >
+                            <h1 class="text-[1.35rem] font-extrabold md:text-5xl">Style, post, and share!</h1>
+                            <p className="text-[1.05rem] ml-4  md:text-2xl">Show off your style with our wide selection of items!</p>
+                            <h4 className="text-lg font-bold md:text-3xl">Not sure what to get?</h4>
+                            <p className="text-[1.05rem] ml-4 md:text-lg">Browse collections to find the perfect item for you!</p>
+
+                        </div>
+                        <div className="flex flex-row gap-4 z-20 bg-(--bg-secondary) absolute md: bottom-20 left-10">
+                            <Link to="/collections" className="p-1 border-2 transition duration-200 hover:shadow-lg shadow-(--accent) ">Browse Collections</Link>
+                            <Link to="/shop" className="p-1 border-2 transition duration-200 hover:shadow-lg shadow-(--accent) ">Shop Now</Link>
+                        </div>
+                        <div className="w-[50%] h-[100%] absolute z-0 right-0 top-0 md:w-[30%] " style={{webkitMaskImage: 'linear-gradient(to right, transparent 0%, black 40%, black 100%)'}}>
+                            <img src="http://localhost:8080/watch5.png" alt="hero banner" className="w-[100%] h-[100%] object-cover z-0"/>
+                        </div>
+                    </div>
+                    </div>
+                </>
+                ):(
+                <></>
+
+                )
+            }
+        </>
+    )
 }
 function CollectionPopup( {user, item, active, setActive} ) {
     const [userCollections, setUserCollections] = useState([]);
@@ -356,9 +402,35 @@ function HotItems({inventory, vertical=false}) {
     const hotItems = inventory.sort((a, b) => (b.times_interacted || 0) - (a.times_interacted || 0)).slice(0, 5);
     if(vertical){
         return (
-            <div className="front-page-vertical">
-                <h2>Hot Items</h2>
-                <div className="front-page-container-vertical">
+            <div className='hidden md:flex'>
+
+                <div className="front-page-vertical">
+                    <h2>Hot Items</h2>
+                    <div className="front-page-container-vertical">
+                        {hotItems.map(item => (
+                            <Link to={`/shop/${item.id}`} key={item.id}>
+                                <div className="front-page-item" >
+                                <img src={item.image} alt={item.label} />
+                                <p>{item.label}</p>
+                                <div className="inventory-item-info">
+                                    <span>${item.price}</span>
+                                    <span>{item.averageRating}</span>
+                                </div>
+                            </div>
+                        </Link>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+    return (
+            <>
+                <div className='w-[90%]  mx-auto mb-5 border-b-2 border-(--border) p-3'>
+                                    <h2 className='text-(--text-primary) text-[22px] '>Hot Items</h2>
+                                    <h4 className='text-(--text-muted) '>Items that are selling FAST!</h4>
+                                </div>
+                <div className="w-[90%] mx-auto flex flex-col md:flex-row  p-2 gap-3 md:gap-8 overflow-x-auto items-center snap-x text-(--text-primary) " style={{WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 0%, black 95%, transparent 100%)'}}>
                     {hotItems.map(item => (
                         <Link to={`/shop/${item.id}`} key={item.id}>
                             <div className="front-page-item" >
@@ -372,27 +444,7 @@ function HotItems({inventory, vertical=false}) {
                     </Link>
                     ))}
                 </div>
-            </div>
-        );
-    }
-    return (
-            <div className="front-page">
-                <h2>Hot Items</h2>
-                <div className="front-page-container">
-                    {hotItems.map(item => (
-                        <Link to={`/shop/${item.id}`}>
-                            <div className="front-page-item" key={item.id}>
-                                <img src={item.image} alt={item.label} />
-                                <p>{item.label}</p>
-                                <div className="inventory-item-info">
-                                    <span>${item.price}</span>
-                                    <span>{item.averageRating}</span>
-                                </div>
-                            </div>
-                        </Link>
-                    ))}
-                </div>
-            </div>
+            </>
         );
 }
 
@@ -483,47 +535,53 @@ function Inventory() {
     return (
         <div className="inventory-container">
             
-            <section id="sort"> 
-                <h3>Sort: </h3>   
-                <h4>Accessory: </h4>
+            <section  className="*:hidden md:flex flex-col w-[250px] h-[100%] p-2 gap-4 items-center border-r-2 border-(--border)"> 
+                <div className="hidden md:flex flex-col">
+                    
+                    <h3>Sort: </h3>   
+                    <h4>Accessory: </h4>
+                        <ul>
+                            {accessory.map(item => (
+                                <li key={item}>
+                                    <input type="checkbox" checked={filters.accessory.includes(item)} onChange={() => handleCheckboxChange("accessory", item)} />
+                                    <label htmlFor={`accessory-${item}`}>{item}</label>
+                                </li>
+                            ))}
+                        </ul>
+                    <h4>Price: </h4>
                     <ul>
-                        {accessory.map(item => (
+                        {price.map(item => (
                             <li key={item}>
-                                <input type="checkbox" checked={filters.accessory.includes(item)} onChange={() => handleCheckboxChange("accessory", item)} />
-                                <label htmlFor={`accessory-${item}`}>{item}</label>
+                                <input type="checkbox" checked={filters.price.includes(item)} onChange={() => handleCheckboxChange("price", item)} />
+                                <label htmlFor={`price-${item}`}>{item}</label>
                             </li>
                         ))}
                     </ul>
-                <h4>Price: </h4>
-                <ul>
-                    {price.map(item => (
-                        <li key={item}>
-                            <input type="checkbox" checked={filters.price.includes(item)} onChange={() => handleCheckboxChange("price", item)} />
-                            <label htmlFor={`price-${item}`}>{item}</label>
-                        </li>
-                    ))}
-                </ul>
-                <h4>Rating: </h4>
-                <ul>
-                    {rating.map(item => (
-                        <li key={item}>
-                            <input type="checkbox" checked={filters.rating.includes(item)} onChange={() => handleCheckboxChange("rating", item)} />
-                            <label htmlFor={`rating-${item}`}>{item}</label>
-                        </li>
-                    ))}
-                </ul>
-                <h4>Tags: </h4>
-                <ul>
-                    {tags.map(item => (
-                        <li key={item}>
-                            <input type="checkbox" checked={filters.tags.includes(item)} onChange={() => handleCheckboxChange("tags", item)} />
-                            <label htmlFor={`tags-${item}`}>{item}</label>
-                        </li>
-                    ))}
-                </ul>
+                    <h4>Rating: </h4>
+                    <ul>
+                        {rating.map(item => (
+                            <li key={item}>
+                                <input type="checkbox" checked={filters.rating.includes(item)} onChange={() => handleCheckboxChange("rating", item)} />
+                                <label htmlFor={`rating-${item}`}>{item}</label>
+                            </li>
+                        ))}
+                    </ul>
+                    <h4>Tags: </h4>
+                    <ul>
+                        {tags.map(item => (
+                            <li key={item}>
+                                <input type="checkbox" checked={filters.tags.includes(item)} onChange={() => handleCheckboxChange("tags", item)} />
+                                <label htmlFor={`tags-${item}`}>{item}</label>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </section>
+
             <section id="inventory">
-                <div className="inventory-stock-container">
+                <div className="flex flex-col md:flex-row w-[100%] justify-center h-fit flex-wrap 
+                items-center text-(--text-primary)" 
+                style={{WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 0%, black 95%, transparent 100%)'}}>
                     {inventory.map(item => (
                         <Link to={`/shop/${item.id}`} key={item.id}>
                         
@@ -547,4 +605,4 @@ function Inventory() {
 }
 
 
-export {Inventory, FrontPageItems, GetQuick, HotItems, InventoryItem, RecentViewed};
+export {Inventory, GetQuick, HotItems, HeroBanner, InventoryItem, RecentViewed};
